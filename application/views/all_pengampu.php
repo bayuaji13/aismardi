@@ -1,0 +1,2 @@
+<?php ?> Daftar semua pengampu<a  href="<?=base_url('pengampu/managePengampu/all_pengampu')?>"> klik disini!</a> </br>
+Daftar pengampu tahun ini<a  href="<?=base_url('pengampu/managePengampu')?>"> klik disini!</a>

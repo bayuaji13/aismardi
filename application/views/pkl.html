@@ -1,0 +1,53 @@
+          <h3><i class="fa fa-angle-right"></i> Dashsboard Rata-rata Nilai Murid</h3>
+              <!-- page start-->
+              <div class="tab-pane" id="chartjs">
+                  <div class="row mt">
+                      <div class="col-lg-4">
+                          <div class="content-panel">
+						  <h4><i class="fa fa-angle-right"></i> Tingkat Satu</h4>
+							  <a href = blank.html>
+                              <div class="panel-body text-center">
+                                  <canvas id="doughnut" height="240" width="300"></canvas>
+                              </div>
+							  </a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row mt">
+                      <div class="col-lg-4">
+                          <div class="content-panel">
+							  <h4><i class="fa fa-angle-right"></i> Tingkat Dua</h4>
+                              <div class="panel-body text-center">
+                                  <canvas id="doughnut1" height="240" width="300"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row mt">
+                      <div class="col-lg-4">
+                          <div class="content-panel">
+							  <h4><i class="fa fa-angle-right"></i> Tingkat Tiga</h4>
+                              <div class="panel-body text-center">
+                                  <canvas id="doughnut2" height="240" width="300"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- page end-->
+          </section>          
+      </section><!-- /MAIN CONTENT -->
+
+      <!--main content end-->
+      
+	  <script>
+		var Script = function () {
+
+
+    var doughnutData = <?php echo $data;?>
+	new Chart(document.getElementById("doughnut").getContext("2d")).Doughnut(doughnutData);
+    new Chart(document.getElementById("doughnut1").getContext("2d")).Doughnut(doughnutData);
+    new Chart(document.getElementById("doughnut2").getContext("2d")).Doughnut(doughnutData);
+ }();
+ 
+ </script>

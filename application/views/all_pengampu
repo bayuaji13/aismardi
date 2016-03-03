@@ -1,0 +1,1 @@
+Daftar semua Pengampu<a  href="<?=base_url('pengampu/managePengampu/all_pengampu')?>">klik disini!</a>
