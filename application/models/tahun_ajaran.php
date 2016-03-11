@@ -5,11 +5,11 @@
 	}
 
 	function getCurrentTA(){
-		$sql="SELECT * FROM tahun_ajaran ORDER BY id_tahun DESC LIMIT 1";
+		$sql="SELECT * FROM tahun_ajaran ORDER BY id_tahun_ajaran DESC LIMIT 1";
 		$query=$this->db->query($sql);
 		$result = $query->first_row('array');
 
-		return $result['id_tahun'];
+		return $result['id_tahun_ajaran'];
 	}
 
 	public function verifikasiSemester($value,$ta = null)

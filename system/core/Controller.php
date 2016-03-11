@@ -92,5 +92,49 @@ class CI_Controller {
 	{
 		return self::$instance;
 	}
-
+	
+	/**
+	 * Get header view based in level user
+	 */
+	public function showHeader(){
+		$level = $this->session->userdata('level');
+		if ($level == null){
+			redirect('users/login');
+		}
+		switch ($level) {
+			case '9':
+				$this->load->view('header_admin');
+				break;
+			case '1':
+				$this->load->view('header_guru');
+				break;
+			case '2':
+				$this->load->view('header_kepsek');
+				break;
+			case '3':
+				$this->load->view('header_yayasan');
+				break;
+			case '4':
+				$this->load->view('header_wali');
+				break;
+			case '5':
+				$this->load->view('header_siswa');
+				break;
+		}
+	}
+	
+	/**
+	 * Get session data to verify user
+	 * @return boolean
+	 */
+	public function getSession(){
+	
+		if (($this->session->userdata('user') != null) && ($this->session->userdata('level') != null)){
+	
+			return true;
+		}
+		else
+	
+			return false;
+	}
 }

@@ -101,9 +101,46 @@
               <span>Administrasi Sistem</span>
             </a>
             <ul class="sub">
+              <li>
+	            <a href="javascript:;" >
+	              <i class="fa fa-newspaper-o"></i>
+	              <span>Berita</span>
+	            </a>
+	            <ul class="sub">
+	              <li><a  href="<?=base_url('users/manageUser')?>">Tambah Berita</a></li>
+	            </ul>
+	             <ul class="sub">
+	              <li><a  href="<?=base_url('users/manageUser')?>">Lihat Daftar Berita</a></li>
+	            </ul>
+	          </li>
+	          <li><a  href="<?=base_url('users/manageUser')?>">Category</a></li>
+	          <li>
+	            <a href="javascript:;" >
+	              <i class="fa fa-file-o"></i>
+	              <span>Laman</span>
+	            </a>
+	            <ul class="sub">
+	              <li><a  href="<?=base_url('users/manageUser')?>">Tambah Laman</a></li>
+	            </ul>
+	             <ul class="sub">
+	              <li><a  href="<?=base_url('users/manageUser')?>">Lihat Daftar Laman</a></li>
+	            </ul>
+	          </li>
+	          <li>
+	            <a href="javascript:;" >
+	              <i class="fa fa-calendar"></i>
+	              <span>Event</span>
+	            </a>
+	            <ul class="sub">
+	              <li><a  href="<?=base_url('users/manageUser')?>">Tambah Event</a></li>
+	            </ul>
+	             <ul class="sub">
+	              <li><a  href="<?=base_url('users/manageUser')?>">Lihat Daftar Event</a></li>
+	            </ul>
+	          </li>
+              <li><a  href="<?=base_url('users/manageUser')?>">Laman Muka</a></li>
               <li><a  href="<?=base_url('users/manageUser')?>">Daftar Data User</a></li>
               <li><a  href="<?=base_url('logs/showLog')?>">Log Sistem</a></li>
-
             </ul>
           </li>
 
