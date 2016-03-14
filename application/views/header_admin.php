@@ -102,18 +102,12 @@
             </a>
             <ul class="sub">
               <li>
-	            <a href="javascript:;" >
+	            <a href="<?=base_url('konten/manageNews')?>" >
 	              <i class="fa fa-newspaper-o"></i>
 	              <span>Berita</span>
 	            </a>
-	            <ul class="sub">
-	              <li><a  href="<?=base_url('users/manageUser')?>">Tambah Berita</a></li>
-	            </ul>
-	             <ul class="sub">
-	              <li><a  href="<?=base_url('users/manageUser')?>">Lihat Daftar Berita</a></li>
-	            </ul>
 	          </li>
-	          <li><a  href="<?=base_url('users/manageUser')?>">Category</a></li>
+	          <li><a  href="<?=base_url('konten/manageCategory')?>">Category</a></li>
 	          <li>
 	            <a href="javascript:;" >
 	              <i class="fa fa-file-o"></i>

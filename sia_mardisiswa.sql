@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.4
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2016 at 04:26 AM
--- Server version: 5.6.15-log
--- PHP Version: 5.5.8
+-- Generation Time: Mar 14, 2016 at 10:31 AM
+-- Server version: 5.6.24
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,9 +31,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `ip_address` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '0',
   `user_agent` varchar(120) COLLATE utf8_bin DEFAULT NULL,
   `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_data` text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`session_id`),
-  KEY `last_activity_idx` (`last_activity`)
+  `user_data` text COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -42,7 +40,8 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 
 INSERT INTO `sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
 ('08f11497abfd3870f6c6ff0e1c7f2d76', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 1453421113, 'a:5:{s:9:"user_data";s:0:"";s:4:"user";s:5:"admin";s:5:"level";s:1:"9";s:12:"kd_transaksi";N;s:9:"nama_akun";N;}'),
-('557164b91844c29817374d0ee0d93822', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36', 1456976922, '');
+('557164b91844c29817374d0ee0d93822', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36', 1456976922, ''),
+('e690c17238534d75aadedb0d3a37c991', '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0', 1457935966, '');
 
 -- --------------------------------------------------------
 
@@ -51,15 +50,14 @@ INSERT INTO `sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity
 --
 
 CREATE TABLE IF NOT EXISTS `statistik` (
-  `kd_statistik` int(11) NOT NULL AUTO_INCREMENT,
+  `kd_statistik` int(11) NOT NULL,
   `user` varchar(20) NOT NULL,
   `level` int(2) NOT NULL,
   `section` varchar(32) NOT NULL,
   `action` varchar(32) NOT NULL,
   `when` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `uri` varchar(255) NOT NULL,
-  PRIMARY KEY (`kd_statistik`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=128 ;
+  `uri` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `statistik`
@@ -192,7 +190,11 @@ INSERT INTO `statistik` (`kd_statistik`, `user`, `level`, `section`, `action`, `
 (124, 'admin', 9, 'gurus', 'manageGuru', '2016-01-22 00:07:26', 'gurus/manageGuru/delete/4'),
 (125, 'admin', 9, 'gurus', 'manageGuru', '2016-01-22 00:07:26', 'gurus/manageGuru/ajax_list_info'),
 (126, 'admin', 9, 'gurus', 'manageGuru', '2016-01-22 00:07:26', 'gurus/manageGuru/ajax_list'),
-(127, '0', 0, 'users', 'index', '2016-03-03 03:48:42', '');
+(127, '0', 0, 'users', 'index', '2016-03-03 03:48:42', ''),
+(128, '0', 0, 'users', 'index', '2016-03-14 06:12:46', ''),
+(129, '0', 0, 'users', 'index', '2016-03-14 06:14:32', ''),
+(130, '0', 0, 'users', 'login', '2016-03-14 06:14:32', 'users/login'),
+(131, '0', 0, 'users', 'login', '2016-03-14 06:14:40', 'users/login');
 
 -- --------------------------------------------------------
 
@@ -233,16 +235,42 @@ CREATE TABLE IF NOT EXISTS `tabel_banyaknya_sk` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tabel_berita`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_berita` (
+  `newsId` int(11) NOT NULL,
+  `categoryId` int(11) NOT NULL DEFAULT '1',
+  `newsTitle` text NOT NULL,
+  `newsDate` datetime NOT NULL,
+  `newsContent` longtext NOT NULL,
+  `newsStatus` enum('Publish','Draft') NOT NULL,
+  `newsName` varchar(200) NOT NULL,
+  `newsModified` datetime NOT NULL,
+  `newsUrl` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tabel_berita`
+--
+
+INSERT INTO `tabel_berita` (`newsId`, `categoryId`, `newsTitle`, `newsDate`, `newsContent`, `newsStatus`, `newsName`, `newsModified`, `newsUrl`) VALUES
+(1, 1, 'Coba Berita', '0000-00-00 00:00:00', '<p>\r\n	ini adalah contoh konten berita pertama</p>\r\n', 'Publish', 'Coba-Berita', '2016-03-14 08:29:17', 'http://localhost/aismardi/news/UmumCoba-Berita'),
+(2, 0, 'Coba Berita 2', '2016-03-14 08:30:35', '<p>\r\n	coba berita redundan</p>\r\n', 'Publish', 'coba-berita-2', '2016-03-14 08:30:35', 'http://localhost/aismardi/news//coba-berita-2'),
+(4, 1, 'Coba ketiga', '2016-03-14 10:27:33', '<p>\r\n	Berita ketiga</p>\r\n', 'Publish', 'coba-ketiga', '2016-03-14 10:27:33', 'http://localhost/aismardi/news/umum/coba-ketiga');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tabel_guru`
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_guru` (
-  `id_guru` int(11) NOT NULL AUTO_INCREMENT,
+  `id_guru` int(11) NOT NULL,
   `nip` varchar(40) NOT NULL,
   `nama` varchar(80) NOT NULL,
-  `alamat` varchar(80) NOT NULL,
-  PRIMARY KEY (`id_guru`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  `alamat` varchar(80) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -251,10 +279,9 @@ CREATE TABLE IF NOT EXISTS `tabel_guru` (
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_jurusan` (
-  `id_jurusan` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_jurusan` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_jurusan`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  `id_jurusan` int(11) NOT NULL,
+  `nama_jurusan` varchar(50) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tabel_jurusan`
@@ -268,17 +295,36 @@ INSERT INTO `tabel_jurusan` (`id_jurusan`, `nama_jurusan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tabel_kategori`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_kategori` (
+  `categoryId` int(11) NOT NULL,
+  `categoryName` varchar(128) NOT NULL,
+  `count` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tabel_kategori`
+--
+
+INSERT INTO `tabel_kategori` (`categoryId`, `categoryName`, `count`) VALUES
+(0, 'Uncategorized', 1),
+(1, 'Umum', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tabel_kelas`
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_kelas` (
   `tahun_ajaran` varchar(10) NOT NULL,
-  `id_kelas` int(5) NOT NULL AUTO_INCREMENT,
+  `id_kelas` int(5) NOT NULL,
   `nama_kelas` varchar(10) NOT NULL,
   `kd_guru` varchar(5) NOT NULL,
-  `tingkat` enum('','1','2','3') NOT NULL,
-  PRIMARY KEY (`id_kelas`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `tingkat` enum('','1','2','3') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -287,12 +333,11 @@ CREATE TABLE IF NOT EXISTS `tabel_kelas` (
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_kelas_siswa` (
-  `id_entry` int(11) NOT NULL AUTO_INCREMENT,
+  `id_entry` int(11) NOT NULL,
   `tahun_ajaran` varchar(10) NOT NULL,
   `kd_siswa` varchar(20) NOT NULL,
-  `kd_kelas` varchar(5) NOT NULL,
-  PRIMARY KEY (`id_entry`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `kd_kelas` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -302,8 +347,7 @@ CREATE TABLE IF NOT EXISTS `tabel_kelas_siswa` (
 
 CREATE TABLE IF NOT EXISTS `tabel_level` (
   `jenis_user` varchar(20) NOT NULL,
-  `level` int(2) NOT NULL,
-  PRIMARY KEY (`level`)
+  `level` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -324,10 +368,9 @@ INSERT INTO `tabel_level` (`jenis_user`, `level`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_mapel` (
-  `id_mapel` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_mapel` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_mapel`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  `id_mapel` int(11) NOT NULL,
+  `nama_mapel` varchar(50) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tabel_mapel`
@@ -345,12 +388,11 @@ INSERT INTO `tabel_mapel` (`id_mapel`, `nama_mapel`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_mapel_jurusan` (
-  `id_entry` int(11) NOT NULL AUTO_INCREMENT,
+  `id_entry` int(11) NOT NULL,
   `id_jurusan` int(11) NOT NULL,
   `id_mapel` int(11) NOT NULL,
-  `tahun_ajaran` year(4) NOT NULL,
-  PRIMARY KEY (`id_entry`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `tahun_ajaran` year(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -359,15 +401,14 @@ CREATE TABLE IF NOT EXISTS `tabel_mapel_jurusan` (
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_mapel_tahunan` (
-  `id_mapel_ta` int(11) NOT NULL AUTO_INCREMENT,
+  `id_mapel_ta` int(11) NOT NULL,
   `id_mapel` int(11) NOT NULL,
   `tahun_ajaran` year(4) NOT NULL,
   `semester` int(1) NOT NULL,
   `tingkat` int(1) DEFAULT NULL,
   `kkm_uts` float NOT NULL,
-  `kkm_uas` float NOT NULL,
-  PRIMARY KEY (`id_mapel_ta`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `kkm_uas` float NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -403,7 +444,7 @@ CREATE TABLE IF NOT EXISTS `tabel_nilai_penugasan` (
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_siswa` (
-  `id_siswa` int(11) NOT NULL AUTO_INCREMENT,
+  `id_siswa` int(11) NOT NULL,
   `nis` varchar(50) NOT NULL,
   `nisn` varchar(30) NOT NULL,
   `nama` varchar(80) NOT NULL,
@@ -411,9 +452,8 @@ CREATE TABLE IF NOT EXISTS `tabel_siswa` (
   `jurusan` int(11) NOT NULL DEFAULT '1',
   `status` int(1) NOT NULL DEFAULT '1',
   `tingkat` int(1) NOT NULL DEFAULT '1',
-  `tahun_lulus` year(4) DEFAULT NULL,
-  PRIMARY KEY (`id_siswa`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  `tahun_lulus` year(4) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -425,8 +465,7 @@ CREATE TABLE IF NOT EXISTS `tabel_users` (
   `user` varchar(20) NOT NULL,
   `pass` varchar(80) NOT NULL,
   `level` int(2) NOT NULL,
-  `id_transaksi` int(11) NOT NULL,
-  PRIMARY KEY (`user`)
+  `id_transaksi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -445,8 +484,7 @@ INSERT INTO `tabel_users` (`user`, `pass`, `level`, `id_transaksi`) VALUES
 CREATE TABLE IF NOT EXISTS `tahun_ajaran` (
   `id_tahun_ajaran` year(4) NOT NULL,
   `tahun_ajaran` varchar(30) NOT NULL,
-  `kepala_sekolah` int(11) NOT NULL,
-  PRIMARY KEY (`id_tahun_ajaran`)
+  `kepala_sekolah` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -458,6 +496,159 @@ INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`, `kepala_sekolah`)
 (2015, '2015 / 2016', 0),
 (2016, '2016 / 2017', 0);
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`session_id`), ADD KEY `last_activity_idx` (`last_activity`);
+
+--
+-- Indexes for table `statistik`
+--
+ALTER TABLE `statistik`
+  ADD PRIMARY KEY (`kd_statistik`);
+
+--
+-- Indexes for table `tabel_berita`
+--
+ALTER TABLE `tabel_berita`
+  ADD PRIMARY KEY (`newsId`), ADD KEY `categoryId` (`categoryId`);
+
+--
+-- Indexes for table `tabel_guru`
+--
+ALTER TABLE `tabel_guru`
+  ADD PRIMARY KEY (`id_guru`);
+
+--
+-- Indexes for table `tabel_jurusan`
+--
+ALTER TABLE `tabel_jurusan`
+  ADD PRIMARY KEY (`id_jurusan`);
+
+--
+-- Indexes for table `tabel_kategori`
+--
+ALTER TABLE `tabel_kategori`
+  ADD PRIMARY KEY (`categoryId`);
+
+--
+-- Indexes for table `tabel_kelas`
+--
+ALTER TABLE `tabel_kelas`
+  ADD PRIMARY KEY (`id_kelas`);
+
+--
+-- Indexes for table `tabel_kelas_siswa`
+--
+ALTER TABLE `tabel_kelas_siswa`
+  ADD PRIMARY KEY (`id_entry`);
+
+--
+-- Indexes for table `tabel_level`
+--
+ALTER TABLE `tabel_level`
+  ADD PRIMARY KEY (`level`);
+
+--
+-- Indexes for table `tabel_mapel`
+--
+ALTER TABLE `tabel_mapel`
+  ADD PRIMARY KEY (`id_mapel`);
+
+--
+-- Indexes for table `tabel_mapel_jurusan`
+--
+ALTER TABLE `tabel_mapel_jurusan`
+  ADD PRIMARY KEY (`id_entry`);
+
+--
+-- Indexes for table `tabel_mapel_tahunan`
+--
+ALTER TABLE `tabel_mapel_tahunan`
+  ADD PRIMARY KEY (`id_mapel_ta`);
+
+--
+-- Indexes for table `tabel_siswa`
+--
+ALTER TABLE `tabel_siswa`
+  ADD PRIMARY KEY (`id_siswa`);
+
+--
+-- Indexes for table `tabel_users`
+--
+ALTER TABLE `tabel_users`
+  ADD PRIMARY KEY (`user`);
+
+--
+-- Indexes for table `tahun_ajaran`
+--
+ALTER TABLE `tahun_ajaran`
+  ADD PRIMARY KEY (`id_tahun_ajaran`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `statistik`
+--
+ALTER TABLE `statistik`
+  MODIFY `kd_statistik` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=132;
+--
+-- AUTO_INCREMENT for table `tabel_berita`
+--
+ALTER TABLE `tabel_berita`
+  MODIFY `newsId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `tabel_guru`
+--
+ALTER TABLE `tabel_guru`
+  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `tabel_jurusan`
+--
+ALTER TABLE `tabel_jurusan`
+  MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `tabel_kategori`
+--
+ALTER TABLE `tabel_kategori`
+  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tabel_kelas`
+--
+ALTER TABLE `tabel_kelas`
+  MODIFY `id_kelas` int(5) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tabel_kelas_siswa`
+--
+ALTER TABLE `tabel_kelas_siswa`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tabel_mapel`
+--
+ALTER TABLE `tabel_mapel`
+  MODIFY `id_mapel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `tabel_mapel_jurusan`
+--
+ALTER TABLE `tabel_mapel_jurusan`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tabel_mapel_tahunan`
+--
+ALTER TABLE `tabel_mapel_tahunan`
+  MODIFY `id_mapel_ta` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tabel_siswa`
+--
+ALTER TABLE `tabel_siswa`
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 DELIMITER $$
 --
 -- Events
