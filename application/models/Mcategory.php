@@ -11,7 +11,15 @@ class Mcategory extends CI_Model {
 		
 		$result = $query->row_array();
 		
-		return $result['categoryName'];
+		return str_replace(" ", "-",strtolower($result['categoryName']));
+	}
+	
+	public function getJumlahCategory(){
+		$query = $this->db->query("SELECT * FROM `tabel_kategori` ORDER BY categoryId DESC LIMIT 1 ");
+		
+		$result = $query->row_array();
+		
+		return $result['categoryId'] + 1;
 	}
 	
 	public function getCategoryCount(){
