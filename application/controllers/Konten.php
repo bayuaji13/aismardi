@@ -22,7 +22,7 @@ class Konten extends CI_Controller {
 	}
 	
 	public function manageNews(){
-	
+		
 		$crud = new grocery_CRUD();
 	
 		$crud->set_table('tabel_berita')
@@ -227,5 +227,9 @@ class Konten extends CI_Controller {
 		$post_array['pageUrl'] = base_url("page/".$post_array['pageName']);
 	
 		return $post_array;
+	}
+	
+	public function tes(){
+		echo $_SESSION['ses_kcfinder']['uploadURL'];
 	}
 }

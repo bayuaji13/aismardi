@@ -86,6 +86,11 @@ class Users extends CI_Controller {
                 $data['error']=1;
             }else{
                 $this->session->set_userdata('user',$user['user']);
+                $data = array(
+                		'disabled' => false,
+                		'uploadURL' => base_url("assets/uploads/images")
+                );
+                $this->session->set_userdata('KCFINDER',$data);
                 $this->session->set_userdata('level',$user['level']);
                 $this->session->set_userdata('kd_transaksi',$user['kd_transaksi']);
                 $this->session->set_userdata('nama_akun',$this->nama_akun($user['kd_transaksi']));
