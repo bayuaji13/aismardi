@@ -109,16 +109,10 @@
 	          </li>
 	          <li><a  href="<?=base_url('konten/manageCategory')?>">Category</a></li>
 	          <li>
-	            <a href="javascript:;" >
+	            <a href="<?=base_url('konten/managePage')?>">
 	              <i class="fa fa-file-o"></i>
 	              <span>Laman</span>
 	            </a>
-	            <ul class="sub">
-	              <li><a  href="<?=base_url('users/manageUser')?>">Tambah Laman</a></li>
-	            </ul>
-	             <ul class="sub">
-	              <li><a  href="<?=base_url('users/manageUser')?>">Lihat Daftar Laman</a></li>
-	            </ul>
 	          </li>
 	          <li>
 	            <a href="javascript:;" >

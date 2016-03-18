@@ -16,6 +16,11 @@ class Konten extends CI_Controller {
 		$this->load->view('footer_crud');
 	}
 	
+	function alphanumericAndSpace( $string )
+	{
+		return preg_replace('/[^a-zA-Z0-9\s]/', '', $string);
+	}
+	
 	public function manageNews(){
 	
 		$crud = new grocery_CRUD();
@@ -69,9 +74,9 @@ class Konten extends CI_Controller {
 		if($post_array['categoryId'] == ""){
 			$post_array['categoryId'] = 0;
 		}
-		
+		$post_array['newsContent'] = $this->security->xss_clean($post_array['newsContent']);
 		$post_array['newsTitle'] = strip_tags($post_array['newsTitle']);
-		$post_array['newsName'] = str_replace(" ", "-", $post_array['newsTitle']);
+		$post_array['newsName'] = $this->alphanumericAndSpace(str_replace(" ", "-", $post_array['newsTitle']));
 		$post_array['newsModified'] = date("Y-m-d H:i:s");
 		$post_array['newsUrl'] = base_url("news/".$categoryName."/".$post_array['newsName']);
 		
@@ -82,9 +87,9 @@ class Konten extends CI_Controller {
 		$this->load->model('mcategory');
 		$categoryName = $this->mcategory->getCategoryName($post_array['categoryId']);
 		$categoryName = strtolower($categoryName);
-		
+		$post_array['newsContent'] = $this->security->xss_clean($post_array['newsContent']);
 		$post_array['newsTitle'] = strip_tags($post_array['newsTitle']);
-		$post_array['newsName'] = str_replace(" ", "-", strtolower($post_array['newsTitle']));
+		$post_array['newsName'] = $this->alphanumericAndSpace(str_replace(" ", "-", $post_array['newsTitle']));
 		$post_array['newsDate'] = date("Y-m-d H:i:s");
 		$post_array['newsModified'] = date("Y-m-d H:i:s");
 		$post_array['newsUrl'] = base_url("news/".$categoryName."/".$post_array['newsName']);
@@ -134,7 +139,7 @@ class Konten extends CI_Controller {
 	}
 	
 	public function categoryBeforeInsert($post_array){
-		$post_array['categoryName'] = strip_tags($post_array['categoryName']); 
+		$post_array['categoryName'] = $this->alphanumericAndSpace(strip_tags($post_array['categoryName'])); 
 		$this->load->model('mcategory');
 		$post_array['categoryId'] = $this->mcategory->getJumlahCategory(); 
 		
@@ -142,7 +147,7 @@ class Konten extends CI_Controller {
 	}
 	
 	public function categoryBeforeUpdate($post_array){
-		$post_array['categoryName'] = strip_tags($post_array['categoryName']); 
+		$post_array['categoryName'] = $this->alphanumericAndSpace(strip_tags($post_array['categoryName'])); 
 		return $post_array;
 	}
 	
@@ -161,5 +166,66 @@ class Konten extends CI_Controller {
 			$this->mcategory->updateCountCategory();
 			return true;
 		}
+	}
+	
+	public function managePage(){
+	
+		$crud = new grocery_CRUD();
+	
+		$crud->set_table('tabel_laman')
+		->set_subject('Laman')
+		->unset_read()
+		->field_type('pageContent','text')
+		->field_type('pageTitle','string')
+		->field_type('pageId','invisible')
+		->field_type('pageName','invisible')
+		->field_type('pageDate','invisible')
+		->field_type('pageUrl','hidden')
+		->field_type('pageModified','invisible')
+		->display_as('pageTitle','Judul Laman')
+		->display_as('pageModified','Terakhir Diubah')
+		->display_as('pageContent','Konten Laman')
+		->display_as('pageStatus','Status Laman')
+		->display_as('pageUrl','URL Laman')
+		->required_fields('pageTitle', 'pageStatus')
+		->unique_fields('pageTitle')
+		->columns('pageTitle','pageContent', 'pageStatus', 'pageModified', 'pageUrl')
+		->order_by('pageDate','desc')
+		->unset_export()
+		->unset_print();
+	
+		if ($this->session->userdata('level') != 9){
+			$crud->unset_edit()
+			->unset_delete();
+		}
+	
+	
+		$crud->callback_before_update(array($this,'pageBeforeUpdate'))
+		->callback_before_insert(array($this,'pageBeforeInsert'));
+	
+		$output = $crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Berita </h3> <br/>' . $output->output;
+		$this->showOutput($output);
+	}
+	
+	public function pageBeforeUpdate($post_array){
+		$post_array['pageContent'] = $this->security->xss_clean($post_array['pageContent']);
+		$post_array['pageTitle'] = strip_tags($post_array['pageTitle']);
+		$post_array['pageName'] = $this->alphanumericAndSpace(str_replace(" ", "-", $post_array['pageTitle']));
+		$post_array['pageModified'] = date("Y-m-d H:i:s");
+		$post_array['pageUrl'] = base_url("page/".$post_array['pageName']);
+	
+		return $post_array;
+	}
+	
+	public function pageBeforeInsert($post_array) {
+		$post_array['pageContent'] = $this->security->xss_clean($post_array['pageContent']);
+		$post_array['pageTitle'] = strip_tags($post_array['pageTitle']);
+		$post_array['pageName'] = $this->alphanumericAndSpace(str_replace(" ", "-", strtolower($post_array['pageTitle'])));
+		$post_array['pageDate'] = date("Y-m-d H:i:s");
+		$post_array['pageModified'] = date("Y-m-d H:i:s");
+		$post_array['pageUrl'] = base_url("page/".$post_array['pageName']);
+	
+		return $post_array;
 	}
 }
