@@ -19,7 +19,7 @@ class siswas extends CI_Controller {
 
         $crud->set_table('tabel_siswa')
         ->columns('nis','nisn','nama_siswa','tahun_masuk','jurusan','status','tingkat','tahun_lulus')
-        ->set_relation('tahun_masuk','tahun_ajaran','tahun_ajaran',null,'id_tahun_ajaran DESC LIMIT 3')
+        ->set_relation('tahun_masuk','tahun_ajaran','tahun_ajaran',null,'id_tahun_ajaran', 'DESC LIMIT 3')
         ->set_relation('jurusan','tabel_jurusan','nama_jurusan')
         ->unset_fields('id_siswa')
         ->field_type('tahun_lulus','integer')

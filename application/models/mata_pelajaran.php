@@ -4,6 +4,19 @@
 		parent::__construct();
 	}
 
+	public function getMapelByJurusan($id_jurusan,$tahun_ajaran)
+	{
+		return $this->db->query("SELECT tabel_mapel.id_mapel, tabel_mapel.nama_mapel FROM tabel_mapel,tabel_mapel_jurusan 
+								WHERE tabel_mapel.id_mapel = tabel_mapel_jurusan.id_mapel 
+								AND tabel_mapel_jurusan.id_jurusan = $id_jurusan 
+								AND tabel_mapel_jurusan.tahun_ajaran = $tahun_ajaran");
+	}
+
+	public function getAllMapel()
+	{
+		return $this->db->query("SELECT * FROM tabel_mapel");
+	}
+
 	public function getAllMapelOrderByKategori()
 	{
 		return $this->db->query("SELECT * FROM mata_pelajaran ORDER BY kd_kategori");
@@ -25,10 +38,10 @@
 		return $hasil['nama'];
 	}
 
-	public function getAllMapel()
-	{
-		return $this->db->query("SELECT * FROM mata_pelajaran");
-	}
+	// public function getAllMapel()
+	// {
+	// 	return $this->db->query("SELECT * FROM mata_pelajaran");
+	// }
 
 	public function getPengampu($kd_pelajaran,$tahun_ajaran,$kelas)
 	{
