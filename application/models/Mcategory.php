@@ -23,7 +23,9 @@ class Mcategory extends CI_Model {
 	}
 	
 	public function getCategoryCount(){
-		$query = $this->db->query('SELECT `categoryId`, COUNT(`newsId`) as count FROM `tabel_berita` GROUP BY `categoryId` ');
+		$query = $this->db->query('select tabel_kategori.categoryId, 
+				(select count(*) from tabel_berita where tabel_berita.categoryId=tabel_kategori.categoryId) as count 
+				from tabel_kategori left join tabel_berita on tabel_berita.categoryId=tabel_kategori.categoryId ');
 		
 		$result = $query->result_array();
 		

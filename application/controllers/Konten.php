@@ -110,7 +110,8 @@ class Konten extends CI_Controller {
 		->set_subject('Kategori')
 		->unset_read()
 		->field_type('categoryId','invisible')
-		->field_type('categoryName','string')
+		//->field_type('categoryName','string')
+		->set_field_upload('categoryName','assets/uploads/images')
 		->field_type('count','invisible')
 		->display_as('categoryId','ID Kategori')
 		->display_as('categoryName','Nama Kategori')
@@ -229,7 +230,81 @@ class Konten extends CI_Controller {
 		return $post_array;
 	}
 	
-	public function tes(){
-		echo $_SESSION['ses_kcfinder']['uploadURL'];
+	public function manageEvent(){
+	
+		$crud = new grocery_CRUD();
+	
+		$crud->set_table('tabel_event')
+		->set_subject('Event')
+		->unset_read()
+		->field_type('locationName','string')
+		->field_type('content','text')
+		->display_as('eventTitle','Judul Event')
+		->display_as('startDate','Waktu Mulai')
+		->display_as('endDate','Waktu Selesai')
+		->display_as('locationName','Lokasi')
+		->display_as('content','Deskripsi Event')
+		->required_fields('eventTitle')
+		->columns('eventTitle', 'startDate','endDate', 'locationName', 'content')
+		->fields('eventTitle', 'startDate','endDate', 'locationName', 'content')
+		->order_by('eventId','asc')
+		->set_rules('content', 'Deskripsi Event', 'max_length[255]')
+		->unset_export()
+		->unset_print();
+	
+		if ($this->session->userdata('level') != 9){
+			$crud->unset_edit()
+			->unset_delete();
+		}
+	
+	
+		$crud->callback_before_update(array($this,'eventBefore'))
+		->callback_before_insert(array($this,'eventBefore'));
+	
+		$output = $crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Berita </h3> <br/>' . $output->output;
+		$this->showOutput($output);
+	}
+	
+	public function eventBefore($post_array){
+		$post_array['content'] = $this->security->xss_clean($post_array['content']);
+		$post_array['eventTitle'] = strip_tags($post_array['eventTitle']);
+		
+		return $post_array;
+	}
+	
+	public function manageGallery(){
+		$this->load->library('image_CRUD');
+		
+		$image_crud = new image_CRUD();
+		$image_crud->set_table('tabel_galeri')
+		->set_primary_key_field('imageId');
+		$image_crud->set_url_field('imageUrl')
+		->set_title_field('imageTitle')
+		->set_ordering_field('imagePriority')
+		->set_image_path('assets/uploads/images/galleries');
+		
+		$output = $image_crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Galeri </h3> <br/>
+				(Harap refresh halaman setelah selesai proses upload) <br/>' . $output->output;
+		$this->showOutput($output);
+	}
+	
+	public function manageSlider(){
+		$this->load->library('image_CRUD');
+	
+		$image_crud = new image_CRUD();
+		$image_crud->set_table('tabel_slider')
+		->set_primary_key_field('sliderId');
+		$image_crud->set_url_field('sliderUrl')
+		->set_title_field('sliderTitle')
+		->set_ordering_field('sliderPriority')
+		->set_image_path('assets/uploads/images/sliders');
+	
+		$output = $image_crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Slider </h3> <br/>Untuk hasil
+				yang optimal gunakan gambar dengan dimensi 1140x350 (Harap refresh halaman setelah selesai proses upload)
+				<br/>' . $output->output;
+		$this->showOutput($output);
 	}
 }

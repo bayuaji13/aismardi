@@ -115,18 +115,31 @@
 	            </a>
 	          </li>
 	          <li>
-	            <a href="javascript:;" >
+	            <a href="<?=base_url('konten/manageEvent')?>">
 	              <i class="fa fa-calendar"></i>
 	              <span>Event</span>
 	            </a>
+	          </li>
+	           <li>
+	            <a href="<?=base_url('konten/manageGallery')?>">
+	              <i class="fa fa-picture-o"></i>
+	              <span>Galeri</span>
+	            </a>
+	          </li>
+	          <li class="sub-menu">
+	            <a href="">
+	              <i class="fa fa-picture-o"></i>
+	              <span>Front Page</span>
+	            </a>
 	            <ul class="sub">
-	              <li><a  href="<?=base_url('users/manageUser')?>">Tambah Event</a></li>
-	            </ul>
-	             <ul class="sub">
-	              <li><a  href="<?=base_url('users/manageUser')?>">Lihat Daftar Event</a></li>
+	            	 <li>
+			            <a href="<?=base_url('konten/manageSlider')?>">
+			              <i class="fa fa-picture-o"></i>
+			              <span>Slider</span>
+			            </a>
+			         </li>
 	            </ul>
 	          </li>
-              <li><a  href="<?=base_url('users/manageUser')?>">Laman Muka</a></li>
               <li><a  href="<?=base_url('users/manageUser')?>">Daftar Data User</a></li>
               <li><a  href="<?=base_url('logs/showLog')?>">Log Sistem</a></li>
             </ul>
