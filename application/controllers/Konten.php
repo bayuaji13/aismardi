@@ -307,4 +307,51 @@ class Konten extends CI_Controller {
 				<br/>' . $output->output;
 		$this->showOutput($output);
 	}
+	
+	public function manageSambutan(){
+		$this->load->model('msambutan');
+		$crud = new grocery_CRUD();
+	
+		$crud->set_table('tabel_sambutan')
+		->set_subject('Sambutan Kepala Sekolah')
+		->unset_read()
+		->field_type('sambutanKonten','text')
+		->display_as('sambutanKonten','Isi Sambutan')
+		->display_as('imageUrl','Foto Kepala Sekolah')
+		->required_fields('sambutanKonten', 'imageUrl')
+		->columns('imageUrl', 'sambutanKonten')
+		->fields('imageUrl', 'sambutanKonten')
+		->order_by('sambutanId','asc')
+		->set_field_upload('imageUrl', 'assets/uploads/images/sambutan')
+		->unset_export()
+		->unset_print();
+		
+		if($this->msambutan->getJumlahBaris() >= 1)
+			$crud->unset_add();
+		
+		if ($this->session->userdata('level') != 9){
+			$crud->unset_edit()
+			->unset_delete();
+		}
+		
+		$crud->callback_before_upload(array($this, 'before_test_upload'));
+	
+		$output = $crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Sambutan Kepala Sekolah </h3> <br/>' . $output->output;
+		$this->showOutput($output);
+	}
+	
+	public function before_test_upload($files_to_upload, $field_info){
+		foreach($files_to_upload as $value) {
+			$ext = pathinfo($value['name'], PATHINFO_EXTENSION);
+		}
+		
+		$allowed_formats = array("jpg", "gif", "png", "jpeg");
+		if(in_array($ext,$allowed_formats)){
+			return true;
+		}
+		else{
+			return 'Hanya bisa upload .jpg, .jpeg, .png, .gif';
+		}
+	}
 }

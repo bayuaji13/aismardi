@@ -138,6 +138,12 @@
 			              <span>Slider</span>
 			            </a>
 			         </li>
+			          <li>
+			            <a href="<?=base_url('konten/manageSambutan')?>">
+			              <i class="fa fa-info-circle"></i>
+			              <span>Sambutan</span>
+			            </a>
+			         </li>
 	            </ul>
 	          </li>
               <li><a  href="<?=base_url('users/manageUser')?>">Daftar Data User</a></li>
