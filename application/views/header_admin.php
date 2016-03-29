@@ -144,6 +144,18 @@
 			              <span>Sambutan</span>
 			            </a>
 			         </li>
+			         <li>
+			            <a href="<?=base_url('konten/manageTesti')?>">
+			              <i class="fa fa-commenting-o"></i>
+			              <span>Testimonial Siswa</span>
+			            </a>
+			         </li>
+			         <li>
+			            <a href="<?=base_url('konten/manageLinks')?>">
+			              <i class="fa fa-link"></i>
+			              <span>Tautan</span>
+			            </a>
+			         </li>
 	            </ul>
 	          </li>
               <li><a  href="<?=base_url('users/manageUser')?>">Daftar Data User</a></li>

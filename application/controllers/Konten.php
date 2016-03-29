@@ -354,4 +354,69 @@ class Konten extends CI_Controller {
 			return 'Hanya bisa upload .jpg, .jpeg, .png, .gif';
 		}
 	}
+	
+	public function manageTesti(){
+		$crud = new grocery_CRUD();
+	
+		$crud->set_table('tabel_testi')
+		->set_subject('Testimonial Siswa')
+		->unset_read()
+		->display_as('testiImage','Foto Pemberi Testimoni')
+		->display_as('testiName','Nama Pemberi Testimoni')
+		->display_as('testiAngkatan','Angkatan Pemberi Testimoni')
+		->display_as('testiContent','Konten Testimoni')
+		->required_fields('testiImage', 'testiName', 'testiAngkatan', 'testiContent')
+		->columns('testiImage', 'testiName', 'testiAngkatan', 'testiContent')
+		->fields('testiImage', 'testiName', 'testiAngkatan', 'testiContent')
+		->set_rules('testiContent', 'Angkatan Pemberi Testimoni', 'max_length[255]')
+		->set_rules('testiName', 'Angkatan Pemberi Testimoni', 'max_length[64]')
+		->set_rules('testiAngkatan', 'Angkatan Pemberi Testimoni', 'max_length[8]')
+		->order_by('testiId','asc')
+		->set_field_upload('testiImage', 'assets/uploads/images/sambutan')
+		->unset_export()
+		->unset_print();
+	
+		if ($this->session->userdata('level') != 9){
+			$crud->unset_edit()
+			->unset_delete();
+		}
+	
+		$crud->callback_before_upload(array($this, 'before_test_upload'));
+	
+		$output = $crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Testimonial Siswa </h3> <br/>' . $output->output;
+		$this->showOutput($output);
+	}
+	
+	public function manageLinks(){
+		$crud = new grocery_CRUD();
+	
+		$crud->set_table('tabel_tautan')
+		->set_subject('Daftar Tautan')
+		->unset_read()		
+		->display_as('linkName','Nama Link')
+		->display_as('linkUrl','URL Tautan')
+		->required_fields('linkName', 'linkUrl')
+		->columns('linkName', 'linkUrl')
+		->fields('linkName', 'linkUrl')
+		->set_rules('linkUrl', 'URL Tautan', 'valid_url')
+		->order_by('linkId','asc')
+		->unset_export()
+		->unset_print();
+	
+		if ($this->session->userdata('level') != 9){
+			$crud->unset_edit()
+			->unset_delete();
+		}
+		
+		$crud->callback_field('linkUrl',array($this,'_callback_url'));
+	
+		$output = $crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Tautan </h3> <br/>' . $output->output;
+		$this->showOutput($output);
+	}
+	
+	public function _callback_url($value = '', $primary_key = null) {
+		return '<input type="text" maxlength="128" name="linkUrl" placeholder="http://">';
+	}
 }
