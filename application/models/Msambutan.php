@@ -9,4 +9,11 @@ class Msambutan extends CI_Model {
 	public function getJumlahBaris(){
 		return $this->db->count_all('tabel_sambutan');
 	}
+	
+	public function getSambutan(){
+		$query = $this->db->get('tabel_sambutan');
+		$result = $query->row_array();
+		$result['sambutanKonten'] = strip_tags($result['sambutanKonten']); 
+		return $result;
+	}
 }

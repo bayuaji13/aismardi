@@ -3,7 +3,7 @@
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
 <head>
-    <title><?php echo $pageTitle;?></title>
+    <title>SMA Mardisiswa - <?php echo $pageTitle;?></title>
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,13 +13,13 @@
     <link rel="shortcut icon" href="favicon.ico">  
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>   
     <!-- Global CSS -->
-    <link rel="stylesheet" href="<?php echo site_url('assets/css/bootstrap.css');?>">   
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css');?>">   
     <!-- Plugins CSS -->    
-    <link rel="stylesheet" href="<?php echo site_url('assets/font-awesome/css/font-awesome.css');?>">
-    <link rel="stylesheet" href="<?php echo site_url('assets/plugins/flexslider/flexslider.css');?>">
-    <link rel="stylesheet" href="<?php echo site_url('assets/plugins/pretty-photo/css/prettyPhoto.css');?>"> 
+    <link rel="stylesheet" href="<?php echo base_url('assets/font-awesome/css/font-awesome.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/plugins/flexslider/flexslider.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/plugins/pretty-photo/css/prettyPhoto.css');?>"> 
     <!-- Theme CSS -->  
-    <link id="theme-style" rel="stylesheet" href="<?php echo site_url('assets/css/frontpage/styles.css');?>">
+    <link id="theme-style" rel="stylesheet" href="<?php echo base_url('assets/css/frontpage/styles.css');?>">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

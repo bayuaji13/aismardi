@@ -57,10 +57,10 @@
             <div id="config-panel" class="config-panel">
                 <p>Choose Colour</p>
                 <ul id="color-options" class="list-unstyled list-inline">
-                    <li class="default active" ><a data-style="assets/css/styles.css" data-logo="assets/images/logo.png" href="#"></a></li>
-                    <li class="green"><a data-style="assets/css/styles-green.css" data-logo="assets/images/logo-green.png" href="#"></a></li>
-                    <li class="purple"><a data-style="assets/css/styles-purple.css" data-logo="assets/images/logo-purple.png" href="#"></a></li>
-                    <li class="red"><a data-style="assets/css/styles-red.css" data-logo="assets/images/logo-red.png" href="#"></a></li>
+                    <li class="default active" ><a data-style="assets/css/frontpage/styles.css" data-logo="assets/images/logo.png" href="#"></a></li>
+                    <li class="green"><a data-style="assets/css/frontpage/styles-green.css" data-logo="assets/images/logo-green.png" href="#"></a></li>
+                    <li class="purple"><a data-style="assets/css/frontpage/styles-purple.css" data-logo="assets/images/logo-purple.png" href="#"></a></li>
+                    <li class="red"><a data-style="assets/css/frontpage/styles-red.css" data-logo="assets/images/logo-red.png" href="#"></a></li>
                 </ul><!--//color-options-->
                 <a id="config-close" class="close" href="#"><i class="fa fa-times-circle"></i></a>
             </div><!--//configure-panel-->
@@ -68,14 +68,14 @@
     </div><!--//config-wrapper-->
  
     <!-- Javascript -->          
-    <script type="text/javascript" src="<?php echo site_url('assets/js/jquery-1.8.3.min.js');?>"></script>
-    <script type="text/javascript" src="<?php echo site_url('assets/js/bootstrap.min.js');?>"></script> 
-    <script type="text/javascript" src="<?php echo site_url('assets/js/bootstrap-hover-dropdown.min.js');?>"></script> 
-    <script type="text/javascript" src="<?php echo site_url('assets/js/back-to-top.js')?>"></script>
-    <script type="text/javascript" src="<?php echo site_url('assets/plugins/jquery-placeholder/jquery.placeholder.js')?>"></script>
-    <script type="text/javascript" src="<?php echo site_url('assets/plugins/pretty-photo/js/jquery.prettyPhoto.js')?>"></script>
-    <script type="text/javascript" src="<?php echo site_url('assets/plugins/flexslider/jquery.flexslider-min.js')?>"></script>
-    <script type="text/javascript" src="<?php echo site_url('assets/plugins/jflickrfeed/jflickrfeed.min.js')?>"></script> 
-    <script type="text/javascript" src="<?php echo site_url('assets/js/main.js')?>"></script>            
+    <script type="text/javascript" src="<?php echo base_url('assets/js/jquery-1.11.2.min.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.min.js');?>"></script> 
+    <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap-hover-dropdown.min.js');?>"></script> 
+    <script type="text/javascript" src="<?php echo base_url('assets/js/back-to-top.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/plugins/jquery-placeholder/jquery.placeholder.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/plugins/pretty-photo/js/jquery.prettyPhoto.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/plugins/flexslider/jquery.flexslider-min.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/plugins/jflickrfeed/jflickrfeed.min.js')?>"></script> 
+    <script type="text/javascript" src="<?php echo base_url('assets/js/main.js')?>"></script>            
 </body>
 </html> 

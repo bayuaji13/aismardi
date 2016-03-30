@@ -18,7 +18,7 @@ class Konten extends CI_Controller {
 	
 	function alphanumericAndSpace( $string )
 	{
-		return preg_replace('/[^a-zA-Z0-9\s]/', '', $string);
+		return preg_replace('/[^0-9a-zA-Z ]/', '', $string);
 	}
 	
 	public function manageNews(){
@@ -35,7 +35,9 @@ class Konten extends CI_Controller {
 		->field_type('newsDate','invisible')
 		->field_type('newsUrl','hidden')
 		->field_type('newsModified','invisible')
+		->set_field_upload('newsThumbnail', 'assets/uploads/images/images')
 		->display_as('newsTitle','Judul Berita')
+		->display_as('newsThumbnail','Thumbnail Berita')
 		->display_as('newsModified','Terakhir Diubah')
 		->display_as('newsContent','Konten Berita')
 		->display_as('categoryId','Kategori')
@@ -44,7 +46,7 @@ class Konten extends CI_Controller {
 		->required_fields('newsTitle', 'newsStatus')
 		->unique_fields('newsTitle')
 		->set_relation('categoryId','tabel_kategori','categoryName')
-		->columns('newsTitle','newsContent', 'categoryId', 'newsStatus', 'newsModified', 'newsUrl')
+		->columns('newsTitle', 'newsThumbnail', 'newsContent', 'categoryId', 'newsStatus', 'newsModified', 'newsUrl')
 		->order_by('newsDate','desc')
 		->unset_export()
 		->unset_print();
@@ -76,9 +78,9 @@ class Konten extends CI_Controller {
 		}
 		$post_array['newsContent'] = $this->security->xss_clean($post_array['newsContent']);
 		$post_array['newsTitle'] = strip_tags($post_array['newsTitle']);
-		$post_array['newsName'] = $this->alphanumericAndSpace(str_replace(" ", "-", $post_array['newsTitle']));
+		$post_array['newsName'] = str_replace(" ", "-", $this->alphanumericAndSpace(strtolower($post_array['newsTitle'])));
 		$post_array['newsModified'] = date("Y-m-d H:i:s");
-		$post_array['newsUrl'] = base_url("news/".$categoryName."/".$post_array['newsName']);
+		$post_array['newsUrl'] = base_url("berita/".$categoryName."/".$post_array['newsName']);
 		
 		return $post_array;
 	}
@@ -89,10 +91,10 @@ class Konten extends CI_Controller {
 		$categoryName = strtolower($categoryName);
 		$post_array['newsContent'] = $this->security->xss_clean($post_array['newsContent']);
 		$post_array['newsTitle'] = strip_tags($post_array['newsTitle']);
-		$post_array['newsName'] = $this->alphanumericAndSpace(str_replace(" ", "-", $post_array['newsTitle']));
+		$post_array['newsName'] = str_replace(" ", "-", $this->alphanumericAndSpace(strtolower($post_array['newsTitle'])));
 		$post_array['newsDate'] = date("Y-m-d H:i:s");
 		$post_array['newsModified'] = date("Y-m-d H:i:s");
-		$post_array['newsUrl'] = base_url("news/".$categoryName."/".$post_array['newsName']);
+		$post_array['newsUrl'] = base_url("berita/".$categoryName."/".$post_array['newsName']);
 		
 		return $post_array;
 	}
@@ -212,9 +214,9 @@ class Konten extends CI_Controller {
 	public function pageBeforeUpdate($post_array){
 		$post_array['pageContent'] = $this->security->xss_clean($post_array['pageContent']);
 		$post_array['pageTitle'] = strip_tags($post_array['pageTitle']);
-		$post_array['pageName'] = $this->alphanumericAndSpace(str_replace(" ", "-", $post_array['pageTitle']));
+		$post_array['pageName'] = str_replace(" ", "-", $this->alphanumericAndSpace(strtolower($post_array['pageTitle'])));
 		$post_array['pageModified'] = date("Y-m-d H:i:s");
-		$post_array['pageUrl'] = base_url("page/".$post_array['pageName']);
+		$post_array['pageUrl'] = base_url("laman/".$post_array['pageName']);
 	
 		return $post_array;
 	}
@@ -222,10 +224,10 @@ class Konten extends CI_Controller {
 	public function pageBeforeInsert($post_array) {
 		$post_array['pageContent'] = $this->security->xss_clean($post_array['pageContent']);
 		$post_array['pageTitle'] = strip_tags($post_array['pageTitle']);
-		$post_array['pageName'] = $this->alphanumericAndSpace(str_replace(" ", "-", strtolower($post_array['pageTitle'])));
+		$post_array['pageName'] = str_replace(" ", "-", $this->alphanumericAndSpace(strtolower($post_array['pageTitle'])));
 		$post_array['pageDate'] = date("Y-m-d H:i:s");
 		$post_array['pageModified'] = date("Y-m-d H:i:s");
-		$post_array['pageUrl'] = base_url("page/".$post_array['pageName']);
+		$post_array['pageUrl'] = base_url("laman/".$post_array['pageName']);
 	
 		return $post_array;
 	}

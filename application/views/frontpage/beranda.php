@@ -2,38 +2,17 @@
 <div class="content container">
 	<div id="promo-slider" class="slider flexslider">
 		<ul class="slides">
-			<li>
-				<img src="assets/images/slides/slide-1.jpg"  alt="" />
-				<p class="flex-caption">
-					<span class="main" >Slider 1</span>
-					<br />
-					<span class="secondary clearfix" >Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
-				</p>
-			</li>
-			<li>
-				<img src="assets/images/slides/slide-2.jpg"  alt="" />
-				<p class="flex-caption">
-					<span class="main" >Slider 2</span>
-					<br />
-					<span class="secondary clearfix" >Donec accumsan nunc sed ipsum dapibus consectetur</span>
-				</p>
-			</li>
-			<li>
-				<img src="assets/images/slides/slide-3.jpg"  alt="" />
-				<p class="flex-caption">
-					<span class="main" >Slider 3</span>
-					<br />
-					<span class="secondary clearfix" >Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
-				</p>
-			</li>
-			<li>
-				<img src="assets/images/slides/slide-4.jpg"  alt="" />
-				<p class="flex-caption">
-					<span class="main" >Slider 4</span>
-					<br />
-					<span class="secondary clearfix" >In justo orci, ornare vitae nulla sed, suscipit suscipit augue</span>
-				</p>
-			</li>
+			<?php 
+				foreach ($sliders as $slider){
+					echo '<li>';
+					echo "<img width='1140' height='350' src='".base_url('assets/uploads/images/sliders/'.$slider['sliderUrl'])."'  alt='' />";
+					echo '<p class="flex-caption">';
+					echo "<span class='main' >".$slider['sliderTitle']."</span>";
+					echo '<br />';
+					echo '</p>';
+					echo '</li>';
+				}
+			?>
 		</ul><!--//slides-->
 	</div><!--//flexslider-->
 	<section class="news">
@@ -45,46 +24,22 @@
 		<div class="section-content clearfix">
 			<div id="news-carousel" class="news-carousel carousel slide">
 				<div class="carousel-inner">
-					<div class="item active"> 
-						<div class="col-md-4 news-item">
-							<h2 class="title"><a href="news-single.html">Phasellus scelerisque metus</a></h2>
-							<img class="thumb" src="assets/images/news/news-thumb-1.jpg"  alt="" />
-							<p>Suspendisse purus felis, porttitor quis sollicitudin sit amet, elementum et tortor. Praesent lacinia magna in malesuada vestibulum. Pellentesque urna libero.</p>
-							<a class="read-more" href="news-single.html">Selengkapnya<i class="fa fa-chevron-right"></i></a>                
-						</div><!--//news-item-->
-						<div class="col-md-4 news-item">
-							<h2 class="title"><a href="news-single.html">Morbi at vestibulum turpis</a></h2>
-							<p>Nam feugiat erat vel neque mollis, non vulputate erat aliquet. Maecenas ac leo porttitor, semper risus condimentum, cursus elit. Vivamus vitae libero tellus.</p>
-							<a class="read-more" href="news-single.html">Selengkapnya<i class="fa fa-chevron-right"></i></a>
-							<img class="thumb" src="assets/images/news/news-thumb-2.jpg"  alt="" />
-						</div><!--//news-item-->
-						<div class="col-md-4 news-item">
-							<h2 class="title"><a href="news-single.html">Aliquam id iaculis urna</a></h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam bibendum mauris eget sapien consectetur pellentesque. Proin elementum tristique euismod. </p>
-							<a class="read-more" href="news-single.html">Selengkapnya<i class="fa fa-chevron-right"></i></a>
-							<img class="thumb" src="assets/images/news/news-thumb-3.jpg"  alt="" />
-						</div><!--//news-item-->
-					</div><!--//item-->
-					<div class="item"> 
-						<div class="col-md-4 news-item">
-							<h2 class="title"><a href="news-single.html">Phasellus scelerisque metus</a></h2>
-							<img class="thumb" src="assets/images/news/news-thumb-4.jpg"  alt="" />
-							<p>Suspendisse purus felis, porttitor quis sollicitudin sit amet, elementum et tortor. Praesent lacinia magna in malesuada vestibulum. Pellentesque urna libero.</p>
-							<a class="read-more" href="news-single.html">Selengkapnya<i class="fa fa-chevron-right"></i></a>                
-						</div><!--//news-item-->
-						<div class="col-md-4 news-item">
-							<h2 class="title"><a href="news-single.html">Morbi at vestibulum turpis</a></h2>
-							<p>Nam feugiat erat vel neque mollis, non vulputate erat aliquet. Maecenas ac leo porttitor, semper risus condimentum, cursus elit. Vivamus vitae libero tellus.</p>
-							<a class="read-more" href="news-single.html">Selengkapnya<i class="fa fa-chevron-right"></i></a>
-							<img class="thumb" src="assets/images/news/news-thumb-5.jpg"  alt="" />
-						</div><!--//news-item-->
-						<div class="col-md-4 news-item">
-							<h2 class="title"><a href="news-single.html">Aliquam id iaculis urna</a></h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam bibendum mauris eget sapien consectetur pellentesque. Proin elementum tristique euismod. </p>
-							<a class="read-more" href="news-single.html">Selengkapnya<i class="fa fa-chevron-right"></i></a>
-							<img class="thumb" src="assets/images/news/news-thumb-6.jpg"  alt="" />
-						</div><!--//news-item-->
-					</div><!--//item-->
+					<?php 
+						for ($indeks = 1; $indeks <= count($latestNews); $indeks++){
+							if ($indeks == 1)
+								echo '<div class="item active">';
+							else if($indeks != 1 && ($indeks)%4 == 0)
+								echo '<div class="item">';
+							echo '<div class="col-md-4 news-item">';
+							echo "<h2 class='title'><a href='".$latestNews[$indeks-1]['newsUrl']."'>".$latestNews[$indeks-1]['newsTitle']."</a></h2>";
+							echo "<img class='thumb' width='100' height='100' src='".base_url('assets/uploads/images/images/'.$latestNews[$indeks-1]['newsThumbnail'])."'  alt='".$latestNews[$indeks-1]['newsTitle']."' />";
+							echo "<p>".$latestNews[$indeks-1]['newsContent']."</p>";
+							echo "<a class='read-more' href='".$latestNews[$indeks-1]['newsUrl']."'>Selengkapnya<i class='fa fa-chevron-right'></i></a>";
+							echo '</div><!--//news-item-->';
+							if(($indeks)%3 == 0)
+								echo '</div><!--//item-->';
+						}
+					?>
 				</div><!--//carousel-inner-->
 			</div><!--//news-carousel-->  
 		</div><!--//section-content-->     
@@ -135,11 +90,10 @@
 			<section class="video">
 				<h1 class="section-heading text-highlight"><span class="line">Sambutan Kepala Sekolah</span></h1>
 				<div class="section-content news-item col-md-12"> 
-					<img class="thumb" style="float: left; margin-right: 10px;" src="assets/images/news/news-thumb-4.jpg"  alt="" />						
-					<p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vestibulum pellentesque urna. Phasellus adipiscing et massa et aliquam. 
-					Ut odio magna, interdum quis dolor non, tristique vestibulum nisi. Nam accumsan convallis venenatis. Nullam posuere risus odio, in interdum felis venenatis sagittis. 
-					Integer malesuada porta fermentum. Sed luctus nibh sed mi auctor imperdiet. Cras et sapien rhoncus, pulvinar dolor sed, tincidunt massa. Nullam fringilla mauris non risus ultricies viverra. 
-					Donec a turpis non lorem pulvinar posuere.</p>
+				<?php 
+					echo "<img class='thumb' width='100' height='100' style='float: left; margin-right: 10px;' src='assets/uploads/images/sambutan/".$sambutan['imageUrl']."'  alt='' />";
+					echo "<p class='description'>".$sambutan['sambutanKonten']."</p>"
+				?>
 				</div><!--//section-content-->
 			</section><!--//video-->
 		</div>
