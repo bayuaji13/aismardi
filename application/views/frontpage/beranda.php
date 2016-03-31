@@ -49,40 +49,25 @@
 			<section class="events">
 				<h1 class="section-heading text-highlight"><span class="line">Event</span></h1>
 				<div class="section-content" style="min-height: auto">
-					<div class="event-item">
-						<p class="date-label">
-							<span class="month">JUN</span>
-							<span class="date-number">23</span>
-						</p>
-						<div class="details">
-							<h2 class="title">Penerimaan Siswa Baru</h2>
-							<p class="time"><i class="fa fa-calendar-o"></i>23 Juni - 23 Juli</p>
-							<p class="location"><i class="fa fa-map-marker"></i>SMA Mardisiswa</p>                            
-						</div><!--//details-->
-					</div><!--event-item-->
-					<div class="event-item">
-						<p class="date-label">
-							<span class="month">Juli</span>
-							<span class="date-number">31</span>
-						</p>
-						<div class="details">
-							<h2 class="title">Pengumuman Penerimaan Siswa Baru</h2>
-							<p class="time"><i class="fa fa-clock-o"></i>08:00</p>
-							<p class="location"><i class="fa fa-map-marker"></i>SMA Mardisiswa</p>                            
-						</div><!--//details-->
-					</div><!--event-item-->
-					<div class="event-item">
-						<p class="date-label">
-							<span class="month">Juli</span>
-							<span class="date-number">31</span>
-						</p>
-						<div class="details">
-							<h2 class="title">Pengumuman Penerimaan Siswa Baru</h2>
-							<p class="time"><i class="fa fa-clock-o"></i>08:00</p>
-							<p class="location"><i class="fa fa-map-marker"></i>SMA Mardisiswa</p>                            
-						</div><!--//details-->
-					</div><!--event-item-->
-					<a class="read-more" href="events.html">Semua event<i class="fa fa-chevron-right"></i></a>
+				<?php 
+					foreach ($latestEvents as $event){
+						echo '<div class="event-item">';
+						echo '<p class="date-label">';
+						echo "<span class='month'>".$event['monthBegin']."</span>";
+						echo "<span class='date-number'>".$event['dayBegin']."</span>";
+						echo '</p>';
+						echo '<div class="details">';
+						echo "<h2 class='title'>".$event['eventTitle']."</h2>";
+						if ($event['duration'] == 'days')
+							echo "<p class='time'><i class='fa fa-calendar-o'></i>".$event['dayBegin']." ".$event['monthBegin']." - ".$event['dayEnded']." ".$event['monthEnded']."</p>";
+						else 
+							echo "<p class='time'><i class='fa fa-clock-o'></i>".$event['hourBegin']." - ".$event['hourEnded']."</p>";
+						echo "<p class='location'><i class='fa fa-map-marker'></i>".$event['locationName']."</p>";
+						echo '</div><!--//details-->';
+						echo '</div><!--event-item-->';
+					}
+				?>
+					<a class="read-more" href="<?php base_url('events/')?>">Semua event<i class="fa fa-chevron-right"></i></a>
 				</div><!--//section-content-->
 			</section><!--//events-->
 		</div><!--//col-md-3-->
@@ -101,10 +86,11 @@
 			<section class="links">
 				<h1 class="section-heading text-highlight"><span class="line">Tautan</span></h1>
 				<div class="section-content">
-					<p><a href="#"><i class="fa fa-caret-right"></i>E-learning Portal</a></p>
-					<p><a href="#"><i class="fa fa-caret-right"></i>SIA</a></p>
-					<p><a href="#"><i class="fa fa-caret-right"></i>Galeri</a></p>
-					<p><a href="#"><i class="fa fa-caret-right"></i>Kontak</a></p>
+				<?php 
+					foreach ($daftarTautan as $tautan){
+						echo "<p><a href='".$tautan['linkUrl']."'><i class='fa fa-caret-right'></i>".$tautan['linkName']."</a></p>";
+					}
+				?>
 				</div><!--//section-content-->
 			</section><!--//links-->
 			<section class="testimonials">
@@ -116,15 +102,22 @@
 				<div class="section-content">
 					<div id="testimonials-carousel" class="testimonials-carousel carousel slide">
 						<div class="carousel-inner">
-							<div class="item active">
-								<blockquote class="quote">                                  
-									<p><i class="fa fa-quote-left"></i>I’m very happy interdum eget ipsum. Nunc pulvinar ut nulla eget sollicitudin. In hac habitasse platea dictumst. Integer mattis varius ipsum, posuere posuere est porta vel. Integer metus ligula, blandit ut fermentum a, rhoncus in ligula. Duis luctus.</p>
-								</blockquote>                
-								<div class="row">
-									<p class="people col-md-8 col-sm-3 col-xs-8"><span class="name">Suparjo</span><br /><span class="title">Angkatan 2012</span></p>
-									<img class="profile col-md-4 pull-right" src="assets/images/testimonials/profile-2.png"  alt="" />
-								</div>                               
-							</div><!--//item-->
+						<?php 
+							for ($indeks = 1; $indeks <= count($daftarTestimoni); $indeks++){
+								if ($indeks == 1)
+									echo '<div class="item active" style="min-height: 200px">';
+								else if($indeks != 1)
+									echo '<div class="item" style="min-height: 200px">';
+								echo '<blockquote class="quote">';
+								echo "<p><i class='fa fa-quote-left'></i>".$daftarTestimoni[$indeks-1]['testiContent']."</p>";
+								echo '</blockquote>';
+								echo '<div class="row">';
+								echo "<p class='people col-md-8 col-sm-3 col-xs-8'><span class='name'>".$daftarTestimoni[$indeks-1]['testiName']."</span><br /><span class='title'>".$daftarTestimoni[$indeks-1]['testiAngkatan']."</span></p>";
+								echo "<img class='profile col-md-4 pull-right' width='90' height='60' src='".base_url('assets/uploads/images/sambutan/'.$daftarTestimoni[$indeks-1]['testiImage'])."'  alt='".$daftarTestimoni[$indeks-1]['testiName']."' />";
+								echo '</div>';
+								echo '</div><!--//item-->';
+							}
+						?>
 						</div><!--//carousel-inner-->
 					</div><!--//testimonials-carousel-->
 				</div><!--//section-content-->

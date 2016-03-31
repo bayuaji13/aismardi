@@ -7,10 +7,13 @@
                 <div class="row">
                 <div class="footer-col col-md-3 col-sm-4 about">
                     <div class="footer-col-inner">
-                        <h3>Tentang Kami</h3>
+                        <h3>Tautan</h3>
                         <ul>
-                            <li><a href="about.html"><i class="fa fa-caret-right"></i>Tentang Kami</a></li>
-                            <li><a href="contact.html"><i class="fa fa-caret-right"></i>Kontak</a></li>
+                        <?php 
+							foreach ($daftarTautan as $tautan){
+								echo "<li><a href='".$tautan['linkUrl']."'><i class='fa fa-caret-right'></i>".$tautan['linkName']."</a></li>";
+							}
+						?>
                         </ul>
                     </div><!--//footer-col-inner-->
                 </div><!--//foooter-col-->

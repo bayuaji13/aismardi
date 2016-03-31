@@ -37,11 +37,6 @@
                     <a href="index.html">Logo</a>
                 </h1><!--//logo-->           
                 <div class="info col-md-8 col-sm-8">
-                    <ul class="menu-top navbar-right hidden-xs">
-                        <li class="divider"><a href="index.html">Beranda</a></li>
-                        <li class="divider"><a href="faq.html">FAQ</a></li>
-                        <li><a href="contact.html">Kontak</a></li>
-                    </ul><!--//menu-top-->
                     <br />
                     <div class="contact pull-right">
                         <p class="phone"><i class="fa fa-phone"></i>Contact 0800 123 4567</p> 

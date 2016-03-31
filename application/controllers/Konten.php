@@ -245,12 +245,12 @@ class Konten extends CI_Controller {
 		->display_as('startDate','Waktu Mulai')
 		->display_as('endDate','Waktu Selesai')
 		->display_as('locationName','Lokasi')
-		->display_as('content','Deskripsi Event')
+		->display_as('eventContent','Deskripsi Event')
 		->required_fields('eventTitle')
-		->columns('eventTitle', 'startDate','endDate', 'locationName', 'content')
-		->fields('eventTitle', 'startDate','endDate', 'locationName', 'content')
+		->columns('eventTitle', 'startDate','endDate', 'locationName', 'eventContent')
+		->fields('eventTitle', 'startDate','endDate', 'locationName', 'eventContent')
 		->order_by('eventId','asc')
-		->set_rules('content', 'Deskripsi Event', 'max_length[255]')
+		->set_rules('eventContent', 'Deskripsi Event', 'max_length[255]')
 		->unset_export()
 		->unset_print();
 	
@@ -269,7 +269,6 @@ class Konten extends CI_Controller {
 	}
 	
 	public function eventBefore($post_array){
-		$post_array['content'] = $this->security->xss_clean($post_array['content']);
 		$post_array['eventTitle'] = strip_tags($post_array['eventTitle']);
 		
 		return $post_array;
@@ -383,11 +382,19 @@ class Konten extends CI_Controller {
 			->unset_delete();
 		}
 	
-		$crud->callback_before_upload(array($this, 'before_test_upload'));
+		$crud->callback_before_upload(array($this, 'before_test_upload'))
+		->callback_before_update(array($this,'testiBefore'))
+		->callback_before_insert(array($this,'testiBefore'));
 	
 		$output = $crud->render();
-		$output->output ='<h3><i class="fa fa-angle-right"></i>Testimonial Siswa </h3> <br/>' . $output->output;
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Testimonial Siswa </h3> (Gunakan foto dengan ukuran 90x60)<br/>' . $output->output;
 		$this->showOutput($output);
+	}
+	
+	public function testiBefore($post_array){
+		$post_array['testiContent'] = strip_tags($post_array['testiContent']);
+	
+		return $post_array;
 	}
 	
 	public function manageLinks(){
