@@ -34,7 +34,7 @@
             
             <div class="header-main container">
                 <h1 class="logo col-md-4 col-sm-4">
-                    <a href="index.html">Logo</a>
+                    <a href="<?php echo base_url();?>">Logo</a>
                 </h1><!--//logo-->           
                 <div class="info col-md-8 col-sm-8">
                     <br />
@@ -59,7 +59,7 @@
                 </div><!--//navbar-header-->            
                 <div class="navbar-collapse collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active nav-item"><a href="index.html">Beranda</a></li>
+                        <li class="active nav-item"><a href="<?php echo base_url();?>">Beranda</a></li>
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Profil <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">

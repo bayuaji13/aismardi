@@ -71,7 +71,7 @@ class Konten extends CI_Controller {
 	
 	public function newsBeforeUpdate($post_array){
 		$this->load->model('mcategory');
-		$categoryName = $this->mcategory->getCategoryName($post_array['categoryId']);
+		$categoryName = $this->mcategory->getCategoryPid($post_array['categoryId']);
 		
 		if($post_array['categoryId'] == ""){
 			$post_array['categoryId'] = 0;
@@ -87,7 +87,7 @@ class Konten extends CI_Controller {
 	
 	public function newsBeforeInsert($post_array) {
 		$this->load->model('mcategory');
-		$categoryName = $this->mcategory->getCategoryName($post_array['categoryId']);
+		$categoryName = $this->mcategory->getCategoryPid($post_array['categoryId']);
 		$categoryName = strtolower($categoryName);
 		$post_array['newsContent'] = $this->security->xss_clean($post_array['newsContent']);
 		$post_array['newsTitle'] = strip_tags($post_array['newsTitle']);
@@ -112,9 +112,9 @@ class Konten extends CI_Controller {
 		->set_subject('Kategori')
 		->unset_read()
 		->field_type('categoryId','invisible')
-		//->field_type('categoryName','string')
-		->set_field_upload('categoryName','assets/uploads/images')
+		->field_type('categoryName','string')
 		->field_type('count','invisible')
+		->field_type('categoryPid','invisible')
 		->display_as('categoryId','ID Kategori')
 		->display_as('categoryName','Nama Kategori')
 		->display_as('count','Jumlah Berita')
@@ -143,6 +143,7 @@ class Konten extends CI_Controller {
 	
 	public function categoryBeforeInsert($post_array){
 		$post_array['categoryName'] = $this->alphanumericAndSpace(strip_tags($post_array['categoryName'])); 
+		$post_array['categoryPid'] = str_replace(" ", "-", strtolower($post_array['categoryName']));
 		$this->load->model('mcategory');
 		$post_array['categoryId'] = $this->mcategory->getJumlahCategory(); 
 		
@@ -151,6 +152,7 @@ class Konten extends CI_Controller {
 	
 	public function categoryBeforeUpdate($post_array){
 		$post_array['categoryName'] = $this->alphanumericAndSpace(strip_tags($post_array['categoryName'])); 
+		$post_array['categoryPid'] = str_replace(" ", "-", strtolower($post_array['categoryName']));
 		return $post_array;
 	}
 	
@@ -264,7 +266,7 @@ class Konten extends CI_Controller {
 		->callback_before_insert(array($this,'eventBefore'));
 	
 		$output = $crud->render();
-		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Berita </h3> <br/>' . $output->output;
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Event </h3> <br/>' . $output->output;
 		$this->showOutput($output);
 	}
 	
@@ -426,6 +428,7 @@ class Konten extends CI_Controller {
 	}
 	
 	public function _callback_url($value = '', $primary_key = null) {
-		return '<input type="text" maxlength="128" name="linkUrl" placeholder="http://">';
+		
+		return '<script>alert("coba");</script><input type="text" maxlength="128" name="linkUrl" placeholder="http://">';
 	}
 }

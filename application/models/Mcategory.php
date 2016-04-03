@@ -6,12 +6,28 @@ class Mcategory extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function getCategoryName($categoryId){
-		$query = $this->db->get_where('tabel_kategori', array('categoryId' => $categoryId), 1);
+	public function getCategoryNameByPid($categoryPid){
+		$query = $this->db->get_where('tabel_kategori', array('categoryPid' => $categoryPid), 1);
 		
 		$result = $query->row_array();
 		
-		return str_replace(" ", "-",strtolower($result['categoryName']));
+		return $result['categoryName'];
+	}
+	
+	public function getCategoryPid($categoryId){
+		$query = $this->db->get_where('tabel_kategori', array('categoryId' => $categoryId), 1);
+	
+		$result = $query->row_array();
+	
+		return $result['categoryPid'];
+	}
+	
+	public function getCategoryId($categoryPid){
+		$query = $this->db->get_where('tabel_kategori', array('categoryName' => $categoryPid), 1);
+	
+		$result = $query->row_array();
+	
+		return $result['categoryId'];
 	}
 	
 	public function getJumlahCategory(){

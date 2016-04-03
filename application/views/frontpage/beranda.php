@@ -25,19 +25,23 @@
 			<div id="news-carousel" class="news-carousel carousel slide">
 				<div class="carousel-inner">
 					<?php 
-						for ($indeks = 1; $indeks <= count($latestNews); $indeks++){
-							if ($indeks == 1)
-								echo '<div class="item active">';
-							else if($indeks != 1 && ($indeks)%4 == 0)
-								echo '<div class="item">';
-							echo '<div class="col-md-4 news-item">';
-							echo "<h2 class='title'><a href='".$latestNews[$indeks-1]['newsUrl']."'>".$latestNews[$indeks-1]['newsTitle']."</a></h2>";
-							echo "<img class='thumb' width='100' height='100' src='".base_url('assets/uploads/images/images/'.$latestNews[$indeks-1]['newsThumbnail'])."'  alt='".$latestNews[$indeks-1]['newsTitle']."' />";
-							echo "<p>".$latestNews[$indeks-1]['newsContent']."</p>";
-							echo "<a class='read-more' href='".$latestNews[$indeks-1]['newsUrl']."'>Selengkapnya<i class='fa fa-chevron-right'></i></a>";
-							echo '</div><!--//news-item-->';
-							if(($indeks)%3 == 0)
-								echo '</div><!--//item-->';
+						if(empty($latestNews))
+							echo 'Tidak ada berita';
+						else{
+							for ($indeks = 1; $indeks <= count($latestNews); $indeks++){
+								if ($indeks == 1)
+									echo '<div class="item active">';
+								else if($indeks != 1 && ($indeks)%4 == 0)
+									echo '<div class="item">';
+								echo '<div class="col-md-4 news-item">';
+								echo "<h2 class='title'><a href='".$latestNews[$indeks-1]['newsUrl']."'>".$latestNews[$indeks-1]['newsTitle']."</a></h2>";
+								echo "<img class='thumb' width='100' height='100' src='".base_url('assets/uploads/images/images/'.$latestNews[$indeks-1]['newsThumbnail'])."'  alt='".$latestNews[$indeks-1]['newsTitle']."' />";
+								echo "<p>".$latestNews[$indeks-1]['newsContent']."</p>";
+								echo "<a class='read-more' href='".$latestNews[$indeks-1]['newsUrl']."'>Selengkapnya<i class='fa fa-chevron-right'></i></a>";
+								echo '</div><!--//news-item-->';
+								if(($indeks)%3 == 0)
+									echo '</div><!--//item-->';
+							}
 						}
 					?>
 				</div><!--//carousel-inner-->
@@ -47,24 +51,28 @@
 	<div class="row cols-wrapper">
 		<div class="col-md-3">
 			<section class="events">
-				<h1 class="section-heading text-highlight"><span class="line">Event</span></h1>
+				<h1 class="section-heading text-highlight"><span class="line">Event Terdekat</span></h1>
 				<div class="section-content" style="min-height: auto">
 				<?php 
-					foreach ($latestEvents as $event){
-						echo '<div class="event-item">';
-						echo '<p class="date-label">';
-						echo "<span class='month'>".$event['monthBegin']."</span>";
-						echo "<span class='date-number'>".$event['dayBegin']."</span>";
-						echo '</p>';
-						echo '<div class="details">';
-						echo "<h2 class='title'>".$event['eventTitle']."</h2>";
-						if ($event['duration'] == 'days')
-							echo "<p class='time'><i class='fa fa-calendar-o'></i>".$event['dayBegin']." ".$event['monthBegin']." - ".$event['dayEnded']." ".$event['monthEnded']."</p>";
-						else 
-							echo "<p class='time'><i class='fa fa-clock-o'></i>".$event['hourBegin']." - ".$event['hourEnded']."</p>";
-						echo "<p class='location'><i class='fa fa-map-marker'></i>".$event['locationName']."</p>";
-						echo '</div><!--//details-->';
-						echo '</div><!--event-item-->';
+					if (empty($latestEvents))
+						echo "Tidak ada event terdekat";
+					else{
+						foreach ($latestEvents as $event){
+							echo '<div class="event-item">';
+							echo '<p class="date-label">';
+							echo "<span class='month'>".$event['monthBegin']."</span>";
+							echo "<span class='date-number'>".$event['dayBegin']."</span>";
+							echo '</p>';
+							echo '<div class="details">';
+							echo "<h2 class='title'>".$event['eventTitle']."</h2>";
+							if ($event['duration'] == 'days')
+								echo "<p class='time'><i class='fa fa-calendar-o'></i>".$event['dayBegin']." ".$event['monthBegin']." - ".$event['dayEnded']." ".$event['monthEnded']."</p>";
+							else 
+								echo "<p class='time'><i class='fa fa-clock-o'></i>".$event['hourBegin']." - ".$event['hourEnded']."</p>";
+							echo "<p class='location'><i class='fa fa-map-marker'></i>".$event['locationName']."</p>";
+							echo '</div><!--//details-->';
+							echo '</div><!--event-item-->';
+						}
 					}
 				?>
 					<a class="read-more" href="<?php base_url('events/')?>">Semua event<i class="fa fa-chevron-right"></i></a>
@@ -76,8 +84,12 @@
 				<h1 class="section-heading text-highlight"><span class="line">Sambutan Kepala Sekolah</span></h1>
 				<div class="section-content news-item col-md-12"> 
 				<?php 
-					echo "<img class='thumb' width='100' height='100' style='float: left; margin-right: 10px;' src='assets/uploads/images/sambutan/".$sambutan['imageUrl']."'  alt='' />";
-					echo "<p class='description'>".$sambutan['sambutanKonten']."</p>"
+					if (empty($sambutan['imageUrl']) && $sambutan['sambutanKonten'] == "")
+						echo "Tidak ada sambutan";
+					else {
+						echo "<img class='thumb' width='100' height='100' style='float: left; margin-right: 10px;' src='assets/uploads/images/sambutan/".$sambutan['imageUrl']."'  alt='' />";
+						echo "<p class='description'>".$sambutan['sambutanKonten']."</p>";
+					}
 				?>
 				</div><!--//section-content-->
 			</section><!--//video-->

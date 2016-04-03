@@ -60,10 +60,10 @@
             <div id="config-panel" class="config-panel">
                 <p>Choose Colour</p>
                 <ul id="color-options" class="list-unstyled list-inline">
-                    <li class="default active" ><a data-style="assets/css/frontpage/styles.css" data-logo="assets/images/logo.png" href="#"></a></li>
-                    <li class="green"><a data-style="assets/css/frontpage/styles-green.css" data-logo="assets/images/logo-green.png" href="#"></a></li>
-                    <li class="purple"><a data-style="assets/css/frontpage/styles-purple.css" data-logo="assets/images/logo-purple.png" href="#"></a></li>
-                    <li class="red"><a data-style="assets/css/frontpage/styles-red.css" data-logo="assets/images/logo-red.png" href="#"></a></li>
+                    <li class="default active" ><a data-style="<?php echo base_url('assets/css/frontpage/styles.css')?>" data-logo="<?php echo base_url('assets/images/logo.png')?>" href="#"></a></li>
+                    <li class="green"><a data-style="<?php echo base_url('assets/css/frontpage/styles-green.css')?>" data-logo="<?php echo base_url('assets/images/logo-green.png')?>" href="#"></a></li>
+                    <li class="purple"><a data-style="<?php echo base_url('assets/css/frontpage/styles-purple.css')?>" data-logo="<?php echo base_url('assets/images/logo-purple.png')?>" href="#"></a></li>
+                    <li class="red"><a data-style="<?php echo base_url('assets/css/frontpage/styles-red.css')?>" data-logo="<?php echo base_url('assets/images/logo-red.png')?>" href="#"></a></li>
                 </ul><!--//color-options-->
                 <a id="config-close" class="close" href="#"><i class="fa fa-times-circle"></i></a>
             </div><!--//configure-panel-->

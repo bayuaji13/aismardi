@@ -80,4 +80,39 @@ class Mberita extends CI_Model {
 		}
 		return $result;
 	}
+	
+	public function getBerita($kategori = "", $namaBerita = ""){
+		if ($kategori != "" && $namaBerita != ""){
+			$query = $this->db->get_where('tabel_berita', array('newsName' => $namaBerita), 1);
+				
+			return $query->row_array();
+		}else if ($kategori != "" && $namaBerita == ""){
+			$this->load->model('mcategory');
+			$idKategori = $this->mcategory->getCategoryId($kategori);
+			
+			$this->db->order_by('newsDate', 'DESC');
+			$query = $this->db->get_where('tabel_berita', array('categoryId' => $idKategori));
+			return $query->result_array();
+		}else {
+			$query = $this->db->get('tabel_berita');
+				
+			return $query->result_array();
+		}
+	}
+	
+	public function getSimilarBerita($kategori, $judulBerita){
+		$query = $this->db->query("SELECT *, DAMLEV(newsTitle, '$judulBerita') AS distance FROM tabel_berita
+				WHERE DAMLEV(newsTitle, '$judulBerita') < 10 ORDER BY distance ASC LIMIT 4");
+		
+		$result = array();
+		$indeks = 0;
+		foreach ($query->result_array() as $row){
+			if ($row['newsThumbnail'] == "" || $row['newsThumbnail'] == null){
+				$row['newsThumbnail'] = 'default-news.png';
+			}
+			$result[$indeks] = $row;
+		}
+		
+		return $result;
+	}
 }

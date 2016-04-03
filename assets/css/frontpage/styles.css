@@ -1226,6 +1226,7 @@ ul.custom-list-style li {
 }
 .page-wrapper .page-sidebar .widget.has-divider {
   border-bottom: 1px dotted #e8e8e8;
+  padding: 5px 15px;
 }
 .page-wrapper .page-sidebar .widget .iframe {
   height: auto;
