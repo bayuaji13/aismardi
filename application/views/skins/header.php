@@ -77,14 +77,7 @@
 								<li><a href="courses.html">Ekstra Kurikuler</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Berita <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="news.html">Daftar Berita</a></li>
-                                <li><a href="news-single.html">Satu Berita (dengan gambar)</a></li>   
-                                <li><a href="news-single-2.html">Satu Berita (dengan video)</a></li>          
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a href="<?php echo base_url('berita');?>">Berita</a></li>
 						<li class="nav-item dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Fasilitas <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
@@ -94,7 +87,7 @@
                             </ul>
                         </li>
                         <li class="nav-item"><a href="events.html">Event</a></li>
-						<li class="nav-item"><a href="events.html">Penerimaan Siswa Baru</a></li>
+						<li class="nav-item"><a href="<?php echo base_url('event/');?>">Penerimaan Siswa Baru</a></li>
 						<li class="nav-item"><a href="gallery-2.html">Galery</a></li>
                         <li class="nav-item"><a href="contact.html">Kontak Kami</a></li>
                     </ul><!--//nav-->

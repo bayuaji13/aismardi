@@ -50,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'users';
+
 $route['berita/(:any)/(:any)'] = 'berita/index/$1/$2';
+$route['berita/(:any)'] = 'berita/index/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

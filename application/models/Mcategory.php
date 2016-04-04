@@ -23,7 +23,7 @@ class Mcategory extends CI_Model {
 	}
 	
 	public function getCategoryId($categoryPid){
-		$query = $this->db->get_where('tabel_kategori', array('categoryName' => $categoryPid), 1);
+		$query = $this->db->get_where('tabel_kategori', array('categoryPid' => $categoryPid), 1);
 	
 		$result = $query->row_array();
 	
