@@ -86,8 +86,8 @@
 								<li><a href="news.html">Fasilitas Olahraga</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="events.html">Event</a></li>
-						<li class="nav-item"><a href="<?php echo base_url('event/');?>">Penerimaan Siswa Baru</a></li>
+                        <li class="nav-item"><a href="<?php echo base_url('event/');?>">Event</a></li>
+						<li class="nav-item"><a href="#">Penerimaan Siswa Baru</a></li>
 						<li class="nav-item"><a href="gallery-2.html">Galery</a></li>
                         <li class="nav-item"><a href="contact.html">Kontak Kami</a></li>
                     </ul><!--//nav-->

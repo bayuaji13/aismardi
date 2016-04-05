@@ -73,7 +73,7 @@
 										echo "<p class='time text-muted'><i class='fa fa-calendar-o'></i>".$event['dayBegin']." ".$event['monthBegin']." - ".$event['dayEnded']." ".$event['monthEnded'];
 									else 
 										echo "<p class='time text-muted'><i class='fa fa-clock-o'></i>".$event['hourBegin']." - ".$event['hourEnded'];
-									echo "<br>".$event['locationName']."</p>";
+									echo "<br><i class='fa fa-map-marker'></i>".$event['locationName']."</p>";
 									echo '</div><!--//details-->';
 									echo '</article>';
 								}
