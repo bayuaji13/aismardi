@@ -1,7 +1,7 @@
 <div class="tab-pane" id="chartjs">
 	<div class="row mt">
 		<?php 
-			echo form_open('mata_pelajaran/setMapel'); ?>
+			echo form_open('mapels/setSeleksiMapel'); ?>
 		<div class="col-lg-4">
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>Tingkat 1 (belum ada penjurusan)</h4>

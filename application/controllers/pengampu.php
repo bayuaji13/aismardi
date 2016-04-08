@@ -15,14 +15,53 @@ class Pengampu extends CI_Controller {
         redirect('pengampu/managePengampu');
     }
 
+    public function pilihKelas()
+    {
+        $data['kelas'] = $this->kelas->getAllKelas();
+        $this->showHeader();
+        $this->load->view('pengampu/pilih_kelas',$data);
+        $this->load->view('footer_general');
+    }
+
+    public function pilihPengampu($id_kelas)
+    {
+        $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+        $jurusan = $this->kelas->getJurusanByKelas($id_kelas);
+        if ($jurusan == null)
+            $jurusan = 1;
+        $data['mapel'] = $this->mata_pelajaran->getMapelByJurusan($jurusan,$tahun_ajaran);
+        $data['guru'] = $this->pengampu_m->getAllGuru();
+        $data['id_kelas'] = $id_kelas;
+        $this->showHeader();
+        $this->load->view('pengampu/pilih_pengampu',$data);
+        $this->load->view('footer_general');
+    }
+
+    public function setPengampu()
+    {
+        print_r($_POST);
+        $mapel = $_POST['mapel'];
+        $pengampu = $_POST['pengampu'];
+        $id_kelas = $_POST['id_kelas'];
+        $success = true;
+        for ($i=0; $i < count($mapel); $i++) { 
+            $success = $success AND $this->pengampu_m->setPengampu($id_kelas,$mapel[$i],$pengampu[$i]);
+        }
+        if ($success)
+            $this->session->set_flashdata('notice','Data berhasil diinput');
+        else
+            $this->session->set_flashdata('notice','Ada data yang gagal diinput');
+        redirect('pengampu/pilihPengampu/'.$id_kelas);
+    }
+
 
     public function managePengampu($mode = null) {
         $crud = new grocery_CRUD();
 
-        $crud->set_table('pengampu')
+        $crud->set_table('tabel_guru')
             ->set_subject('Pengampu')
-            ->display_as('kd_guru', 'Nama Guru')
-            ->display_as('kd_pelajaran', 'Mata Pelajaran')
+            ->display_as('id_guru', 'Nama Guru')
+            ->display_as('id_mapel', 'Mata Pelajaran')
             ->display_as('tahun_ajaran', 'Tahun Ajaran')
             ->field_type('tahun_ajaran', 'hidden', $this->tahun_ajaran->getCurrentTA())
             ->set_relation('kd_pelajaran','mata_pelajaran','nama_pelajaran')

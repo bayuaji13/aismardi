@@ -20,7 +20,9 @@
 	public function getAllKelas()
 	{
 		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
-		return $this->db->query("SELECT kd_kelas,nama_kelas FROM tabel_kelas where tahun_ajaran = '$tahun_ajaran'");
+		$query = $this->db->query("SELECT id_kelas,nama_kelas FROM tabel_kelas where tahun_ajaran = '$tahun_ajaran'");
+		$hasil = $query->result_array();
+		return $hasil;
 	}
 
     public function process_create_kelas($data){
@@ -39,10 +41,35 @@
             }
 	}
 
-	public function getKelasByWali($kd_guru)
+	public function cekKelas($nama_kelas)
 	{
 		$ta = $this->tahun_ajaran->getCurrentTA();
-		return $this->db->query("SELECT kd_kelas,nama_kelas FROM tabel_kelas WHERE kd_guru='$kd_guru' and tahun_ajaran=$ta");
+		$query = $this->db->query("SELECT * FROM tabel_kelas WHERE nama_kelas='$nama_kelas' AND tahun_ajaran='$ta'");
+		$hasil = $query->first_row();
+		if ($hasil != null)
+			return true;
+		else
+			return null;
+	}
+
+	public function getJurusanByKelas($id_kelas)
+	{
+		$ta = $this->tahun_ajaran->getCurrentTA();
+		$query = $this->db->query("SELECT jurusan FROM tabel_kelas WHERE id_kelas='$id_kelas' AND tahun_ajaran='$ta'");
+		$hasil = $query->first_row();
+		return $hasil->jurusan;
+
+	}
+
+	public function naikKelas($id_siswa)
+	{
+		return $this->db->query("UPDATE tabel_siswa SET tingkat = tingkat + 1 WHERE id_siswa='$id_siswa'");
+	}
+
+	public function getKelasByWali($id_guru)
+	{
+		$ta = $this->tahun_ajaran->getCurrentTA();
+		return $this->db->query("SELECT id_kelas,nama_kelas FROM tabel_kelas WHERE id_guru='$id_guru' and tahun_ajaran=$ta");
 	}
 
 	public function getKelasBySiswaByTahunAjaranByGuru($kd_siswa,$tahun_ajaran,$kd_guru=null)
@@ -55,9 +82,9 @@
 									");
 	}
 
-	public function getNamaKelas($kd_kelas)
+	public function getNamaKelas($id_kelas)
 	{
-		$query = $this->db->query("SELECT nama_kelas FROM tabel_kelas WHERE kd_kelas='$kd_kelas'");
+		$query = $this->db->query("SELECT nama_kelas FROM tabel_kelas WHERE id_kelas='$id_kelas'");
 		$hasil = $query->first_row();
 		return $hasil->nama_kelas;
 	}

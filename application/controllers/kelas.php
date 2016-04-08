@@ -17,16 +17,16 @@ class Kelas extends CI_Controller {
         $ta = $this->tahun_ajaran->getCurrentTA();
         $crud = new grocery_CRUD();
 
-        $crud->set_table('kelas')
-        ->set_relation('kd_guru','guru','nama_guru')
-        ->display_as('kd_guru','Wali Kelas')
+        $crud->set_table('tabel_kelas')
+        ->set_relation('id_guru','tabel_guru','nama')
+        ->display_as('id_guru','Wali Kelas')
         ->field_type('tahun_ajaran', 'hidden', $this->tahun_ajaran->getCurrentTA())
-        ->set_relation_n_n('Isi','kelas_siswa','data_siswa','kd_kelas','kd_siswa','nis',null,"kd_siswa NOT IN (SELECT kd_siswa FROM kelas_siswa WHERE tahun_ajaran=$ta) AND kd_siswa NOT IN (SELECT kd_siswa FROM data_siswa WHERE status = '2')",true)
-        ->callback_after_insert(array($this,'createUserWali'))
+        ->set_relation_n_n('Isi','tabel_kelas_siswa','tabel_siswa','id_kelas','id_siswa','nis',null,"id_siswa NOT IN (SELECT id_siswa FROM tabel_kelas_siswa WHERE tahun_ajaran=$ta) AND id_siswa NOT IN (SELECT id_siswa FROM tabel_siswa WHERE status = '2')",true)
         ->callback_after_update(array($this,'createUserWali'))
-        ->required_fields('tahun_ajaran','Isi','kd_guru','nama_kelas','tingkat')
+        ->required_fields('tahun_ajaran','Isi','id_guru','nama_kelas','tingkat')
         ->order_by('tahun_ajaran','desc')
         ->where('tahun_ajaran',$this->tahun_ajaran->getCurrentTA())
+        ->unset_add();
         ;
 
         //kalau bukan mode nampilin semua, edit di enable, tampilin cuma kelas TA sekarang

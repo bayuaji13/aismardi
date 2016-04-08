@@ -1,0 +1,18 @@
+test buat yg input excel
+	Validasi buat input kelas :
+	[v]Validasi kelas dulu, udah ada yang namanya itu ngga di tahun ajaran itu dan tingkat itu
+	[v]Validasi siswa pertama cek nisnya bener ada di data ga, kedua cek udah kedaftar di kelas lain ngga..
+	[v]Kalo validasinya ngga cocok, inputnya di batalin semua...
+-> Guru pengampu
+	Pilih kelas
+	sediain tampilan buat nama tiap mapel + disamping kasi dropdown nama2 guru
+	submit v
+	yang dibutuhin :
+	getAllKelas v
+	getJurusanByKelas v
+	getMapelByJurusan (nama + id_mapel) v
+	getAllGuru (nama + id) v
+	cekPengampu v
+	setPengampu v :
+	getAllKelas dulu, terus get jurusan dri kelas yang dipilih, terus list mapelnya, terus get all guru
+	**Nampilin formnya sekalian biar bisa buat edit**

@@ -6,16 +6,14 @@
 
 	public function getMapelByJurusan($id_jurusan,$tahun_ajaran)
 	{
-		return $this->db->query("SELECT tabel_mapel.id_mapel, tabel_mapel.nama_mapel FROM tabel_mapel,tabel_mapel_jurusan 
+		$query =  $this->db->query("SELECT tabel_mapel.id_mapel, tabel_mapel.nama_mapel FROM tabel_mapel,tabel_mapel_jurusan 
 								WHERE tabel_mapel.id_mapel = tabel_mapel_jurusan.id_mapel 
 								AND tabel_mapel_jurusan.id_jurusan = $id_jurusan 
 								AND tabel_mapel_jurusan.tahun_ajaran = $tahun_ajaran");
+		$hasil = $query->result_array();
+		return $hasil;
 	}
 
-	public function getAllMapel()
-	{
-		return $this->db->query("SELECT * FROM tabel_mapel");
-	}
 
 	public function getAllMapelOrderByKategori()
 	{

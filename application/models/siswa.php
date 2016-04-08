@@ -4,11 +4,11 @@
 		parent::__construct();
 	}
 	public function get_all_siswa() {
-		return $this->db->get('data_siswa');
+		return $this->db->get('tabel_siswa');
 	}
 	public function delete_user($nis) {
 		$this->db->where('nis', $nis);
-		if ($this->db->delete('data_siswa')) {
+		if ($this->db->delete('tabel_siswa')) {
 			return true;
 		} else {
 			return false;
@@ -17,7 +17,7 @@
 
 	public function deleteSiswa($nis) {
 		$this->db->where('nis', $nis);
-		if ($this->db->delete('data_siswa')) {
+		if ($this->db->delete('tabel_siswa')) {
 			return true;
 		} else {
 			return false;
@@ -31,56 +31,69 @@
 
 	public function getSiswa($kd_siswa)
 	{
-		return $this->db->query("SELECT nama_siswa,nis FROM data_siswa WHERE kd_siswa='$kd_siswa'");
+		return $this->db->query("SELECT nama_siswa,nis FROM tabel_siswa WHERE kd_siswa='$kd_siswa'");
 	}
 
     public function process_create_siswa($data){
-            if ($this->db->insert('data_siswa',$data)){
+            if ($this->db->insert('tabel_siswa',$data)){
                     return $this->db->insert_id();
             } else {
                     return FALSE;
             }
 	}
+	public function cekSiswaDiKelas($nis)
+	{
+		$id_siswa = $this->nis2id_siswa($nis);
+		$ta = $this->tahun_ajaran->getCurrentTA();
+		$query = $this->db->query("SELECT * FROM tabel_kelas_siswa WHERE id_siswa='$id_siswa' AND tahun_ajaran='$ta'");
+		$hasil = $query->first_row('array');
+		if ($hasil != null)
+			return $hasil;
+		else
+			return null;
+	}
 
 	public function getTingkat($kd_siswa)
 	{
-		$query = $this->db->query("SELECT tingkat FROM data_siswa WHERE kd_siswa='$kd_siswa'");
+		$query = $this->db->query("SELECT tingkat FROM tabel_siswa WHERE kd_siswa='$kd_siswa'");
 		$result = $query->first_row();
 		return $result->tingkat;
 	}
 	public function process_update_siswa($nis, $data) {
             $this->db->where('nis', $nis);
-            if ($this->db->update('data_siswa', $data)) {
+            if ($this->db->update('tabel_siswa', $data)) {
                 return true;
             } else {
                 return false;
             }
         }
 
-    public function nis2kd_siswa($nis)
+    public function nis2id_siswa($nis)
 	{	
-		$query = $this->db->query("SELECT kd_siswa FROM data_siswa WHERE nis='$nis'");
+		$query = $this->db->query("SELECT id_siswa FROM tabel_siswa WHERE nis='$nis'");
 		$result = $query->first_row();
-		return $result->kd_siswa;
+		if ($result != null)
+			return $result->id_siswa;
 	}
 
 	public function cekSiswa($nis)
 	{
-		$query = "SELECT * FROM data_siswa WHERE nis = '$nis'";
+		$query = "SELECT * FROM tabel_siswa WHERE nis = '$nis'";
 		$hasil = $this->db->query($query);
-		if ($hasil->num_rows >= 1)
+		$hasil = $hasil->first_row('array');
+		if ($hasil != null)
 			return true;
 		else
 			return false;
 	}
 	 public function get_siswa_bytipe($tipe){
 		$query = $this->db->query("SELECT *, tabel_jenkel.jenis_kelamin
-							FROM data_siswa, kelas_siswa, kelas, tabel_jenkel
-							WHERE data_siswa.kd_siswa = kelas_siswa.kd_siswa
-							AND data_siswa.jns_kelamin = tabel_jenkel.id_jekel
+							FROM tabel_siswa, kelas_siswa, kelas, tabel_jenkel
+							WHERE tabel_siswa.kd_siswa = kelas_siswa.kd_siswa
+							AND tabel_siswa.jns_kelamin = tabel_jenkel.id_jekel
 							AND kelas.kd_kelas=kelas_siswa.kd_kelas
-							AND data_siswa.tipe = '$tipe'
-							AND data_siswa.status = '1'");
+							AND tabel_siswa.tipe = '$tipe'
+							AND tabel_siswa.status = '1'");
 		$result = $query;
 		return $result->result(); 
 	}

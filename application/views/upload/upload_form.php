@@ -4,7 +4,7 @@
 							if ($alert == 'success')
 								$alerts = "Data berhasil dimasukkan";
 							else if ($alert == 'fail')
-								$alerts = "Ada data yang gagal dimasukkan, Anda dapat mendownload data yang gagal terinput";
+								$alerts = "Ada data yang gagal dimasukkan";
 							echo 'alert("'.$alerts.'")';
 						}
 						?>
@@ -18,7 +18,7 @@
 						if (isset($alert)){
 							if ($alert == 'fail'){
 								?>
-								<div class="alert alert-danger"><b>Ada data yang belum terinput</b> <br/><a href="<?=base_url('assets/downloadable/DataBelumTerinput.xls')?>">Klik di sini untuk download data siswa yang belum terinput </a></div>
+								<div class="alert alert-danger"><?=$this->session->flashdata('notice');?></div>
 								<?php
 							}
 						}
