@@ -1964,7 +1964,7 @@ ul.custom-list-style li {
     min-height: inherit;
   }
   .page-wrapper .album-cover {
-    min-height: 360px;
+    min-height: 300px;
   }
 }
 /* Medium devices (desktops, 992px and up) */
@@ -1985,7 +1985,7 @@ ul.custom-list-style li {
     min-height: 100px;
   }
   .page-wrapper .album-cover {
-    min-height: 360px;
+    min-height: 300px;
   }
   /* Sticky Footer */
   html,

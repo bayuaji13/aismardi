@@ -75,7 +75,7 @@
 						}
 					}
 				?>
-					<a class="read-more" href="<?php base_url('events/')?>">Semua event<i class="fa fa-chevron-right"></i></a>
+					<a class="read-more" href="<?php echo base_url('event/')?>">Semua event<i class="fa fa-chevron-right"></i></a>
 				</div><!--//section-content-->
 			</section><!--//events-->
 		</div><!--//col-md-3-->

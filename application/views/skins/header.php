@@ -88,7 +88,7 @@
                         </li>
                         <li class="nav-item"><a href="<?php echo base_url('event/');?>">Event</a></li>
 						<li class="nav-item"><a href="#">Penerimaan Siswa Baru</a></li>
-						<li class="nav-item"><a href="gallery-2.html">Galery</a></li>
+						<li class="nav-item"><a href="<?php echo base_url('galeri/');?>">Galeri</a></li>
                         <li class="nav-item"><a href="contact.html">Kontak Kami</a></li>
                     </ul><!--//nav-->
                 </div><!--//navabr-collapse-->
