@@ -21,14 +21,10 @@ class Mapels extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('form');
 
-        $query = $this->mata_pelajaran->getMapelByJurusan(1,2016);
-        $data['non_jurusan'] = $query->result_array();
-        $query = $this->mata_pelajaran->getMapelByJurusan(2,2016);
-        $data['ipa'] = $query->result_array();
-        $query = $this->mata_pelajaran->getMapelByJurusan(3,2016);
-        $data['ips'] = $query->result_array();
-        $query = $this->mata_pelajaran->getAllMapel();
-        $data['mapel'] = $query->result_array();
+        $data['non_jurusan'] = $this->mata_pelajaran->getMapelByJurusan(1,2016);
+        $data['ipa'] = $this->mata_pelajaran->getMapelByJurusan(2,2016);
+        $data['ips'] = $this->mata_pelajaran->getMapelByJurusan(3,2016);
+        $data['mapel'] = $this->mata_pelajaran->getAllMapel();
 
         // echo in_array($data['ips'][1],$data['mapel']);
         // print_r($data);
@@ -41,7 +37,19 @@ class Mapels extends CI_Controller {
 
     public function setSeleksiMapel()
     {
-        # code...
+        foreach ($_POST['non_jurusan'] as $row) {
+            $this->mata_pelajaran->setMapelTahunan(1,$row);
+        }
+
+        foreach ($_POST['ipa'] as $row) {
+            $this->mata_pelajaran->setMapelTahunan(2,$row);
+        }
+
+        foreach ($_POST['ips'] as $row) {
+            $this->mata_pelajaran->setMapelTahunan(3,$row);
+        }
+        echo "<script>alert('Data berhasil dimasukkan')</script>";
+        redirect('mapels/seleksiMapel');
     }
 
     public function manageMapel() {

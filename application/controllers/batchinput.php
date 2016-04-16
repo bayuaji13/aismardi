@@ -547,7 +547,7 @@ class BatchInput extends CI_Controller {
 				else {
 					$user['user'] = $row['nis'];
 					$user['pass'] = sha1('123');
-					$user['level'] = 4;
+					$user['level'] = 5;
 					$this->user->process_create_user($user);
 				}
 			}

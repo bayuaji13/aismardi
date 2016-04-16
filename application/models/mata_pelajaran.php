@@ -15,6 +15,28 @@
 	}
 
 
+	public function setMapelTahunan($id_jurusan,$id_mapel)
+	{
+		$ta = $this->tahun_ajaran->getCurrentTA();
+		$data['id_jurusan'] = $id_jurusan;
+		$data['id_mapel'] = $id_mapel;
+		$data['tahun_ajaran'] = $ta;
+		$query = $this->db->query("SELECT * FROM tabel_mapel_jurusan WHERE tahun_ajaran='$ta' AND id_mapel='$id_mapel' AND id_jurusan='$id_jurusan'");
+		$hasil = $query->result();
+		if ($hasil != null){
+			$query = $this->db->query("DELETE FROM tabel_mapel_jurusan WHERE tahun_ajaran='$ta' AND id_mapel='$id_mapel' AND id_jurusan='$id_jurusan'");
+		}
+		$this->db->insert('tabel_mapel_jurusan',$data);
+	}
+
+	public function getAllMapel()
+	{
+		$query = $this->db->query("SELECT * FROM tabel_mapel");
+		$hasil = $query->result_array();
+		return $hasil;
+	}
+
+
 	public function getAllMapelOrderByKategori()
 	{
 		return $this->db->query("SELECT * FROM mata_pelajaran ORDER BY kd_kategori");
@@ -51,11 +73,11 @@
 		return $this->db->query("SELECT kkm FROM mata_pelajaran WHERE kd_pelajaran='$kd_pelajaran'");
 	}
 
-	public function getNamaMapel($kd_pelajaran)
+	public function getMapel($id_mapel)
 	{	
-		$query = $this->db->query("SELECT nama_pelajaran FROM mata_pelajaran WHERE kd_pelajaran='$kd_pelajaran'");
-		$hasil = $query->first_row();
-		return $hasil->nama_pelajaran;
+		$query = $this->db->query("SELECT nama_mapel,kkm FROM tabel_mapel WHERE id_mapel='$id_mapel'");
+		$hasil = $query->first_row('array');
+		return $hasil;
 	}
 
 }

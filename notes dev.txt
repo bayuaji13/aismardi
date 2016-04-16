@@ -16,3 +16,5 @@ test buat yg input excel
 	setPengampu v :
 	getAllKelas dulu, terus get jurusan dri kelas yang dipilih, terus list mapelnya, terus get all guru
 	**Nampilin formnya sekalian biar bisa buat edit**
+[v] cek seleksi mapel -> yg buat nginput ke database belum ada
+=> tabel nilai rapor siswa yang nim ganti ke id_siswa

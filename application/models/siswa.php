@@ -29,9 +29,11 @@
 		return $this->db->get('users');
 	}
 
-	public function getSiswa($kd_siswa)
+	public function getSiswa($id_siswa)
 	{
-		return $this->db->query("SELECT nama_siswa,nis FROM tabel_siswa WHERE kd_siswa='$kd_siswa'");
+		$query = $this->db->query("SELECT nama as nama_siswa,nis FROM tabel_siswa WHERE id_siswa='$id_siswa'");
+		$hasil = $query->first_row('array');
+		return $hasil;
 	}
 
     public function process_create_siswa($data){
@@ -51,6 +53,21 @@
 			return $hasil;
 		else
 			return null;
+	}
+
+	public function getKelasSiswa($id_siswa,$tahun_ajaran)
+	{
+		$this->db->where('id_siswa',$id_siswa);
+		$this->db->where('tahun_ajaran',$tahun_ajaran);
+		$query = $this->db->get('tabel_kelas_siswa');
+		$hasil = $query->first_row('array');
+		$id_kelas = $hasil['id_kelas'];
+
+
+		$this->db->where('id_kelas',$id_kelas);
+		$query = $this->db->get('tabel_kelas');
+		$hasil = $query->first_row('array');
+		return $hasil;
 	}
 
 	public function getTingkat($kd_siswa)

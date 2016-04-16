@@ -92,8 +92,8 @@ class Users extends CI_Controller {
                 );
                 $this->session->set_userdata('KCFINDER',$data);
                 $this->session->set_userdata('level',$user['level']);
-                $this->session->set_userdata('kd_transaksi',$user['kd_transaksi']);
-                $this->session->set_userdata('nama_akun',$this->nama_akun($user['kd_transaksi']));
+                $this->session->set_userdata('id_transaksi',$user['id_transaksi']);
+                $this->session->set_userdata('nama_akun',$this->nama_akun($user['id_transaksi']));
                 redirect('users/home');
             }
         }
@@ -119,13 +119,13 @@ class Users extends CI_Controller {
     public function nama_akun(){
     	$kode = $this->session->userdata('kd_transaksi');
     	if ($this->session->userdata['level'] == 5)	{
-    		$query = $this->db->query("SELECT nama_siswa as nama FROM data_siswa WHERE kd_siswa = '$kode' ");
+    		$query = $this->db->query("SELECT nama FROM tabel_siswa WHERE id_siswa = '$kode' ");
     		$result = $query->first_row();
     	    return $result->nama;
     	    
     	}
     	else if ($this->session->userdata['level'] == 4 or $this->session->userdata['level'] == 1){
-    		$query = $this->db->query("SELECT nama_guru as nama FROM guru WHERE kd_guru = '$kode' ");
+    		$query = $this->db->query("SELECT nama FROM tabel_guru WHERE id_guru = '$kode' ");
     		$result = $query->first_row();
     	    return $result->nama;
     	}

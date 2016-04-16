@@ -14,16 +14,18 @@ class pengampu_m extends CI_Model {
 			return null;
 	}
 
-	public function getKelasDanMapelAmpu($kd_guru,$tahun_ajaran)
+
+	public function getKelasDanMapelAmpu($kd_guru)
 	{
-		$query = $this->db->query("SELECT kd_kelas,kd_pelajaran FROM pengampu WHERE kd_guru='$kd_guru' AND tahun_ajaran='$tahun_ajaran' ");
+		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+		$query = $this->db->query("SELECT id_kelas,id_mapel FROM tabel_pengampu WHERE id_guru='$kd_guru' AND tahun_ajaran='$tahun_ajaran' ");
 		// AND semester='$semester'"
 		$hasil = $query->result_array();
 		$returned = [];
 		$i = 0;
 		foreach ($hasil as $row) {
-			$returned[$i]['kd_kelas'] = $row['kd_kelas'];
-			$returned[$i]['kd_pelajaran'] = $row['kd_pelajaran'];
+			$returned[$i]['id_kelas'] = $row['id_kelas'];
+			$returned[$i]['id_mapel'] = $row['id_mapel'];
 			$i++;
 		}
 
@@ -68,6 +70,20 @@ class pengampu_m extends CI_Model {
 		}
 	}
 
+	public function cekStatusAmpu($id_guru,$id_kelas,$id_mapel)
+	{
+		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+		$this->db->where('id_guru',$id_guru);
+		$this->db->where('id_kelas',$id_kelas);
+		$this->db->where('id_mapel',$id_mapel);
+		$this->db->where('tahun_ajaran',$tahun_ajaran);
+		$query = $this->db->get('tabel_pengampu');
+		if ($query->result_array() != null){
+			return true;
+		} else
+			return false;
+	}
+
 	public function cekPengampu($id_kelas,$id_mapel)
 	{
 		$ta = $this->tahun_ajaran->getCurrentTA();
@@ -87,6 +103,13 @@ class pengampu_m extends CI_Model {
 			return true;
 		} else
 			return false;
+	}
+
+	public function getPengampu($id_guru)
+	{
+		$query = $this->db->where('id_guru',$id_guru)->get('tabel_guru');
+		$hasil = $query->first_row('array');
+		return $hasil;
 	}
 
 	public function getAllGuru()

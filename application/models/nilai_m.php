@@ -1,7 +1,54 @@
 <?php
 class Nilai_m extends CI_Model
 {
-    public function cekNilai($kd_siswa,$kd_pelajaran,$tahun_ajaran,$semester)
+    public function isiNilaiSiswa($data)
+    {
+        $berhasil = true;
+        foreach ($data as $row) {
+            if ($existed = $this->cekNilai($row)){ //kalo udah ada diupdate
+                $this->db->where($existed);
+                $berhasil = $berhasil AND $this->db->update('tabel_nilai_rapor',$row);
+            } else {
+                $berhasil = $berhasil AND $this->db->insert('tabel_nilai_rapor',$row);
+            }
+        }
+        return $berhasil;
+    }
+
+    public function cekNilai($data)
+    {
+        $check['id_siswa'] = $data['id_siswa'];
+        $check['id_mapel'] = $data['id_mapel'];
+        $check['tahun_ajaran'] = $data['tahun_ajaran'];
+        $check['semester'] = $data['semester'];
+
+        $this->db->where($check);
+        $query = $this->db->get('tabel_nilai_rapor');
+        if ($query->num_rows() == 1)
+            return $check;
+        else
+            return FALSE;
+    }
+
+    public function getNilaiRapor($id_siswa,$tahun_ajaran,$semester)
+    {
+        $this->db->where('id_siswa',$id_siswa);
+        $this->db->where('semester',$semester);
+        $this->db->where('tahun_ajaran',$tahun_ajaran);
+        $query = $this->db->get('tabel_nilai_rapor');
+        $hasil = $query->result_array();
+
+        for ($i=0; $i < count($hasil); $i++) { 
+            $mapel = $this->mata_pelajaran->getMapel($hasil[$i]['id_mapel']);
+            $hasil[$i]['nama_mapel'] = $mapel['nama_mapel'];
+            $hasil[$i]['kkm'] = $mapel['kkm'];
+        }
+
+        return $hasil;
+
+    }
+
+    public function cekNilaiOLD($kd_siswa,$kd_pelajaran,$tahun_ajaran,$semester)
     {
         $query = $this->db->query("SELECT * FROM tabel_nilai WHERE kd_siswa='$kd_siswa' AND kd_pelajaran='$kd_pelajaran'
                                     AND semester='$semester'

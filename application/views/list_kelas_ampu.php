@@ -6,11 +6,11 @@
 				<div class="panel-body" id="tampilan rapor">
 					<?php foreach ($data as $row): ?>
 						<?php
-							$kd_kelas = $row['kd_kelas'];
-							$kd_pelajaran = $row['kd_pelajaran'];
+							$id_kelas = $row['id_kelas'];
+							$id_mapel = $row['id_mapel'];
 							$string = $row['string'];
 						?>
-						<?=anchor(base_url()."pengampu/isiNilaiSiswaAmpu/$kd_kelas/$kd_pelajaran/$field/$tahun_ajaran/$semester",$string ." - Semester ".$semester);?>	
+						<?=anchor(base_url()."pengampu/isiNilaiSiswaAmpu/$id_kelas/$id_mapel/$semester",$string ." - Semester ".$semester);?>	
 						<br/>
 					<?php endforeach ?>
 				</div>

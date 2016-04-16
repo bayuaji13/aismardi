@@ -25,6 +25,41 @@
 		return $hasil;
 	}
 
+	public function getInfoKelas($id_kelas)
+	{
+		$query = $this->db->get_where('tabel_kelas', array('id_kelas' => $id_kelas));
+		$hasil = $query->first_row('array');
+		$id_guru = $hasil['id_guru'];
+		$query = $this->db->select('nama,nip')->where('id_guru',$id_guru)->get('tabel_guru');
+		$hasil2 = $query->first_row('array');
+		$hasil['nama_wali'] = $hasil2['nama'];
+		$hasil['nip_wali'] = $hasil2['nip'];
+		$hasil['jurusan'] = $this->rekonversiJurusan($hasil['jurusan']);
+		return $hasil;
+	}
+
+	public function konversiJurusan($jurusan)
+	{
+		$jurusan = strtolower($jurusan);
+		if ($jurusan == 'ipa' OR $jurusan == 'ilmu pengetahuan alam')
+			return 2;
+		else if ($jurusan == 'ips' OR $jurusan == 'ilmu pengetahuan sosial')
+			return 3;
+		else
+			return 1;
+	}
+
+	public function rekonversiJurusan($jurusan)
+	{
+		if ($jurusan == null or $jurusan == 1) {
+			return '';
+		} elseif ($jurusan == 2) {
+			return 'IPA';
+		} elseif ($jurusan == 3) {
+			return 'IPS';
+		}
+	}
+
     public function process_create_kelas($data){
             if ($this->db->insert('tabel_kelas',$data)){
                     return  $this->db->insert_id();
@@ -82,6 +117,7 @@
 									");
 	}
 
+
 	public function getNamaKelas($id_kelas)
 	{
 		$query = $this->db->query("SELECT nama_kelas FROM tabel_kelas WHERE id_kelas='$id_kelas'");
@@ -89,11 +125,20 @@
 		return $hasil->nama_kelas;
 	}
 
-	public function getIsiKelas($kd_kelas)
+	public function getIsiKelas($id_kelas)
 	{
-		$query = $this->db->query("SELECT kd_siswa FROM tabel_kelas_siswa WHERE kd_kelas='$kd_kelas'");
+		$query = $this->db->select('id_siswa')->where('id_kelas',$id_kelas)->get('tabel_kelas_siswa');
 		$hasil = $query->result_array();
-		return $hasil;
+		$i = 0;
+		foreach ($hasil as $row) {
+			$query = $this->db->select('nis,nama')->where('id_siswa',$row['id_siswa'])->get('tabel_siswa');
+			$hasil2 = $query->first_row('array');
+			$returned[$i]['id_siswa'] = $row['id_siswa'];
+			$returned[$i]['nis'] = $hasil2['nis'];
+			$returned[$i]['nama'] = $hasil2['nama'];
+			$i++;
+		}
+		return $returned;
 
 	}
 

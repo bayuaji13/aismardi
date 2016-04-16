@@ -8,6 +8,7 @@ class Pengampu extends CI_Controller {
         $this->load->database();
         $this->load->helper('url');
         $this->load->model(array('pengampu_m','kelas','mata_pelajaran','siswa','nilai_m'));
+        $this->load->library('excel');
         $this->load->library('grocery_CRUD');
     }
 
@@ -92,9 +93,24 @@ class Pengampu extends CI_Controller {
         $this->showOutput($output);
     }
 
-    public function getKelasDanMapelAmpu($kd_guru,$tahun_ajaran,$field,$semester)
+    public function getKelasDanMapelAmpu($id_guru,$semester)
     {
-        $hasil = $this->pengampu_m->getKelasDanMapelAmpu($kd_guru,$tahun_ajaran);
+        $hasil = $this->pengampu_m->getKelasDanMapelAmpu($id_guru);
+        for ($i=0; $i < sizeof($hasil); $i++) { 
+            $hasil[$i]['string'] = $this->kelas->getNamaKelas($hasil[$i]['id_kelas']) ." - ".$this->mata_pelajaran->getNamaMapel($hasil[$i]['id_mapel']);
+        }
+        $array['data'] = $hasil;
+        $array['semester'] = $semester;
+        $this->showHeader();
+        $this->load->view('list_kelas_ampu',$array);
+        $this->load->view('footer_general');
+        
+    }
+
+    public function getKelasDanMapelAmpuOLD($id_guru,$semester)
+    {
+
+        $hasil = $this->pengampu_m->getKelasDanMapelAmpu($id_guru,$tahun_ajaran);
         for ($i=0; $i < sizeof($hasil); $i++) { 
             $hasil[$i]['string'] = $this->kelas->getNamaKelas($hasil[$i]['kd_kelas']) ." - ".$this->mata_pelajaran->getNamaMapel($hasil[$i]['kd_pelajaran']);
         }
@@ -159,14 +175,15 @@ class Pengampu extends CI_Controller {
 
     }
 
-    public function cekKelasDanMapelAmpu($kd_guru,$kd_pelajaran,$kd_kelas,$tahun_ajaran,$semester)
+    public function cekKelasDanMapelAmpu($id_guru,$id_kelas,$id_mapel)
     {
-        $array = $this->pengampu_m->getKelasDanMapelAmpuV2($kd_guru,$tahun_ajaran);
+        $array = $this->pengampu_m->getKelasDanMapelAmpu($id_guru);
         $hasil = false;
+        // echo sizeof($array);
         // print_r($array);
         // die();
-        for ($i=0; $i < sizeof($array['kd_kelas']); $i++) { 
-            if ($array['kd_kelas'][$i] == $kd_kelas AND $array['kd_pelajaran'][$i] == $kd_pelajaran){
+        for ($i=0; $i < sizeof($array); $i++) { 
+            if ($array[$i]['id_kelas'] == $id_kelas AND $array[$i]['id_mapel'] == $id_mapel){
                 $hasil = true;
             }
         }
@@ -208,90 +225,123 @@ class Pengampu extends CI_Controller {
         $this->load->view('footer_general');
     }
 
-
-
-
-    public function isiNilaiSiswaAmpu($kd_kelas,$kd_pelajaran,$field,$tahun_ajaran,$semester)
+    public function coba()
     {
-        
+        // $hasil = $this->kelas->getInfoKelas(11);
+        // print_r($hasil);
+        // $hasil = $this->pengampu_m->getPengampu(5);
+        // print_r($hasil);
+        // $hasil = $this->mata_pelajaran->getNamaMapel(2);
+        // print_r($hasil);
+        $hasil = $this->kelas->getIsiKelas(11);
+        print_r($hasil);
+    }
+
+    public function templateExporter($id_kelas,$id_mapel,$semester)
+    {
+
+        $path_template = realpath(FCPATH).'/assets/template_excel/TemplateUploadNilaiSiswa.xls';
+        $excel = new PHPExcel_Reader_Excel5();
+        $objPHPExcel = $excel->load($path_template);
+        $objWorksheet = $objPHPExcel->getActiveSheet();
+
+        //set datakelas dulu :
+        $tahun_ajaran = (string)$this->tahun_ajaran->getCurrentTA() . ' / '. (string)($this->tahun_ajaran->getCurrentTA() + 1);
+        $id_guru = $this->session->userdata('id_transaksi');
+        $data_kelas = $this->kelas->getInfoKelas($id_kelas);
+        $data_guru = $this->pengampu_m->getPengampu($id_guru);
+        $nama_mapel = $this->mata_pelajaran->getNamaMapel(2);
+
+        $objWorksheet->setCellValueByColumnAndRow(3,4,$tahun_ajaran);
+        $objWorksheet->setCellValueByColumnAndRow(3,5,$semester);
+        $objWorksheet->setCellValueByColumnAndRow(3,6,$data_kelas['nip_wali']);
+        $objWorksheet->setCellValueByColumnAndRow(3,7,$data_kelas['nama_wali']);
+
+        $objWorksheet->setCellValueByColumnAndRow(8,4,$nama_mapel);
+        $objWorksheet->setCellValueByColumnAndRow(8,5,$data_kelas['nama_kelas'] .' '. $data_kelas['jurusan']);
+        $objWorksheet->setCellValueByColumnAndRow(8,6,$data_guru['nip']);
+        $objWorksheet->setCellValueByColumnAndRow(8,7,$data_guru['nama']);
+
+        //set data hidden (id_kelas, idmapel, tahun_ajaran, )
+        $objWorksheet->setCellValueByColumnAndRow(1,11,$id_kelas);
+        $objWorksheet->setCellValueByColumnAndRow(2,11,$id_mapel);
+        $objWorksheet->setCellValueByColumnAndRow(3,11,$this->tahun_ajaran->getCurrentTA());
+
+        //tambahin data anak-anaknya sekalian haha
+        $row = 16;
+        $isi_kelas = $this->kelas->getIsiKelas($id_kelas);
+        $i = 1;
+        foreach ($isi_kelas as $siswa) {
+            $objWorksheet->setCellValueByColumnAndRow(0,$row,$i);
+            $objWorksheet->setCellValueByColumnAndRow(1,$row,$siswa['nis']);
+            $objWorksheet->setCellValueByColumnAndRow(2,$row,$siswa['nama']);
+            $i++;
+            $row++;
+        }
+
+
+
+
+
+
+
+
+
+        // $row = 19;
+        // $highestColumnIndex = count($field)+1;
+        // for ($i=0; $i < count($laporan); $i++) { 
+        //     $laporan[$i]['tgl_lahir'] = $this->reKonversiTanggal($laporan[$i]['tgl_lahir']);
+        //     $laporan[$i]['jns_kelamin'] = $this->reKonversiJekel($laporan[$i]['jns_kelamin']);
+        //     $laporan[$i]['status'] = $this->reKonversiStatus($laporan[$i]['status']);
+        //     $laporan[$i]['tipe'] = $this->reKonversiTipe($laporan[$i]['tipe']);
+        //     $objWorksheet->setCellValueByColumnAndRow(0,$row,$i+1);
+        //     for ($j=1; $j < $highestColumnIndex; $j++) { 
+        //         $objWorksheet->setCellValueByColumnAndRow($j,$row,$laporan[$i][$field[$j]]);
+        //     }
+        //     $row++;
+        // }
+
+        //===================================================================================
+        $filename='Data Kelas '. $data_kelas['nama_kelas']. time() . '.xls'; //save our workbook as this file name
+        $filename = urlencode($filename);
+        // header('Content-Type: application/vnd.ms-excel'); //mime type
+        // header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+        // header('Cache-Control: max-age=0'); //no cache
+
+        $objWriter = new PHPExcel_Writer_excel5($objPHPExcel);  
+        $exportPlace = realpath(FCPATH).'/assets/downloadable/'.$filename;
+        $objWriter->save($exportPlace);
+        return $filename;
+        //===================================================================================
+
+        // $filename='nananana.xls'; //save our workbook as this file name
+        // header('Content-Type: application/vnd.ms-excel'); //mime type
+        // header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+        // header('Cache-Control: max-age=0'); //no cache
+
+        // $objWriter = new PHPExcel_Writer_excel5($objPHPExcel);  
+        // $objWriter->save('php://output');
+
+
+
+
+    }
+
+    public function isiNilaiSiswaAmpu($id_kelas,$id_mapel,$semester)
+    {
+        $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();        
         $this->tahun_ajaran->cekSemester($semester,$tahun_ajaran);
         // die($this->session->userdata('level'));
-        if (!$this->cekKelasDanMapelAmpu($this->session->userdata('kd_transaksi'),$kd_pelajaran,$kd_kelas,$tahun_ajaran,$semester) OR $this->session->userdata('level') != 1){
-            echo "akses ditolak";
+        if (!$this->cekKelasDanMapelAmpu($this->session->userdata('id_transaksi'),$id_kelas,$id_mapel) OR $this->session->userdata('level') != 1){
+            echo "<script>alert('akses ditolak')</script>";
             // sleep(5);
             redirect('users/login');
         }
-        $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters('', '<br />');
-        $data = $this->kelas->getIsiKelas($kd_kelas);
-        $i = 0;
-        foreach ($data as $row) {
-            $inner_data = $this->siswa->getSiswa($row['kd_siswa']);
-            $hasil = $inner_data->first_row('array');
-            $hasil[$i]['kd_siswa'] = $row['kd_siswa'];
-            $teks = $hasil['nama_siswa'] . " - " .$hasil['nis'];
-            $this->form_validation->set_rules("nilai[$i]",$teks,'min_length[1]|max_length[5]');
-            $i++;
-            
-        }
-        $form['data']['min'] = 0;
-        if ($field == "nilai_ki1" or $field == "nilai_ki4"){ //validasi buat range 4
-            $form['data']['max'] = 4;
-        } else {
-            $form['data']['max'] = 100;
-        }
-
-        if ($this->form_validation->run() == false){
-            $i = 0;
-            foreach ($data as $row) {
-                $form['data']['nilai'][$i] = array(
-                                                    'name' => "nilai[]",
-                                                    'id' => "nilai_$i",
-                                                    'value' => set_value("nilai[$i]",$this->nilai_m->cekNilaiField($row['kd_siswa'],$kd_pelajaran,$tahun_ajaran,$semester,$field)),
-                                                    'max_length' => '5',
-                                                    'min' => '0',
-                                                    'max' => '100'
-                                                );
-                $form['data']['kd_siswa'][$i] = array(
-                                                    'name' => "kd_siswa[$i]",
-                                                    'id' => "kd_siswa_$i",
-                                                    'type' => "hidden",
-                                                    'value' => set_value("kd_siswa[$i]",$row['kd_siswa'])
-                                                );
-                $inner_data = $this->siswa->getSiswa($row['kd_siswa']);
-                $hasil = $inner_data->first_row('array');
-                $teks = $hasil['nama_siswa'] . " - " .$hasil['nis'];
-                $form['data']['label'][$i] = $teks;
-                $i++;
-            }
-            $form['data']['kd_pelajaran'] = array(
-                                                    'name' => "kd_pelajaran",
-                                                    'type' => "hidden",
-                                                    'value' => set_value("kd_pelajaran",$kd_pelajaran)
-                                                );
-            $form['data']['semester'] = array(
-                                                    'name' => "semester",
-                                                    'type' => "hidden",
-                                                    'value' => set_value("semester",$semester)
-                                                );
-            $form['data']['tahun_ajaran'] = array(
-                                                    'name' => "tahun_ajaran",
-                                                    'type' => "hidden",
-                                                    'value' => set_value("tahun_ajaran",$tahun_ajaran)
-                                                );
-            $form['data']['field'] = array(
-                                                    'name' => "field",
-                                                    'type' => "hidden",
-                                                    'value' => set_value("field",$field)
-                                                );
-            $form['data']['kd_kelas'] = array(
-                                                    'name' => "kd_kelas",
-                                                    'type' => "hidden",
-                                                    'value' => set_value("kd_kelas",$kd_kelas)
-                                                );
-        }
+        $url = $this->templateExporter($id_kelas,$id_mapel,$semester);
+        $url = base_url().'assets/downloadable/'.$url;
+        $data['url'] = "<a href=".$url.">Download Format Peneilaian </a>";
         $this->showHeader();
-        $this->load->view('pengampu/isi_nilai',$form['data']);
+        $this->load->view('nilai/form_upload',$data);
         $this->load->view('footer_general');
     }
 
