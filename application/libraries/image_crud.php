@@ -19,7 +19,7 @@
  * @version    	0.5
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
-class image_CRUD {
+class Image_CRUD {
 
 	protected $table_name = null;
 	protected $priority_field = null;
@@ -594,7 +594,7 @@ class ImageUploadHandler
 				'param_name' => 'files',
 				// The php.ini settings upload_max_filesize and post_max_size
 		// take precedence over the following max_file_size setting:
-				'max_file_size' => null,
+				'max_file_size' => 5000000,
 				'min_file_size' => 1,
 				'accept_file_types' => '/.+$/i',
 				'max_number_of_files' => null,

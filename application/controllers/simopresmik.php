@@ -1,7 +1,7 @@
 <?php
 require(APPPATH.'/libraries/REST_Controller.php');
  
-class simopresmik extends REST_Controller
+class Simopresmik extends REST_Controller
 {
     function __construct(){
         parent::__construct();

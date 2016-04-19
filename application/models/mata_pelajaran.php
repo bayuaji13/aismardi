@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-    class mata_pelajaran extends CI_Model {
+    class Mata_pelajaran extends CI_Model {
 	function __construct() {
 		parent::__construct();
 	}

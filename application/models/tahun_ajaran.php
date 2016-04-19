@@ -46,7 +46,7 @@
 
 		// die(); //mute
 	
-		$data = [];
+		$data = array();
 		$data['kd_siswa'] = $id;
 		$data['tahun_ajaran'] = $this->getCurrentTA();
 
