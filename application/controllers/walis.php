@@ -100,34 +100,98 @@ class Walis extends CI_Controller {
 
     }
 
-    public function isiNilaiSekunder($kd_kelas,$tahun_ajaran,$semester)
+    public function isiNilaiSekunder($id_kelas,$tahun_ajaran,$semester)
     {
-        $kd_guru = $this->session->userdata['kd_transaksi'];
-        if (!$this->wali->verifikasiGuru($kd_guru,$kd_kelas,$tahun_ajaran) or !$this->tahun_ajaran->verifikasiSemester($semester,$tahun_ajaran))
-            redirect("users/login");
-    	$isi = $this->kelas->getIsiKelas($kd_kelas);
+        $id_guru = $this->session->userdata['id_transaksi'];
+        // if (!$this->wali->verifikasiGuru($kd_guru,$kd_kelas,$tahun_ajaran) or !$this->tahun_ajaran->verifikasiSemester($semester,$tahun_ajaran))
+        //     redirect("users/login");
+    	$isi = $this->kelas->getIsiKelas($id_kelas);
     	foreach ($isi as $siswa) {
-    		$form['kd_siswa'][] = $siswa['kd_siswa'];
-    		$query = $this->siswa->getSiswa($siswa['kd_siswa']);
-    		$hasil = $query->first_row();
-    		$nama_siswa = $hasil->nama_siswa;
-    		$nis = $hasil->nis;
-    		$form['kegiatan'][$siswa['kd_siswa']] = $this->nilai_m->cekNilaiFieldKegiatan($siswa['kd_siswa'],$tahun_ajaran,$semester);
-    		$form['sekunder'][$siswa['kd_siswa']] = $this->nilai_m->cekNilaiFieldSekunder($siswa['kd_siswa'],$tahun_ajaran,$semester);
+    		$form['id_siswa'][] = $siswa['id_siswa'];
+    		$form['kegiatan'][$siswa['id_siswa']] = $this->nilai_m->cekNilaiKegiatan($siswa['id_siswa'],$tahun_ajaran,$semester);
+    		$form['organisasi'][$siswa['id_siswa']] = $this->nilai_m->cekNilaiOrganisasi($siswa['id_siswa'],$tahun_ajaran,$semester);
 
-    		$form['nama_siswa'][] = $nama_siswa." - ".$nis;
+    		$form['nama_siswa'][] = $siswa['nama'];
     	}
     	$form['semester'] = $semester;
     	$form['tahun_ajaran'] = $tahun_ajaran;
-        $form['kd_kelas'] = $kd_kelas;
+        $form['id_kelas'] = $id_kelas;
 
     	// print_r($form['sekunder']);
 
     	// die();
 
     	$this->showHeader();
-    	$this->load->view('nilai_sekunder',$form);
+    	$this->load->view('nilai/nilai_pengembangan',$form);
     	$this->load->view('footer_form');
+    }
+
+    public function prosesIsiNilaiPengembangan()
+    {
+
+
+
+        // print_r($_POST);
+        // die();
+
+        $id_guru = $this->session->userdata['id_transaksi'];
+        $tahun_ajaran = $this->input->post('tahun_ajaran');
+        $id_kelas = $this->input->post('id_kelas');
+        $semester = $this->input->post('semester');
+        $id_siswa = $this->input->post('id_siswa');
+        $nama_kegiatan = $this->input->post('nama_kegiatan');
+        $nama_kegiatan_lama = $this->input->post('nama_kegiatan_lama');
+        $nama_organisasi_lama = $this->input->post('nama_organisasi_lama');
+        $nama_organisasi = $this->input->post('nama_organisasi');
+        $nilai_kegiatan = $this->input->post('nilai_kegiatan');
+        $nilai_organisasi = $this->input->post('nilai_organisasi');
+        $ket_kegiatan = $this->input->post('ket_kegiatan');
+        $ket_organisasi = $this->input->post('ket_organisasi');
+
+        for ($i=0; $i < count($id_siswa); $i++) { 
+            $dataKegiatan['id_siswa'] = $id_siswa[$i];
+            $dataKegiatan['tahun_ajaran'] = $tahun_ajaran;
+            $dataKegiatan['semester'] = $semester;
+            $dataKegiatan['nama_kegiatan'] = $nama_kegiatan[$i];
+            $dataKegiatan['nama_kegiatan_lama'] = $nama_kegiatan_lama[$i];
+            $dataKegiatan['nilai_kegiatan'] = $nilai_kegiatan[$i];
+            $dataKegiatan['ket_kegiatan'] = $ket_kegiatan[$i];
+
+            $dataOrganisasi['id_siswa'] = $id_siswa[$i];
+            $dataOrganisasi['tahun_ajaran'] = $tahun_ajaran;
+            $dataOrganisasi['semester'] = $semester;
+            $dataOrganisasi['nama_organisasi'] = $nama_organisasi[$i];
+            $dataOrganisasi['nama_organisasi_lama'] = $nama_organisasi_lama[$i];
+            $dataOrganisasi['nilai_organisasi'] = $nilai_organisasi[$i];
+            $dataOrganisasi['ket_organisasi'] = $ket_organisasi[$i];
+
+            // $dataKegiatan[$i]['id_siswa'] = $id_siswa[$i];
+            // $dataKegiatan[$i]['tahun_ajaran'] = $tahun_ajaran;
+            // $dataKegiatan[$i]['semester'] = $semester;
+            // $dataKegiatan[$i]['nama_kegiatan'] = $nama_kegiatan[$i];
+            // $dataKegiatan[$i]['nama_kegiatan_lama'] = $nama_kegiatan_lama[$i];
+            // $dataKegiatan[$i]['nilai_kegiatan'] = $nilai_kegiatan[$i];
+            // $dataKegiatan[$i]['ket_kegiatan'] = $ket_kegiatan[$i];
+
+            // $dataOrganisasi[$i]['id_siswa'] = $id_siswa[$i];
+            // $dataOrganisasi[$i]['tahun_ajaran'] = $tahun_ajaran;
+            // $dataOrganisasi[$i]['semester'] = $semester;
+            // $dataOrganisasi[$i]['nama_organisasi'] = $nama_organisasi[$i];
+            // $dataOrganisasi[$i]['nama_organisasi_lama'] = $nama_organisasi_lama[$i];
+            // $dataOrganisasi[$i]['nilai_organisasi'] = $nilai_organisasi[$i];
+            // $dataOrganisasi[$i]['ket_organisasi'] = $ket_organisasi[$i];
+
+            $this->nilai_m->isiNilaiPengembangan($dataKegiatan,$dataOrganisasi);
+            die();
+        }
+        print_r($dataKegiatan);
+        print_r($dataOrganisasi);
+        die();
+
+
+        redirect('walis/isiNilaiSekunder/'.$kd_kelas.'/'.$tahun_ajaran.'/'.$semester);
+
+        
     }
 
     public function prosesIsiNilaiSekunder()

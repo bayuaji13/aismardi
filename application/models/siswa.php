@@ -36,6 +36,27 @@
 		return $hasil;
 	}
 
+	public function isiAbsensi($id_siswa,$tanggal,$status,$semester,$tahun_ajaran)
+	{
+		$data['id_siswa'] = $id_siswa;
+		$data['tanggal'] = $tanggal;
+		$data['status'] = $status;
+		$data['semester'] = $semester;
+		$data['tahun_ajaran'] = $tahun_ajaran;
+
+		return $this->db->insert('tabel_absensi',$data);
+	}
+
+	public function getAbsensi($id_siswa,$tahun_ajaran,$semester,$status)
+	{
+		$this->db->where('id_siswa',$id_siswa);
+		$this->db->where('tahun_ajaran',$tahun_ajaran);
+		$this->db->where('semester',$semester);
+		$this->db->where('status',$status);
+		$query = $this->db->count_all_results('tabel_absensi');
+		return $query;
+	}
+
     public function process_create_siswa($data){
             if ($this->db->insert('tabel_siswa',$data)){
                     return $this->db->insert_id();

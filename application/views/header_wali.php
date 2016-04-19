@@ -112,9 +112,9 @@
                       </a>
                       <ul class="sub">
                              <?php
-                                $kd_guru = $this->session->userdata['kd_transaksi'];
+                                $kd_guru = $this->session->userdata['id_transaksi'];
                                 $ta = $this->tahun_ajaran->getCurrentTA();
-                                $kd_kelas = $this->wali->getKelasPerwalian($kd_guru,$ta);
+                                // $kd_kelas = $this->wali->getKelasPerwalian($kd_guru,$ta);
                                 $link = "walis/isiNilaiSekunder/$kd_kelas/$ta/";
                              ?>
                              <li><a  href="<?=base_url($link.'1')?>">Semester 1</a></li> 

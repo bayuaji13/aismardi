@@ -14,6 +14,30 @@ class Pengampu_m extends CI_Model {
 			return null;
 	}
 
+	public function isWali($id_guru)
+	{
+		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+		$this->db->where('id_guru',$id_guru);
+		$this->db->where('tahun_ajaran',$tahun_ajaran);
+		$query = $this->db->get('tabel_kelas');
+		if ($query->result() != null)
+			return true;
+		else
+			return false;
+	}
+
+	public function isGuruBP($id_guru)
+	{
+		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+		$this->db->where('id_guru',$id_guru);
+		$this->db->where('tahun_ajaran',$tahun_ajaran);
+		$this->db->where('id_mapel',4);
+		$query = $this->db->get('tabel_pengampu');
+		if ($query->result() != null)
+			return true;
+		else
+			return false;
+	}
 
 	public function getKelasDanMapelAmpu($kd_guru)
 	{
@@ -119,8 +143,6 @@ class Pengampu_m extends CI_Model {
 		$hasil = $query->result_array();
 		return $hasil;
 	}
-
-
 
 	public function getNamaPengampu($kd_guru)
 	{

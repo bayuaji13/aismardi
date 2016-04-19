@@ -4,6 +4,7 @@ class Siswas extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->helper('url');
+        $this->load->model('siswa');
         $this->load->library('grocery_CRUD');
     }
 
@@ -81,6 +82,67 @@ class Siswas extends CI_Controller {
         $this->load->view('crud/manage',$output);    
         $this->load->view('footer_crud');     
     } 
+
+    public function kehadiranSiswa($id_siswa,$tahun_ajaran,$semester)
+    {
+        $data['sakit'] = $this->siswa->getAbsensi($id_siswa,$tahun_ajaran,$semester,1);
+        $data['izin'] = $this->siswa->getAbsensi($id_siswa,$tahun_ajaran,$semester,2);
+        $data['alfa'] = $this->siswa->getAbsensi($id_siswa,$tahun_ajaran,$semester,3);
+
+        $this->showHeader();
+        $this->load->view('siswa/rekap_absensi',$data);
+        $this->load->view('footer_general');
+    }
+
+    public function setAbsensi($semester)
+    {
+        print_r($semester);
+        print_r($_POST);
+        $sakit = $this->input->post('sakit');
+        $izin = $this->input->post('izin');
+        $alfa = $this->input->post('alfa');
+        $tanggal = $this->input->post('tanggal');
+        $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+
+        if ($sakit != null)
+            foreach ($sakit as $row) {
+                $this->siswa->isiAbsensi($row,$tanggal,1,$semester,$tahun_ajaran);
+            }
+        if ($izin != null)
+            foreach ($izin as $row) {
+                $this->siswa->isiAbsensi($row,$tanggal,2,$semester,$tahun_ajaran);
+            }
+        if ($alfa != null)
+            foreach ($alfa as $row) {
+                $this->siswa->isiAbsensi($row,$tanggal,3,$semester,$tahun_ajaran);
+            }
+    }
+
+    public function cariSiswa($tingkat)
+    {
+        $nis = '%'.$this->input->get('search').'%';
+        $query = $this->db->query("SELECT id_siswa as value,nis as text,nama as nama_siswa FROM tabel_siswa WHERE status = '1' AND tingkat='$tingkat' AND nis LIKE '$nis'");
+        $result = $query->result_array();
+        for ($i=0; $i < sizeof($result); $i++) { 
+            $result[$i]['text'] = $result[$i]['text'] .' - '.$result[$i]['nama_siswa'];
+            $result[$i]['data_siswa'] = null;
+        }
+
+        // print_r($result);
+        // die();
+        $result = json_encode($result);
+        print_r($result);
+        die();
+    }
+
+    public function absensiSiswa($tingkat, $semester)
+    {
+        $data['tingkat'] = $tingkat;
+        $data['semester'] = $semester;
+        $this->showHeader();
+        $this->load->view('absensi/absensi',$data);
+        $this->load->view('footer_general');
+    }
 
     function createUsersiswa($post_array, $primary_key)
     {

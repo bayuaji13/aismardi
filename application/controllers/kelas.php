@@ -19,6 +19,7 @@ class Kelas extends CI_Controller {
 
         $crud->set_table('tabel_kelas')
         ->set_relation('id_guru','tabel_guru','nama')
+        ->set_relation('jurusan','tabel_jurusan','nama_jurusan')
         ->display_as('id_guru','Wali Kelas')
         ->field_type('tahun_ajaran', 'hidden', $this->tahun_ajaran->getCurrentTA())
         ->set_relation_n_n('Isi','tabel_kelas_siswa','tabel_siswa','id_kelas','id_siswa','nis',null,"id_siswa NOT IN (SELECT id_siswa FROM tabel_kelas_siswa WHERE tahun_ajaran=$ta) AND id_siswa NOT IN (SELECT id_siswa FROM tabel_siswa WHERE status = '2')",true)

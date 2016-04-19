@@ -22,12 +22,12 @@
 
 	}
 
-	public function verifikasiGuru($kd_guru,$kd_kelas,$tahun_ajaran)
+	public function verifikasiGuru($id_guru,$id_kelas,$tahun_ajaran)
 	{
-		$query = $this->db->query("SELECT kd_kelas FROM kelas WHERE kd_guru='$kd_guru' AND tahun_ajaran='$tahun_ajaran'");
+		$query = $this->db->query("SELECT id_kelas FROM tabel_kelas WHERE id_guru='$kd_guru' AND tahun_ajaran='$tahun_ajaran'");
 		if ($query->num_rows() > 0) {
 		    $hasil =  $query->first_row();
-		    return ($hasil->kd_kelas == $kd_kelas);
+		    return ($hasil->id_kelas == $id_kelas);
 		} else {
 			return false;
 		}

@@ -6,6 +6,7 @@ class Users extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->library('grocery_CRUD');
 		$this->load->model('user');
+		$this->load->model('pengampu_m');
 	}
 
 	public function index(){
@@ -99,6 +100,20 @@ class Users extends CI_Controller {
         }
         $this->load->view('users/login',$data);
 
+    }
+
+    public function siftToWali()
+    {
+    	if ($this->session->userdata('level') == 1 AND $this->pengampu_m->isWali($this->session->userdata['id_transaksi']))
+    		$this->session->set_userdata('level',4);
+    	redirect('users/home');
+    }
+
+    public function siftToGuruBP()
+    {
+    	if ($this->session->userdata('level') == 1 AND $this->pengampu_m->isGuruBP($this->session->userdata['id_transaksi']))
+    		$this->session->set_userdata('level',2);
+    	redirect('users/home');
     }
 
     public function home(){

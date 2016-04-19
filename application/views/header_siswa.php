@@ -98,7 +98,7 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="<?=base_url('siswas/managesiswa/read').'/'.$this->session->userdata('kd_transaksi')?>">Data Pribadi</a></li>
-                          <li><a  href="<?=base_url('nilai/manageNilai/siswa')?>">Nilai</a></li>
+                          <li><a  href="<?=base_url('siswas/kehadiranSiswa/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/1')?>">Kehadiran</a></li>
                       </ul>
                   </li>
                   <li cl
@@ -108,8 +108,8 @@
                           <span>Rapor</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="<?=base_url('batchoutput/exporterRapor2013/'.$this->session->userdata('kd_transaksi').'/1')?>">Semester 1</a></li>
-                          <li><a  href="<?=base_url('batchoutput/exporterRapor2013/'.$this->session->userdata('kd_transaksi').'/2')?>">Semester 2</a></li>
+                          <li><a  href="<?=base_url('nilai/generateExcel/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/1')?>">Semester 1</a></li>
+                          <li><a  href="<?=base_url('nilai/generateExcel/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/2')?>">Semester 2</a></li>
                       </ul>
                   </li>
                   <li class="sub-menu">

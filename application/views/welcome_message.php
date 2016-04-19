@@ -1,6 +1,29 @@
 
 <div class="tab-pane" id="chartjs">
 	<!-- page start-->
+	<?php 
+	if ($this->session->userdata('level') == 1){
+		$isWali = $this->pengampu_m->isWali($this->session->userdata['id_transaksi']);
+    	$isGuruBP = $this->pengampu_m->isGuruBP($this->session->userdata['id_transaksi']);
+		if ($isWali or $isGuruBP){	
+		echo '<div class="row mt">
+		<div class="col-lg-12">
+			<div class="content-panel"> 
+				<div class="panel-body">';
+		if ($isWali){
+			echo '<a  href="'.base_url('users/siftToWali').'"><button type="button" class="btn btn-primary">Masuk Sebagai Wali</button></a>';
+		}
+		if ($isGuruBP){
+			echo '<button type="button" class="btn btn-primary">Masuk Sebagai Guru BP</button>';
+		}
+		echo '		</div>
+				</div>
+			</div>
+		</div>';
+
+		}
+	}
+	?>
 	<div class="row mt">
 		<div class="col-lg-12">
 			<div class="content-panel"> 

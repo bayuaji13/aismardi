@@ -48,6 +48,50 @@ class Nilai_m extends CI_Model
 
     }
 
+    public function isiNilaiPengembangan($nilai_ekskul,$nilai_organisasi)
+    {
+        $row_ekskul = array_filter($nilai_ekskul);
+        $row_organisasi = array_filter($nilai_organisasi);
+        
+
+        $row_ekskul['nama_kegiatan'] = $row_ekskul['nama_kegiatan_lama'];
+        $row_organisasi['nama_organisasi'] = $row_organisasi['nama_organisasi_lama'];
+
+        unset($row_ekskul['nama_kegiatan_lama']);
+        unset($row_organisasi['nama_organisasi_lama']);
+
+        unset($row_ekskul['ket_kegiatan']);
+        unset($row_ekskul['nilai_kegiatan']);
+
+        unset($row_organisasi['ket_organisasi']);
+        unset($row_organisasi['nilai_organisasi']);
+
+        
+
+        print_r($row_ekskul);
+        print_r($row_organisasi);
+        die();
+
+    }
+
+    public function cekNilaiKegiatan($id_siswa,$tahun_ajaran,$semester)
+    {
+        $this->db->where('id_siswa',$id_siswa);
+        $this->db->where('tahun_ajaran',$tahun_ajaran);
+        $this->db->where('semester',$semester);
+        $query = $this->db->get('tabel_nilai_ekstrakurikuler');
+        return $query->result_array();
+    }
+
+    public function cekNilaiOrganisasi($id_siswa,$tahun_ajaran,$semester)
+    {
+        $this->db->where('id_siswa',$id_siswa);
+        $this->db->where('tahun_ajaran',$tahun_ajaran);
+        $this->db->where('semester',$semester);
+        $query = $this->db->get('tabel_nilai_organisasi');
+        return $query->result_array();
+    }
+
     public function cekNilaiOLD($kd_siswa,$kd_pelajaran,$tahun_ajaran,$semester)
     {
         $query = $this->db->query("SELECT * FROM tabel_nilai WHERE kd_siswa='$kd_siswa' AND kd_pelajaran='$kd_pelajaran'
@@ -71,7 +115,7 @@ class Nilai_m extends CI_Model
             return FALSE;
     }
 
-    public function CekNilaiKegiatan($kd_siswa,$tahun_ajaran,$semester,$jenis){
+    public function CekNilaiKegiatanOLD($kd_siswa,$tahun_ajaran,$semester,$jenis){
         $query = $this->db->query("SELECT * FROM tabel_pengembangan_diri_siswa WHERE kd_siswa='$kd_siswa' AND semester='$semester'
                                     AND tahun_ajaran='$tahun_ajaran'AND jenis = '$jenis'
                                 ");
@@ -151,7 +195,7 @@ class Nilai_m extends CI_Model
             return 'Belum diisi oleh wali';
     }
 
-    public function cekNilaiFieldKegiatan($kd_siswa,$tahun_ajaran,$semester)
+    public function cekNilaiFieldKegiatanOLD($kd_siswa,$tahun_ajaran,$semester)
     {
         $query = $this->db->query("SELECT jenis,keterangan FROM tabel_pengembangan_diri_siswa
                                     WHERE kd_siswa='$kd_siswa' 
