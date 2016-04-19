@@ -27,8 +27,6 @@ class Mapels extends CI_Controller {
         $data['mapel'] = $this->mata_pelajaran->getAllMapel();
 
         // echo in_array($data['ips'][1],$data['mapel']);
-        // print_r($data);
-        // die();
 
         $this->showHeader();
         $this->load->view('seleksi_mapel',$data);
