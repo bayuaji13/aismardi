@@ -533,7 +533,7 @@ class BatchInput extends CI_Controller {
 
 	public function entryDataSiswa($data)
 	{
-		$laporan = [];
+		$laporan = array();
 		foreach ($data as $row) {
 			$row['tahun_masuk'] = $this->tahun_ajaran->getCurrentTA();
 			$row['status'] = 1;

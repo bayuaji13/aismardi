@@ -45,7 +45,7 @@ class Pengampu_m extends CI_Model {
 		$query = $this->db->query("SELECT id_kelas,id_mapel FROM tabel_pengampu WHERE id_guru='$kd_guru' AND tahun_ajaran='$tahun_ajaran' ");
 		// AND semester='$semester'"
 		$hasil = $query->result_array();
-		$returned = [];
+		$returned = array();
 		$i = 0;
 		foreach ($hasil as $row) {
 			$returned[$i]['id_kelas'] = $row['id_kelas'];
@@ -62,7 +62,7 @@ class Pengampu_m extends CI_Model {
 		$query = $this->db->query("SELECT kd_kelas,kd_pelajaran FROM pengampu WHERE kd_guru='$kd_guru' AND tahun_ajaran='$tahun_ajaran'");
 		// AND semester='$semester'"
 		$hasil = $query->result_array();
-		$returned = [];
+		$returned = array();
 		$i = 0;
 		foreach ($hasil as $row) {
 			$returned['kd_kelas'][$i] = $row['kd_kelas'];
