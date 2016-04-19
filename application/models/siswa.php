@@ -15,6 +15,20 @@
 		}
 	}
 
+	public function setMenunggak($id_siswa)
+	{
+		$this->db->where('id_siswa',$id_siswa);
+		$data['flag_tunggakan'] = 1;
+		$this->db->update('tabel_siswa',$data);
+	}
+
+	public function setTidakMenunggak($id_siswa)
+	{
+		$this->db->where('id_siswa',$id_siswa);
+		$data['flag_tunggakan'] = 0;
+		$this->db->update('tabel_siswa',$data);
+	}
+
 	public function deleteSiswa($nis) {
 		$this->db->where('nis', $nis);
 		if ($this->db->delete('tabel_siswa')) {
@@ -53,8 +67,39 @@
 		$this->db->where('tahun_ajaran',$tahun_ajaran);
 		$this->db->where('semester',$semester);
 		$this->db->where('status',$status);
-		$query = $this->db->count_all_results('tabel_absensi');
-		return $query;
+		$query = $this->db->select('tanggal')->get('tabel_absensi');
+
+		$hasil['tanggal'] = $query->result_array();
+		$hasil['jumlah'] = $query->num_rows();
+
+		return $hasil;
+	}
+
+	public function konversiStatusAbsen($value)
+	{
+		if ($value == 1)
+			return "Sakit";
+		else if ($value == 2) {
+			return "Izin";
+		} else if ($value == 3) {
+			return "Tanpa Keterangan";
+		}
+	}
+
+	public function getAllAbsensi($id_siswa,$tahun_ajaran,$semester)
+	{
+		$this->db->where('id_siswa',$id_siswa);
+		$this->db->where('tahun_ajaran',$tahun_ajaran);
+		$this->db->where('semester',$semester);
+		$query = $this->db->select('tanggal,status')->get('tabel_absensi');
+
+		$hasil = $query->result_array();
+
+		for ($i=0; $i < count($hasil); $i++) { 
+			$hasil[$i]['keterangan'] = $this->konversiStatusAbsen($hasil[$i]['status']);
+		}
+
+		return $hasil;
 	}
 
     public function process_create_siswa($data){
