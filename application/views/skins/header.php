@@ -63,33 +63,31 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Profil <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="courses.html">Sejarah</a></li>
-                                <li><a href="course-single.html">Visi-Misi</a></li>
-                                <li><a href="course-single-2.html">Pimpinan</a></li>  
-								<li><a href="team.html">Staff</a></li>  
-								<li><a href="course-single-2.html">Kerjasama</a></li>  
+                                <li><a href="<?php echo base_url('page/sejarah');?>">Sejarah</a></li>
+                                <li><a href="<?php echo base_url('page/visi-misi');?>">Visi-Misi</a></li>
+                                <li><a href="<?php echo base_url('page/pimpinan');?>">Pimpinan</a></li>  
+								<li><a href="<?php echo base_url('page/staff');?>">Staff</a></li>  
                             </ul>
                         </li>
 						<li class="nav-item dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Akademik <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="courses.html">Kurikulum</a></li>
-								<li><a href="courses.html">Ekstra Kurikuler</a></li>
+                                <li><a href="<?php echo base_url('page/kurikulum');?>">Kurikulum</a></li>
+								<li><a href="<?php echo base_url('page/ekstra-kurikuler');?>">Ekstra Kurikuler</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a href="<?php echo base_url('berita');?>">Berita</a></li>
 						<li class="nav-item dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Fasilitas <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="news-single.html">Laboratorium</a></li>
-								<li><a href="news.html">Fasilitas Keagamaan</a></li>
-								<li><a href="news.html">Fasilitas Olahraga</a></li>
+                                <li><a href="<?php echo base_url('page/laboratorium');?>">Laboratorium</a></li>
+								<li><a href="<?php echo base_url('page/fasilitas-keagamaan');?>">Fasilitas Keagamaan</a></li>
+								<li><a href="<?php echo base_url('page/fasilitas-olahraga');?>">Fasilitas Olahraga</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a href="<?php echo base_url('event/');?>">Event</a></li>
-						<li class="nav-item"><a href="#">Penerimaan Siswa Baru</a></li>
+						<li class="nav-item"><a href="<?php echo base_url('page/penerimaan-siswa-baru');?>">Penerimaan Siswa Baru</a></li>
 						<li class="nav-item"><a href="<?php echo base_url('galeri/');?>">Galeri</a></li>
-                        <li class="nav-item"><a href="contact.html">Kontak Kami</a></li>
                     </ul><!--//nav-->
                 </div><!--//navabr-collapse-->
             </div><!--//container-->

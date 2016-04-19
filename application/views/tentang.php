@@ -744,10 +744,7 @@ mso-bidi-font-size:16.0pt;line-height:150%;mso-fareast-font-family:"Times New Ro
 mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"Times New Roman";
 mso-bidi-theme-font:major-bidi'>Tentang Sistem<o:p></o:p></span></b></p>
 
-<p class=MsoNormal style='margin-bottom:12.0pt'>Sistem ini merupakan perwujudan
-dari IBM Teknologi Informasi untuk Yayasan Taqwal Ilah Semarang oleh Tim
-Jurusan Ilmu Komputer/ Informatika Fakultas Sains dan Matematika Universitas
-Diponegoro<o:p></o:p></p>
+<p class=MsoNormal style='margin-bottom:12.0pt'>Sistem Informasi Akademik &copy; <a href="ketampanan.id">Ketampanan</a><o:p></o:p></p>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 

@@ -1236,7 +1236,7 @@ lang=EN-US style='font-size:12.0pt;line-height:150%;mso-ansi-language:EN-US;
 font-weight:normal'><span style='mso-tab-count:1'>  </span></span></span></span><span
 style='mso-bookmark:_Toc312837606'><span style='mso-bookmark:_Toc329337499'><span
 lang=IT style='font-size:12.0pt;line-height:150%;mso-ansi-language:IT;
-font-weight:normal'>MTs Taqwal Ilah Semarang</span></span></span><span
+font-weight:normal'>SMA Mardisiswa Semarang</span></span></span><span
 style='mso-bookmark:_Toc312837606'><span style='mso-bookmark:_Toc329337499'><span
 lang=EN-US style='font-size:12.0pt;line-height:150%;mso-ansi-language:EN-US;
 font-weight:normal'><o:p></o:p></span></span></span></p>
@@ -1248,72 +1248,7 @@ style='font-size:12.0pt;line-height:150%;mso-ansi-language:IN;font-weight:normal
 style='mso-tab-count:1'>               </span>:</span></span></span><span
 style='mso-bookmark:_Toc312837606'><span style='mso-bookmark:_Toc329337499'><span
 lang=EN-US style='font-size:12.0pt;line-height:150%;mso-ansi-language:EN-US;
-font-weight:normal'><span style='mso-tab-count:1'>  </span>Jalan Tunggu Raya No
-10, Tunggu, Meteseh, Tembalang, Semarang<o:p></o:p></span></span></span></p>
-
-<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:12.0pt;
-margin-left:1.0cm;text-indent:1.0cm'><span style='mso-bookmark:_Toc312837606'><span
-style='mso-bookmark:_Toc329337499'><span lang=EN-US style='mso-ansi-language:
-EN-US'>MTs Taqwal Ilah didirikan pada tahun 1989 dibawah asuhan Yayasan Taqwal
-Ilah</span>.</span></span><span style='mso-bookmark:_Toc312837606'><span
-style='mso-bookmark:_Toc329337499'><span style='mso-ansi-language:EN-US'> <span
-lang=EN-US>MTs Taqwal Ilah diasuh dan dikelola oleh Tenaga Pendidik yang
-Profesional berpendidikan Sarjana (S1) UNDIP, UNNES, IKIP, IAIN, UNISSULA, UWH,
-<span style='mso-spacerun:yes'> </span>SETIA WS, LPBA dll. Terbukti
-kelulusannya sejak Th. 1996-2009 mencapai 100% dinilai memuaskan, dan banyak
-diterima di Sekolah Negeri, Dengan Kurikulum terpadu, Kelulusan Mts Taqwal Ilah
-sudah ahli dalam bercakap-cakap dengan bahasa Inggris dan bahasa Arab. Serta
-unggul dalam bidang komputer.</span></span><span lang=EN-US> </span></span></span><span
-style='mso-bookmark:_Toc312837606'><span style='mso-bookmark:_Toc329337499'><b
-style='mso-bidi-font-weight:normal'><span style='font-size:14.0pt;line-height:
-150%'><o:p></o:p></span></b></span></span></p>
-
-<p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
-12.0pt;margin-left:1.0cm;line-height:150%;tab-stops:1.0cm'><span
-style='mso-bookmark:_Toc312837606'><span style='mso-bookmark:_Toc329337499'><span
-class=Heading2Char><span style='font-size:12.0pt;mso-bidi-font-size:13.0pt;
-line-height:150%'>Visi</span></span></span></span><span style='mso-bookmark:
-_Toc329337499'></span><span style='mso-bookmark:_Toc312837606'></span><span
-class=Heading2Char><span style='font-size:14.0pt;line-height:150%;mso-bidi-font-weight:
-normal'><o:p></o:p></span></span></p>
-
-<p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
-margin-bottom:12.0pt;margin-left:2.0cm;mso-add-space:auto;text-indent:-1.0cm;
-line-height:150%;mso-list:l1 level1 lfo3'><![if !supportLists]><span
-lang=EN-US style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman","serif";
-mso-fareast-font-family:"Times New Roman";mso-ansi-language:EN-US'><span
-style='mso-list:Ignore'>1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='font-size:12.0pt;
-line-height:150%;font-family:"Times New Roman","serif";mso-ansi-language:EN-US'>Membentuk
-siswa mempunyai Iman dan Taqwa yang kuat.<o:p></o:p></span></p>
-
-<h2 style='margin-top:0cm;margin-right:0cm;margin-bottom:12.0pt;margin-left:
-1.0cm'><span class=Heading2Char><span style='mso-bidi-font-size:12.0pt;
-line-height:150%;mso-fareast-font-family:Calibri;mso-bidi-font-weight:normal'>Misi<o:p></o:p></span></span></h2>
-
-<p class=MsoListParagraphCxSpFirst style='margin-top:0cm;margin-right:0cm;
-margin-bottom:12.0pt;margin-left:2.0cm;mso-add-space:auto;text-indent:-1.0cm;
-line-height:150%;mso-list:l3 level1 lfo4'><![if !supportLists]><span
-style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman","serif";
-mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>1)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='font-size:12.0pt;
-line-height:150%;font-family:"Times New Roman","serif";mso-ansi-language:EN-US'>Membentuk
-siswa yang unggul dalam IPTEK.</span><span style='font-size:12.0pt;line-height:
-150%;font-family:"Times New Roman","serif"'><o:p></o:p></span></p>
-
-<p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
-margin-bottom:12.0pt;margin-left:2.0cm;mso-add-space:auto;text-indent:-1.0cm;
-line-height:150%;mso-list:l3 level1 lfo4'><![if !supportLists]><span
-lang=EN-US style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman","serif";
-mso-fareast-font-family:"Times New Roman";mso-ansi-language:EN-US'><span
-style='mso-list:Ignore'>2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='font-size:12.0pt;
-line-height:150%;font-family:"Times New Roman","serif";mso-ansi-language:EN-US'>Mencetak
-generasi muda islam yang mampu mengaktualisasikan dir menjadi diri menjadi
-Insan Kamil, dan unggul berbahasa Inggris dan Arab serta Teknologi Komputer.<o:p></o:p></span></p>
-
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+font-weight:normal'><span style='mso-tab-count:1'>  </span>Jalan Mardisiswa, Banyumanik, Semarang<o:p></o:p></span></span></span></p>
 
 </div>
 
