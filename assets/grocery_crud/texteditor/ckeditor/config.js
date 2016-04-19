@@ -9,10 +9,10 @@ CKEDITOR.editorConfig = function( config )
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 	
-	config.filebrowserBrowseUrl = '../../../assets/kcfinder/browse.php?opener=ckeditor&type=files';
-	config.filebrowserImageBrowseUrl = '../../../assets/kcfinder/browse.php?opener=ckeditor&type=images';
-	config.filebrowserFlashBrowseUrl = '../../../assets/kcfinder/browse.php?opener=ckeditor&type=flash';
-	config.filebrowserUploadUrl = '../../../assets/kcfinder/upload.php?opener=ckeditor&type=files';
-	config.filebrowserImageUploadUrl = '../../../assets/kcfinder/upload.php?opener=ckeditor&type=images';
-	config.filebrowserFlashUploadUrl = '../../../assets/kcfinder/upload.php?opener=ckeditor&type=flash';
+	config.filebrowserBrowseUrl = '../../../../assets/kcfinder/browse.php?opener=ckeditor&type=files';
+	config.filebrowserImageBrowseUrl = '../../../../assets/kcfinder/browse.php?opener=ckeditor&type=images';
+	config.filebrowserFlashBrowseUrl = '../../../../assets/kcfinder/browse.php?opener=ckeditor&type=flash';
+	config.filebrowserUploadUrl = '../../../../assets/kcfinder/upload.php?opener=ckeditor&type=files';
+	config.filebrowserImageUploadUrl = '../../../../assets/kcfinder/upload.php?opener=ckeditor&type=images';
+	config.filebrowserFlashUploadUrl = '../../../../assets/kcfinder/upload.php?opener=ckeditor&type=flash';
 };
