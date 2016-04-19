@@ -15,7 +15,7 @@ class Siswas extends CI_Controller {
     public function managesiswa($tipe = null){
         // $this->tahun_ajaran->newTA();echo "allalala";die();
         //$ta = $this->tahun_ajaran->getCurrentTA();
-        $data = [];
+        $data = array();
         $crud = new grocery_CRUD();
 
         $crud->set_table('tabel_siswa')

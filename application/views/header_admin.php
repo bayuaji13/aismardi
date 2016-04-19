@@ -7,7 +7,7 @@
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-  <title>Sistem Informasi Akademik MTs Taqwal Ilah</title>
+  <title>Sistem Informasi Akademik SMA Mardisiswa</title>
 
   <!-- Bootstrap core CSS -->
   <link href="<?=base_url('assets/css/bootstrap.css')?>" rel="stylesheet">
@@ -88,9 +88,7 @@
               <li><a  href="<?=base_url('gurus')?>">Data Guru</a></li>
               <li><a  href="<?=base_url('mapels')?>">Data Mata Pelajaran</a></li>
               <li><a  href="<?=base_url('kelas')?>">Data Kelas siswa</a></li>
-              <li><a  href="<?=base_url('pengampu')?>">Data Guru Pengampu</a></li>
-              <li><a  href="<?=base_url('nilai')?>">Data Nilai siswa </a></li>
-              <li><a  href="<?=base_url('jadwals')?>">Jadwal</a></li>
+              <li><a  href="<?=base_url('pengampu/pilihkelas')?>">Data Guru Pengampu</a></li>
               <li><a  href="<?=base_url('tahunajaran')?>">Tahun Ajaran</a></li>
             </ul>
           </li>

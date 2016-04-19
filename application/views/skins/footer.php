@@ -36,7 +36,7 @@
                                     <span class="country-name">Indonesia</span>
                                 </span>
                             </p>
-                            <p class="tel col-md-12 col-sm-4"><i class="fa fa-phone"></i>0800 123 4567</p>
+                            <p class="tel col-md-12 col-sm-4"><i class="fa fa-phone"></i>(024)7471629</p>
                             <p class="email col-md-12 col-sm-4"><i class="fa fa-envelope"></i><a href="#">info@smamardisiswa.sch.id</a></p>  
                         </div> 
                     </div><!--//footer-col-inner-->            

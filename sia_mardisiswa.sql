@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2016 at 02:41 PM
+-- Generation Time: Apr 19, 2016 at 04:16 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -872,6 +872,18 @@ ALTER TABLE `tabel_absensi`
   ADD PRIMARY KEY (`id_entry`);
 
 --
+-- Indexes for table `tabel_berita`
+--
+ALTER TABLE `tabel_berita`
+  ADD PRIMARY KEY (`newsId`);
+
+--
+-- Indexes for table `tabel_event`
+--
+ALTER TABLE `tabel_event`
+  ADD PRIMARY KEY (`eventId`);
+
+--
 -- Indexes for table `tabel_guru`
 --
 ALTER TABLE `tabel_guru`
@@ -890,6 +902,12 @@ ALTER TABLE `tabel_kartu_tes`
   ADD PRIMARY KEY (`id_entry`);
 
 --
+-- Indexes for table `tabel_kategori`
+--
+ALTER TABLE `tabel_kategori`
+  ADD PRIMARY KEY (`categoryId`);
+
+--
 -- Indexes for table `tabel_kelas`
 --
 ALTER TABLE `tabel_kelas`
@@ -900,6 +918,12 @@ ALTER TABLE `tabel_kelas`
 --
 ALTER TABLE `tabel_kelas_siswa`
   ADD PRIMARY KEY (`id_entry`);
+
+--
+-- Indexes for table `tabel_laman`
+--
+ALTER TABLE `tabel_laman`
+  ADD PRIMARY KEY (`pageId`);
 
 --
 -- Indexes for table `tabel_level`
@@ -950,10 +974,28 @@ ALTER TABLE `tabel_pengampu`
   ADD PRIMARY KEY (`id_entry`), ADD UNIQUE KEY `tahun_ajaran` (`tahun_ajaran`,`id_mapel`,`id_kelas`,`id_guru`);
 
 --
+-- Indexes for table `tabel_sambutan`
+--
+ALTER TABLE `tabel_sambutan`
+  ADD PRIMARY KEY (`sambutanId`);
+
+--
 -- Indexes for table `tabel_siswa`
 --
 ALTER TABLE `tabel_siswa`
   ADD PRIMARY KEY (`id_siswa`), ADD UNIQUE KEY `nis` (`nis`);
+
+--
+-- Indexes for table `tabel_tautan`
+--
+ALTER TABLE `tabel_tautan`
+  ADD PRIMARY KEY (`linkId`);
+
+--
+-- Indexes for table `tabel_testi`
+--
+ALTER TABLE `tabel_testi`
+  ADD PRIMARY KEY (`testiId`);
 
 --
 -- Indexes for table `tabel_users`

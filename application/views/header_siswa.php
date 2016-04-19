@@ -7,7 +7,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Sistem Informasi Akademik MTs Taqwal Ilah</title>
+    <title>Sistem Informasi Akademik SMA Mardisiswa</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?=base_url('assets/css/bootstrap.css')?>" rel="stylesheet">
