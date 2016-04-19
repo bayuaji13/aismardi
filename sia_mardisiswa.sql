@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2016 at 10:31 AM
+-- Generation Time: Apr 19, 2016 at 01:52 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -19,6 +19,70 @@ SET time_zone = "+00:00";
 --
 -- Database: `sia_mardisiswa`
 --
+
+DELIMITER $$
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `DAMLEV`(`s1` VARCHAR(255), `s2` VARCHAR(255)) RETURNS int(11)
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+  DECLARE s1_len, s2_len, i, j, c, c_temp, cost INT;
+DECLARE s1_char CHAR;
+DECLARE cv0, cv1 VARBINARY(256);
+SET s1_len = CHAR_LENGTH(s1), s2_len = CHAR_LENGTH(s2), cv1 = 0x00, j = 1, i = 1, c = 0;
+IF s1 = s2 THEN
+    RETURN 0;
+ELSEIF s1_len = 0 THEN
+    RETURN s2_len;
+ELSEIF s2_len = 0 THEN
+    RETURN s1_len;
+ELSE
+    WHILE j <= s2_len DO
+      SET cv1 = CONCAT(cv1, UNHEX(HEX(j)));
+SET j = j + 1;
+END WHILE;
+WHILE i <= s1_len DO
+      SET s1_char = SUBSTRING(s1, i, 1);
+SET c = i;
+SET cv0 = UNHEX(HEX(i));
+SET j = 1;
+WHILE j <= s2_len DO
+          SET c = c + 1;
+IF s1_char = SUBSTRING(s2, j, 1) THEN
+			 	SET cost = 0;
+ELSE
+				SET cost = 1;
+END IF;
+SET c_temp = CONV (HEX(SUBSTRING(cv1, j, 1)), 16, 10) + cost;
+IF c > c_temp THEN
+			 	SET c = c_temp;
+END IF;
+SET c_temp = CONV (HEX(SUBSTRING(cv1, j+1, 1)), 16, 10) + 1;
+IF c > c_temp THEN
+				 SET c = c_temp;
+END IF;
+IF i > 1 AND j > 1 AND (s1_char = SUBSTRING(s2, j - 1, 1)) AND (SUBSTRING(s1, i - 1, 1) = SUBSTRING(s2, j, 1)) THEN
+
+
+						SET c_temp = CONV(HEX(SUBSTRING(cv1, j + 1, 1)), 16, 10);
+END IF;
+IF c > c_temp THEN
+						SET c = c_temp;
+END IF;
+SET cv0 = CONCAT(cv0, UNHEX(HEX(c)));
+SET j = j + 1;
+END WHILE;
+SET cv1 = cv0;
+SET i = i + 1;
+END WHILE;
+END IF;
+RETURN c;
+
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -41,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 INSERT INTO `sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
 ('08f11497abfd3870f6c6ff0e1c7f2d76', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 1453421113, 'a:5:{s:9:"user_data";s:0:"";s:4:"user";s:5:"admin";s:5:"level";s:1:"9";s:12:"kd_transaksi";N;s:9:"nama_akun";N;}'),
 ('557164b91844c29817374d0ee0d93822', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36', 1456976922, ''),
-('e690c17238534d75aadedb0d3a37c991', '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0', 1457935966, '');
+('6a2233475605f73db3527f129d47c6db', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36', 1458271806, '');
 
 -- --------------------------------------------------------
 
@@ -57,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `statistik` (
   `action` varchar(32) NOT NULL,
   `when` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `uri` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `statistik`
@@ -191,46 +255,33 @@ INSERT INTO `statistik` (`kd_statistik`, `user`, `level`, `section`, `action`, `
 (125, 'admin', 9, 'gurus', 'manageGuru', '2016-01-22 00:07:26', 'gurus/manageGuru/ajax_list_info'),
 (126, 'admin', 9, 'gurus', 'manageGuru', '2016-01-22 00:07:26', 'gurus/manageGuru/ajax_list'),
 (127, '0', 0, 'users', 'index', '2016-03-03 03:48:42', ''),
-(128, '0', 0, 'users', 'index', '2016-03-14 06:12:46', ''),
-(129, '0', 0, 'users', 'index', '2016-03-14 06:14:32', ''),
-(130, '0', 0, 'users', 'login', '2016-03-14 06:14:32', 'users/login'),
-(131, '0', 0, 'users', 'login', '2016-03-14 06:14:40', 'users/login');
+(128, '0', 0, 'siswas', 'manageSiswa', '2016-03-18 03:30:06', 'siswas/manageSiswa'),
+(129, '0', 0, 'users', 'login', '2016-03-18 03:30:06', 'users/login');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tabel_banyaknya_kd`
+-- Table structure for table `tabel_absensi`
 --
 
-CREATE TABLE IF NOT EXISTS `tabel_banyaknya_kd` (
-  `id_kd` int(11) NOT NULL,
-  `id_sk` int(11) NOT NULL,
-  `kd` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tabel_banyaknya_nilai_harian`
---
-
-CREATE TABLE IF NOT EXISTS `tabel_banyaknya_nilai_harian` (
-  `id_nilai_harian` int(11) NOT NULL,
-  `id_mapel_ta` int(11) NOT NULL,
-  `ulangan` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tabel_absensi` (
+  `id_entry` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `id_kelas` int(11) DEFAULT NULL,
+  `id_guru` int(11) DEFAULT NULL,
+  `tahun_ajaran` year(4) NOT NULL,
+  `semester` int(1) NOT NULL,
+  `tanggal` date NOT NULL,
+  `status` int(3) NOT NULL,
+  `keterangan` text
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `tabel_banyaknya_sk`
+-- Dumping data for table `tabel_absensi`
 --
 
-CREATE TABLE IF NOT EXISTS `tabel_banyaknya_sk` (
-  `id_sk` int(11) NOT NULL,
-  `id_mapel_ta` int(11) NOT NULL,
-  `sk` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+INSERT INTO `tabel_absensi` (`id_entry`, `id_siswa`, `id_kelas`, `id_guru`, `tahun_ajaran`, `semester`, `tanggal`, `status`, `keterangan`) VALUES
+(1, 20, NULL, NULL, 2016, 1, '2016-04-18', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -242,22 +293,60 @@ CREATE TABLE IF NOT EXISTS `tabel_berita` (
   `newsId` int(11) NOT NULL,
   `categoryId` int(11) NOT NULL DEFAULT '1',
   `newsTitle` text NOT NULL,
+  `newsThumbnail` varchar(128) DEFAULT NULL,
   `newsDate` datetime NOT NULL,
   `newsContent` longtext NOT NULL,
-  `newsStatus` enum('Publish','Draft') NOT NULL,
+  `newsStatus` enum('Publish','Draft') NOT NULL DEFAULT 'Draft',
   `newsName` varchar(200) NOT NULL,
   `newsModified` datetime NOT NULL,
   `newsUrl` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tabel_berita`
 --
 
-INSERT INTO `tabel_berita` (`newsId`, `categoryId`, `newsTitle`, `newsDate`, `newsContent`, `newsStatus`, `newsName`, `newsModified`, `newsUrl`) VALUES
-(1, 1, 'Coba Berita', '0000-00-00 00:00:00', '<p>\r\n	ini adalah contoh konten berita pertama</p>\r\n', 'Publish', 'Coba-Berita', '2016-03-14 08:29:17', 'http://localhost/aismardi/news/UmumCoba-Berita'),
-(2, 0, 'Coba Berita 2', '2016-03-14 08:30:35', '<p>\r\n	coba berita redundan</p>\r\n', 'Publish', 'coba-berita-2', '2016-03-14 08:30:35', 'http://localhost/aismardi/news//coba-berita-2'),
-(4, 1, 'Coba ketiga', '2016-03-14 10:27:33', '<p>\r\n	Berita ketiga</p>\r\n', 'Publish', 'coba-ketiga', '2016-03-14 10:27:33', 'http://localhost/aismardi/news/umum/coba-ketiga');
+INSERT INTO `tabel_berita` (`newsId`, `categoryId`, `newsTitle`, `newsThumbnail`, `newsDate`, `newsContent`, `newsStatus`, `newsName`, `newsModified`, `newsUrl`) VALUES
+(10, 3, 'Berita', NULL, '2016-04-01 05:44:05', '<p>\r\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vestibulum pellentesque urna. Phasellus adipiscing et massa et aliquam. Ut odio magna, interdum quis dolor non, tristique vestibulum nisi. Nam accumsan convallis venenatis. Nullam posuere risus odio, in interdum felis venenatis sagittis. Integer malesuada porta fermentum. Sed luctus nibh sed mi auctor imperdiet. Cras et sapien rhoncus, pulvinar dolor sed, tincidunt massa. Nullam fringilla mauris non risus ultricies viverra. Donec a turpis non lorem pulvinar posuere.</p>\r\n', 'Publish', 'berita', '2016-04-01 05:45:42', 'http://localhost/aismardi/berita/umum/berita'),
+(11, 4, 'Berita 2', NULL, '2016-04-01 08:53:36', '<p>\r\n ini berita kedua</p>\r\n', 'Publish', 'berita-2', '2016-04-01 08:53:36', 'http://localhost/aismardi/berita/coba-coba/berita-2'),
+(12, 3, 'Berita Ketiga', '684d2-peta-tegalarum.png', '2016-04-03 14:23:58', '<p>\r\n berita ketiga</p>\r\n', 'Publish', 'berita-ketiga', '2016-04-03 14:23:58', 'http://localhost/aismardi/berita/umum/berita-ketiga');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_event`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_event` (
+  `eventId` int(11) NOT NULL,
+  `startDate` datetime NOT NULL,
+  `endDate` datetime NOT NULL,
+  `eventTitle` varchar(64) NOT NULL,
+  `eventContent` text NOT NULL,
+  `locationName` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tabel_event`
+--
+
+INSERT INTO `tabel_event` (`eventId`, `startDate`, `endDate`, `eventTitle`, `eventContent`, `locationName`) VALUES
+(1, '2016-04-05 10:17:52', '2016-04-13 10:18:07', 'Coba Event', '<p>\r\n	deskripsi konten</p>\r\n', 'Hall'),
+(2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'coba', '', ''),
+(3, '2016-04-03 10:22:11', '2016-04-04 00:00:00', 'Event lebih dari sehari', '', 'Di sini');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_galeri`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_galeri` (
+  `imageId` int(11) NOT NULL,
+  `imageUrl` varchar(128) NOT NULL,
+  `imageTitle` varchar(32) NOT NULL,
+  `imagePriority` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -270,7 +359,15 @@ CREATE TABLE IF NOT EXISTS `tabel_guru` (
   `nip` varchar(40) NOT NULL,
   `nama` varchar(80) NOT NULL,
   `alamat` varchar(80) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_guru`
+--
+
+INSERT INTO `tabel_guru` (`id_guru`, `nip`, `nama`, `alamat`) VALUES
+(5, 'gr.bayu', 'Bayu', 'Boyolali'),
+(6, 'gr.aji', 'Aji', 'Boyolali');
 
 -- --------------------------------------------------------
 
@@ -295,22 +392,39 @@ INSERT INTO `tabel_jurusan` (`id_jurusan`, `nama_jurusan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tabel_kartu_tes`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_kartu_tes` (
+  `id_entry` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `flag_lock` int(11) NOT NULL,
+  `semester` int(11) NOT NULL,
+  `tahun_ajaran` year(4) NOT NULL,
+  `id_guru` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tabel_kategori`
 --
 
 CREATE TABLE IF NOT EXISTS `tabel_kategori` (
   `categoryId` int(11) NOT NULL,
+  `categoryPid` varchar(64) NOT NULL,
   `categoryName` varchar(128) NOT NULL,
   `count` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tabel_kategori`
 --
 
-INSERT INTO `tabel_kategori` (`categoryId`, `categoryName`, `count`) VALUES
-(0, 'Uncategorized', 1),
-(1, 'Umum', 2);
+INSERT INTO `tabel_kategori` (`categoryId`, `categoryPid`, `categoryName`, `count`) VALUES
+(0, 'uncategorized', 'Uncategorized', 0),
+(3, 'umum', 'Umum', 2),
+(4, 'coba-coba', 'Coba coba', 1);
 
 -- --------------------------------------------------------
 
@@ -322,9 +436,17 @@ CREATE TABLE IF NOT EXISTS `tabel_kelas` (
   `tahun_ajaran` varchar(10) NOT NULL,
   `id_kelas` int(5) NOT NULL,
   `nama_kelas` varchar(10) NOT NULL,
-  `kd_guru` varchar(5) NOT NULL,
-  `tingkat` enum('','1','2','3') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_guru` varchar(5) NOT NULL,
+  `tingkat` int(1) NOT NULL,
+  `jurusan` int(1) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_kelas`
+--
+
+INSERT INTO `tabel_kelas` (`tahun_ajaran`, `id_kelas`, `nama_kelas`, `id_guru`, `tingkat`, `jurusan`) VALUES
+('2016', 11, 'X A', '5', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -335,9 +457,43 @@ CREATE TABLE IF NOT EXISTS `tabel_kelas` (
 CREATE TABLE IF NOT EXISTS `tabel_kelas_siswa` (
   `id_entry` int(11) NOT NULL,
   `tahun_ajaran` varchar(10) NOT NULL,
-  `kd_siswa` varchar(20) NOT NULL,
-  `kd_kelas` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_siswa` varchar(20) NOT NULL,
+  `id_kelas` varchar(5) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_kelas_siswa`
+--
+
+INSERT INTO `tabel_kelas_siswa` (`id_entry`, `tahun_ajaran`, `id_siswa`, `id_kelas`) VALUES
+(4, '2016', '18', '11'),
+(5, '2016', '19', '11'),
+(6, '2016', '20', '11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_laman`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_laman` (
+  `pageId` int(11) NOT NULL,
+  `pageTitle` text NOT NULL,
+  `pageDate` datetime NOT NULL,
+  `pageContent` longtext NOT NULL,
+  `pageStatus` enum('Publish','Draft') NOT NULL DEFAULT 'Draft',
+  `pageName` varchar(200) NOT NULL,
+  `pageModified` datetime NOT NULL,
+  `pageUrl` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tabel_laman`
+--
+
+INSERT INTO `tabel_laman` (`pageId`, `pageTitle`, `pageDate`, `pageContent`, `pageStatus`, `pageName`, `pageModified`, `pageUrl`) VALUES
+(1, 'Profil', '2016-03-18 05:22:25', '<p>\r\n Laman untuk profil</p>\r\n', 'Publish', 'profil', '2016-03-18 05:22:25', 'http://localhost/aismardi/page/profil'),
+(4, 'Fasilitas', '2016-03-18 05:30:43', '', 'Draft', 'fasilitas', '2016-03-18 05:30:43', 'http://localhost/aismardi/page/fasilitas');
 
 -- --------------------------------------------------------
 
@@ -356,9 +512,9 @@ CREATE TABLE IF NOT EXISTS `tabel_level` (
 
 INSERT INTO `tabel_level` (`jenis_user`, `level`) VALUES
 ('Guru', 1),
-('Kepala Sekolah', 2),
-('Wali Kelas', 3),
-('Siswa', 4),
+('Guru BP', 2),
+('Wali Kelas', 4),
+('Siswa', 5),
 ('Admin', 9);
 
 -- --------------------------------------------------------
@@ -369,17 +525,19 @@ INSERT INTO `tabel_level` (`jenis_user`, `level`) VALUES
 
 CREATE TABLE IF NOT EXISTS `tabel_mapel` (
   `id_mapel` int(11) NOT NULL,
-  `nama_mapel` varchar(50) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `nama_mapel` varchar(50) NOT NULL,
+  `kkm` float DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tabel_mapel`
 --
 
-INSERT INTO `tabel_mapel` (`id_mapel`, `nama_mapel`) VALUES
-(1, 'Ilmu Pengetahuan Alam'),
-(2, 'Ilmu Pengetahuan Sosial'),
-(3, 'Pendidikan Agam');
+INSERT INTO `tabel_mapel` (`id_mapel`, `nama_mapel`, `kkm`) VALUES
+(1, 'Ilmu Pengetahuan Alam', 65),
+(2, 'Ilmu Pengetahuan Sosial', 65),
+(3, 'Pendidikan Agama', 70),
+(4, 'Bimbingan dan Pengembangan', NULL);
 
 -- --------------------------------------------------------
 
@@ -392,50 +550,144 @@ CREATE TABLE IF NOT EXISTS `tabel_mapel_jurusan` (
   `id_jurusan` int(11) NOT NULL,
   `id_mapel` int(11) NOT NULL,
   `tahun_ajaran` year(4) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_mapel_jurusan`
+--
+
+INSERT INTO `tabel_mapel_jurusan` (`id_entry`, `id_jurusan`, `id_mapel`, `tahun_ajaran`) VALUES
+(41, 3, 3, 2016),
+(40, 3, 2, 2016),
+(35, 1, 1, 2016),
+(39, 2, 3, 2016),
+(38, 2, 1, 2016),
+(36, 1, 2, 2016),
+(37, 1, 3, 2016);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_nilai_ekstrakurikuler`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_nilai_ekstrakurikuler` (
+  `id_entry` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `tahun_ajaran` year(4) NOT NULL,
+  `semester` int(11) NOT NULL,
+  `nama_kegiatan` varchar(50) NOT NULL,
+  `nilai_kegiatan` varchar(5) NOT NULL,
+  `keterangan` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tabel_mapel_tahunan`
+-- Table structure for table `tabel_nilai_organisasi`
 --
 
-CREATE TABLE IF NOT EXISTS `tabel_mapel_tahunan` (
-  `id_mapel_ta` int(11) NOT NULL,
-  `id_mapel` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tabel_nilai_organisasi` (
+  `id_entry` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `tahun_ajaran` year(4) NOT NULL,
+  `semester` int(11) NOT NULL,
+  `nama_organisasi` varchar(50) NOT NULL,
+  `nilai_organisasi` varchar(5) NOT NULL,
+  `keterangan` text
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_nilai_rapor`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_nilai_rapor` (
+  `id_entry` int(11) NOT NULL,
+  `id_siswa` varchar(50) NOT NULL,
   `tahun_ajaran` year(4) NOT NULL,
   `semester` int(1) NOT NULL,
-  `tingkat` int(1) DEFAULT NULL,
-  `kkm_uts` float NOT NULL,
-  `kkm_uas` float NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `nilai_pengetahuan` float NOT NULL,
+  `nilai_praktek` float DEFAULT NULL,
+  `nilai_sikap` char(1) NOT NULL,
+  `keterangan` char(1) NOT NULL,
+  `ketercapaian_kompetensi` text NOT NULL,
+  `id_mapel` int(11) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_nilai_rapor`
+--
+
+INSERT INTO `tabel_nilai_rapor` (`id_entry`, `id_siswa`, `tahun_ajaran`, `semester`, `nilai_pengetahuan`, `nilai_praktek`, `nilai_sikap`, `keterangan`, `ketercapaian_kompetensi`, `id_mapel`) VALUES
+(6, '20', 2016, 2, 70, NULL, 'A', 'T', 'Buruk', 1),
+(5, '19', 2016, 2, 80, NULL, 'B', 'T', 'Lumayannn', 1),
+(4, '18', 2016, 2, 90, NULL, 'A', 'T', 'Baguslaa', 1),
+(10, '18', 2016, 1, 90, NULL, 'B', 'T', 'Baguslaa', 1),
+(11, '19', 2016, 1, 80, NULL, 'A', 'T', 'Lumayannn', 1),
+(12, '20', 2016, 1, 70, NULL, 'C', 'T', 'Buruk', 1),
+(13, '18', 2016, 1, 78, NULL, 'A', 'T', 'Sosialis', 2),
+(14, '19', 2016, 1, 77, NULL, 'B', 'T', 'Agak sosialis', 2),
+(15, '20', 2016, 1, 76, NULL, 'C', 'T', 'Castoff', 2),
+(16, '18', 2016, 1, 90, 99, 'A', 'T', 'Ustad', 3),
+(17, '19', 2016, 1, 60, 70, 'C', 'T', 'Kafir', 3),
+(18, '20', 2016, 1, 50, 0, 'D', 'T', 'Ateis', 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tabel_nilai_harian`
+-- Table structure for table `tabel_partner`
 --
 
-CREATE TABLE IF NOT EXISTS `tabel_nilai_harian` (
-  `id_nilai_harian` int(11) NOT NULL,
-  `id_mapel_ta` int(11) NOT NULL,
-  `ulangan` int(11) NOT NULL,
-  `nilai` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `tabel_partner` (
+  `imageId` int(11) NOT NULL,
+  `imageUrl` varchar(128) NOT NULL,
+  `imageTitle` varchar(32) NOT NULL,
+  `imagePriority` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tabel_partner`
+--
+
+INSERT INTO `tabel_partner` (`imageId`, `imageUrl`, `imageTitle`, `imagePriority`) VALUES
+(1, '804f4-24010312130052.jpg', '', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tabel_nilai_penugasan`
+-- Table structure for table `tabel_pengampu`
 --
 
-CREATE TABLE IF NOT EXISTS `tabel_nilai_penugasan` (
-  `id_nilai_penugasan` int(11) NOT NULL,
-  `id_mapel_ta` int(11) NOT NULL,
-  `sk` int(11) NOT NULL,
-  `dk` int(11) NOT NULL,
-  `nilai` float NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `tabel_pengampu` (
+  `id_entry` int(11) NOT NULL,
+  `tahun_ajaran` year(4) NOT NULL,
+  `id_guru` varchar(5) NOT NULL,
+  `id_mapel` varchar(5) NOT NULL,
+  `id_kelas` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_pengampu`
+--
+
+INSERT INTO `tabel_pengampu` (`id_entry`, `tahun_ajaran`, `id_guru`, `id_mapel`, `id_kelas`) VALUES
+(110, 2016, '5', '1', 11),
+(111, 2016, '5', '2', 11),
+(112, 2016, '5', '3', 11);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_sambutan`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_sambutan` (
+  `sambutanId` int(11) NOT NULL,
+  `imageUrl` varchar(64) NOT NULL,
+  `sambutanKonten` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -446,14 +698,96 @@ CREATE TABLE IF NOT EXISTS `tabel_nilai_penugasan` (
 CREATE TABLE IF NOT EXISTS `tabel_siswa` (
   `id_siswa` int(11) NOT NULL,
   `nis` varchar(50) NOT NULL,
-  `nisn` varchar(30) NOT NULL,
   `nama` varchar(80) NOT NULL,
   `tahun_masuk` year(4) NOT NULL,
-  `jurusan` int(11) NOT NULL DEFAULT '1',
+  `jurusan` int(11) DEFAULT '1',
   `status` int(1) NOT NULL DEFAULT '1',
-  `tingkat` int(1) NOT NULL DEFAULT '1',
-  `tahun_lulus` year(4) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `tingkat` int(1) NOT NULL DEFAULT '1'
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_siswa`
+--
+
+INSERT INTO `tabel_siswa` (`id_siswa`, `nis`, `nama`, `tahun_masuk`, `jurusan`, `status`, `tingkat`) VALUES
+(19, '213', 'ha', 2016, 1, 1, 1),
+(18, '122', 'Helaa', 2016, 1, 1, 1),
+(20, '111', 'hoi', 2016, 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_slider`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_slider` (
+  `sliderId` int(11) NOT NULL,
+  `sliderUrl` varchar(128) NOT NULL,
+  `sliderTitle` varchar(32) NOT NULL,
+  `sliderPriority` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tabel_slider`
+--
+
+INSERT INTO `tabel_slider` (`sliderId`, `sliderUrl`, `sliderTitle`, `sliderPriority`) VALUES
+(1, '72578-peta-tegalarum.png', 'Judul 1', 1),
+(2, '02e71-IMG_20141220_201405.jpg', 'Judul 2', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_status_absensi`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_status_absensi` (
+  `id_status` int(11) NOT NULL,
+  `nama_status` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabel_status_absensi`
+--
+
+INSERT INTO `tabel_status_absensi` (`id_status`, `nama_status`) VALUES
+(1, 'sakit'),
+(2, 'izin'),
+(3, 'alfa');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_tautan`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_tautan` (
+  `linkId` int(11) NOT NULL,
+  `linkName` varchar(32) NOT NULL,
+  `linkUrl` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_testi`
+--
+
+CREATE TABLE IF NOT EXISTS `tabel_testi` (
+  `testiId` int(11) NOT NULL,
+  `testiImage` varchar(128) NOT NULL,
+  `testiName` varchar(64) NOT NULL,
+  `testiAngkatan` varchar(8) NOT NULL,
+  `testiContent` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tabel_testi`
+--
+
+INSERT INTO `tabel_testi` (`testiId`, `testiImage`, `testiName`, `testiAngkatan`, `testiContent`) VALUES
+(3, '79b81-24010312130052.jpg', 'Saptanto', '2012', '\r\n	Saya sekolah disini\r\n'),
+(4, '7f948-peta-tegalarum.png', 'Sindu', '2016', '\r\n	Saya kuliah disini\r\n');
 
 -- --------------------------------------------------------
 
@@ -473,7 +807,12 @@ CREATE TABLE IF NOT EXISTS `tabel_users` (
 --
 
 INSERT INTO `tabel_users` (`user`, `pass`, `level`, `id_transaksi`) VALUES
-('admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 9, 0);
+('111', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 5, 20),
+('122', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 5, 18),
+('213', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 5, 19),
+('admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 9, 0),
+('gr.aji', 'f42e1b5c16d4f64e98aba7b255c16009dfd87d27', 1, 6),
+('gr.bayu', '2080988f5ac23ef8acc98c5afa76be8f6db58ee2', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -496,6 +835,20 @@ INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`, `kepala_sekolah`)
 (2015, '2015 / 2016', 0),
 (2016, '2016 / 2017', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `u_tabel_mapel_tahunan`
+--
+
+CREATE TABLE IF NOT EXISTS `u_tabel_mapel_tahunan` (
+  `id_mapel_ta` int(11) NOT NULL,
+  `id_mapel` int(11) NOT NULL,
+  `tahun_ajaran` year(4) NOT NULL,
+  `semester` int(1) NOT NULL,
+  `tingkat` int(1) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for dumped tables
 --
@@ -513,10 +866,10 @@ ALTER TABLE `statistik`
   ADD PRIMARY KEY (`kd_statistik`);
 
 --
--- Indexes for table `tabel_berita`
+-- Indexes for table `tabel_absensi`
 --
-ALTER TABLE `tabel_berita`
-  ADD PRIMARY KEY (`newsId`), ADD KEY `categoryId` (`categoryId`);
+ALTER TABLE `tabel_absensi`
+  ADD PRIMARY KEY (`id_entry`);
 
 --
 -- Indexes for table `tabel_guru`
@@ -531,10 +884,10 @@ ALTER TABLE `tabel_jurusan`
   ADD PRIMARY KEY (`id_jurusan`);
 
 --
--- Indexes for table `tabel_kategori`
+-- Indexes for table `tabel_kartu_tes`
 --
-ALTER TABLE `tabel_kategori`
-  ADD PRIMARY KEY (`categoryId`);
+ALTER TABLE `tabel_kartu_tes`
+  ADD PRIMARY KEY (`id_entry`);
 
 --
 -- Indexes for table `tabel_kelas`
@@ -564,19 +917,43 @@ ALTER TABLE `tabel_mapel`
 -- Indexes for table `tabel_mapel_jurusan`
 --
 ALTER TABLE `tabel_mapel_jurusan`
+  ADD PRIMARY KEY (`id_entry`), ADD UNIQUE KEY `id_jurusan` (`id_jurusan`,`id_mapel`,`tahun_ajaran`);
+
+--
+-- Indexes for table `tabel_nilai_ekstrakurikuler`
+--
+ALTER TABLE `tabel_nilai_ekstrakurikuler`
   ADD PRIMARY KEY (`id_entry`);
 
 --
--- Indexes for table `tabel_mapel_tahunan`
+-- Indexes for table `tabel_nilai_organisasi`
 --
-ALTER TABLE `tabel_mapel_tahunan`
-  ADD PRIMARY KEY (`id_mapel_ta`);
+ALTER TABLE `tabel_nilai_organisasi`
+  ADD PRIMARY KEY (`id_entry`);
+
+--
+-- Indexes for table `tabel_nilai_rapor`
+--
+ALTER TABLE `tabel_nilai_rapor`
+  ADD PRIMARY KEY (`id_entry`), ADD UNIQUE KEY `id_siswa` (`id_siswa`,`tahun_ajaran`,`semester`,`id_mapel`), ADD UNIQUE KEY `id_siswa_2` (`id_siswa`,`tahun_ajaran`,`semester`,`id_mapel`);
+
+--
+-- Indexes for table `tabel_partner`
+--
+ALTER TABLE `tabel_partner`
+  ADD PRIMARY KEY (`imageId`);
+
+--
+-- Indexes for table `tabel_pengampu`
+--
+ALTER TABLE `tabel_pengampu`
+  ADD PRIMARY KEY (`id_entry`), ADD UNIQUE KEY `tahun_ajaran` (`tahun_ajaran`,`id_mapel`,`id_kelas`,`id_guru`);
 
 --
 -- Indexes for table `tabel_siswa`
 --
 ALTER TABLE `tabel_siswa`
-  ADD PRIMARY KEY (`id_siswa`);
+  ADD PRIMARY KEY (`id_siswa`), ADD UNIQUE KEY `nis` (`nis`);
 
 --
 -- Indexes for table `tabel_users`
@@ -591,6 +968,12 @@ ALTER TABLE `tahun_ajaran`
   ADD PRIMARY KEY (`id_tahun_ajaran`);
 
 --
+-- Indexes for table `u_tabel_mapel_tahunan`
+--
+ALTER TABLE `u_tabel_mapel_tahunan`
+  ADD PRIMARY KEY (`id_mapel_ta`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -598,57 +981,82 @@ ALTER TABLE `tahun_ajaran`
 -- AUTO_INCREMENT for table `statistik`
 --
 ALTER TABLE `statistik`
-  MODIFY `kd_statistik` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=132;
+  MODIFY `kd_statistik` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=130;
 --
--- AUTO_INCREMENT for table `tabel_berita`
+-- AUTO_INCREMENT for table `tabel_absensi`
 --
-ALTER TABLE `tabel_berita`
-  MODIFY `newsId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+ALTER TABLE `tabel_absensi`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tabel_guru`
 --
 ALTER TABLE `tabel_guru`
-  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tabel_jurusan`
 --
 ALTER TABLE `tabel_jurusan`
   MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `tabel_kategori`
+-- AUTO_INCREMENT for table `tabel_kartu_tes`
 --
-ALTER TABLE `tabel_kategori`
-  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+ALTER TABLE `tabel_kartu_tes`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tabel_kelas`
 --
 ALTER TABLE `tabel_kelas`
-  MODIFY `id_kelas` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kelas` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tabel_kelas_siswa`
 --
 ALTER TABLE `tabel_kelas_siswa`
-  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tabel_mapel`
 --
 ALTER TABLE `tabel_mapel`
-  MODIFY `id_mapel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id_mapel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tabel_mapel_jurusan`
 --
 ALTER TABLE `tabel_mapel_jurusan`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+--
+-- AUTO_INCREMENT for table `tabel_nilai_ekstrakurikuler`
+--
+ALTER TABLE `tabel_nilai_ekstrakurikuler`
   MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `tabel_mapel_tahunan`
+-- AUTO_INCREMENT for table `tabel_nilai_organisasi`
 --
-ALTER TABLE `tabel_mapel_tahunan`
-  MODIFY `id_mapel_ta` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tabel_nilai_organisasi`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tabel_nilai_rapor`
+--
+ALTER TABLE `tabel_nilai_rapor`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `tabel_partner`
+--
+ALTER TABLE `tabel_partner`
+  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tabel_pengampu`
+--
+ALTER TABLE `tabel_pengampu`
+  MODIFY `id_entry` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=113;
 --
 -- AUTO_INCREMENT for table `tabel_siswa`
 --
 ALTER TABLE `tabel_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `u_tabel_mapel_tahunan`
+--
+ALTER TABLE `u_tabel_mapel_tahunan`
+  MODIFY `id_mapel_ta` int(11) NOT NULL AUTO_INCREMENT;
 DELIMITER $$
 --
 -- Events

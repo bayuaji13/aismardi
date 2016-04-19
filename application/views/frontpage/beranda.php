@@ -139,51 +139,27 @@
 	<section class="awards">
 		<div id="awards-carousel" class="awards-carousel carousel slide">
 			<div class="carousel-inner">
-				<div class="item active">
-					<ul class="logos">
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<a href="#"><img class="img-responsive" src="assets/images/awards/award1.jpg"  alt="" /></a>
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<a href="#"><img class="img-responsive" src="assets/images/awards/award2.jpg"  alt="" /></a>
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<a href="#"><img class="img-responsive" src="assets/images/awards/award3.jpg"  alt="" /></a>
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<a href="#"><img class="img-responsive" src="assets/images/awards/award4.jpg"  alt="" /></a>
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<a href="#"><img class="img-responsive" src="assets/images/awards/award5.jpg"  alt="" /></a>
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<a href="#"><img class="img-responsive" src="assets/images/awards/award6.jpg"  alt="" /></a>
-						</li>             
-					</ul><!--//slides-->
-				</div><!--//item-->
-				
-				<div class="item">
-					<ul class="logos">
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<img class="img-responsive" src="assets/images/awards/award7.jpg"  alt="" />
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<img class="img-responsive" src="assets/images/awards/award6.jpg"  alt="" />
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<img class="img-responsive" src="assets/images/awards/award5.jpg"  alt="" />
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<img class="img-responsive" src="assets/images/awards/award4.jpg"  alt="" />
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<img class="img-responsive" src="assets/images/awards/award3.jpg"  alt="" />
-						</li>
-						<li class="col-md-2 col-sm-2 col-xs-4">
-							<img class="img-responsive" src="assets/images/awards/award2.jpg"  alt="" />
-						</li>             
-					</ul><!--//slides-->
-				</div><!--//item-->
+			<?php 
+				if(!empty($partners)){
+					for ($indeks = 1; $indeks <= count($partners); $indeks++){
+						if ($indeks == 1){
+							echo '<div class="item active">';
+							echo '	<ul class="logos">';
+						}
+						else if($indeks != 1 && ($indeks)%7 == 0){
+							echo '<div class="item">';
+							echo '	<ul class="logos">';
+						}
+						echo '		<li class="col-md-2 col-sm-2 col-xs-4">';
+						echo "			<img class='img-responsive' height='100px' width='100px' src='".base_url('assets/uploads/images/partners/'.$partners[$indeks-1]['imageUrl'])."'  alt='".$partners[$indeks-1]['imageTitle']."' />";
+						echo '		</li>';
+						if(($indeks)%6 == 0){
+							echo '	</ul><!--//slides-->';
+							echo '</div><!--//item-->';
+						}
+					}
+				}
+			?>
 			</div><!--//carousel-inner-->
 			<a class="left carousel-control" href="#awards-carousel" data-slide="prev">
 				<i class="fa fa-angle-left"></i>

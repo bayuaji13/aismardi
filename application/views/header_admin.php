@@ -138,6 +138,12 @@
 			              <span>Slider</span>
 			            </a>
 			         </li>
+			         <li>
+			            <a href="<?=base_url('konten/managePartner')?>">
+			              <i class="fa fa-picture-o"></i>
+			              <span>Partner</span>
+			            </a>
+			         </li>
 			          <li>
 			            <a href="<?=base_url('konten/manageSambutan')?>">
 			              <i class="fa fa-info-circle"></i>

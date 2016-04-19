@@ -311,6 +311,23 @@ class Konten extends CI_Controller {
 		$this->showOutput($output);
 	}
 	
+	public function managePartner(){
+		$this->load->library('image_CRUD');
+	
+		$image_crud = new image_CRUD();
+		$image_crud->set_table('tabel_partner')
+		->set_primary_key_field('imageId');
+		$image_crud->set_url_field('imageUrl')
+		->set_title_field('imageTitle')
+		->set_ordering_field('imagePriority')
+		->set_image_path('assets/uploads/images/partners');
+	
+		$output = $image_crud->render();
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Partner </h3> <br/>
+				(Harap refresh halaman setelah selesai proses upload) <br/>' . $output->output;
+		$this->showOutput($output);
+	}
+	
 	public function manageSambutan(){
 		$this->load->model('msambutan');
 		$crud = new grocery_CRUD();

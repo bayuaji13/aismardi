@@ -8,12 +8,14 @@ class Main extends CI_Controller {
 	
 	public function index() {
 		$this->load->model('mslider');
+		$this->load->model('mpartner');
 		$this->load->model('mberita');
 		$this->load->model('msambutan');
 		$this->load->model('mevent');
 		$this->load->model('mtautan');
 		$this->load->model('mtestimoni');
 		$data['sliders'] = $this->mslider->getSliders();
+		$data['partners'] = $this->mpartner->getPartners();
 		$data['latestNews'] = $this->mberita->getLatestBerita();
 		$data['sambutan'] = $this->msambutan->getSambutan();
 		$data['latestEvents'] = $this->mevent->getLatestEvents();
