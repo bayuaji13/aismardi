@@ -29,6 +29,25 @@
 		$this->db->update('tabel_siswa',$data);
 	}
 
+	public function cekBolehDownload($id_siswa)
+	{
+		$this->db->where('id_siswa',$id_siswa);
+		$query = $this->db->select('flag_tunggakan')->get('tabel_siswa');
+		$hasil = $query->first_row('array');
+		$hasil = !($hasil['flag_tunggakan'] == 1);
+
+		$query = $this->db->where('DATE(NOW()) BETWEEN tanggal_mulai and tanggal_akhir')->select('keterangan')->get('tabel_tanggal');
+		$hasil2 = $query->first_row('array');
+		$hasil2 = $hasil2['keterangan'];
+
+		if ($hasil and $hasil2)
+			return $hasil2;
+		else
+			return false;
+
+	}
+
+
 	public function deleteSiswa($nis) {
 		$this->db->where('nis', $nis);
 		if ($this->db->delete('tabel_siswa')) {
@@ -36,6 +55,24 @@
 		} else {
 			return false;
 		}
+	}
+
+	public function lulus()
+	{
+		// $this->db->where('id_siswa', $id_siswa);
+		$data['tingkat'] = 4;
+		$data['status'] = 2;
+		$this->db->where('tingkat',3);
+		$this->db->where('status',1);
+		$this->db->update('tabel_siswa',$data);
+	}
+	
+	public function tidakLulus($id_siswa)
+	{
+		$this->db->where('id_siswa', $id_siswa);
+		$data['tingkat'] = 3;
+		$data['status'] = 1;
+		$this->db->update('tabel_siswa'.$data);
 	}
 	
 	public function get_user_details($user) {

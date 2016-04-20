@@ -87,10 +87,10 @@
               <li><a  href="<?=base_url('batchinput/do_upload/data')?>">Input Data siswa</a></li>
               <li><a  href="<?=base_url('gurus')?>">Data Guru</a></li>
               <li><a  href="<?=base_url('mapels')?>">Data Mata Pelajaran</a></li>
+              <li><a  href="<?=base_url('mapels/seleksiMapel')?>">Seleksi Mata Pelajaran</a></li>
               <li><a  href="<?=base_url('kelas')?>">Data Kelas siswa</a></li>
-              <li><a  href="<?=base_url('pengampu')?>">Data Guru Pengampu</a></li>
+              <li><a  href="<?=base_url('pengampu/pilihKelas')?>">Data Pengampu</a></li>
               <li><a  href="<?=base_url('nilai')?>">Data Nilai siswa </a></li>
-              <li><a  href="<?=base_url('jadwals')?>">Jadwal</a></li>
               <li><a  href="<?=base_url('tahunajaran')?>">Tahun Ajaran</a></li>
             </ul>
           </li>

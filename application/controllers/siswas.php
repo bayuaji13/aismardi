@@ -5,7 +5,9 @@ class Siswas extends CI_Controller {
         $this->load->database();
         $this->load->helper('url');
         $this->load->model('siswa');
+        $this->load->library('excel');
         $this->load->library('grocery_CRUD');
+        $this->load->model('mata_pelajaran');
     }
 
     function index() {
@@ -72,6 +74,19 @@ class Siswas extends CI_Controller {
 
     }
 
+    public function setTidakLulus()
+    {
+        $siswa = $this->input->post('tidak_lulus');
+        $this->siswa->lulus();
+        if ($siswa != null){
+            foreach ($siswa as $row) {
+                $this->siswa->tidakLulus($row);
+            }
+        }
+        echo "<script>alert('Sistem masuk ke tahun ajaran baru!')</script>";
+        redirect('users/home');
+    }
+
     public function setTunggakan()
     {
         $berhasil = true;
@@ -100,6 +115,96 @@ class Siswas extends CI_Controller {
         $this->showHeader();
         $this->load->view('siswa/status_tunggakan');    
         $this->load->view('footer_general');  
+    }
+
+    public function downloadKartu($id_siswa)
+    {
+        $valid = ($this->session->userdata('level') == 5 and  $this->session->userdata('id_transaksi') == $id_siswa);
+        if ((!$tes = $this->siswa->cekBolehDownload($id_siswa)) or (!$valid)){
+            $output['data'] = "Akses ke kartu ditolak";
+            $this->showHeader();
+            $this->load->view('siswa/kartu_ujian',$output);
+            $this->load->view('footer_table');  
+        } else {
+            $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+            $styleArray = array(
+            'borders' => array(
+                    'top' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        ),
+                    'bottom' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        ),
+                    'right' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        ),
+                    'left' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        )
+
+                )
+            );
+            // $rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
+            // $rendererLibrary = 'mpdf';
+            // $rendererLibraryPath = APPPATH.'third_party/'.$rendererLibrary;
+            // if (!PHPExcel_Settings::setPdfRend
+            //     die(
+            //         'Please set the $rendererName and $rendererLibraryPath values' .
+            //             PHP_EOL .
+            //         ' as appropriate for your directory structure'
+            //         );
+            // }
+            $path_template = realpath(FCPATH).'/assets/template_excel/TemplateKartuUjian.xls';
+            $excel = new PHPExcel_Reader_Excel5();
+            $objPHPExcel = $excel->load($path_template);
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+
+            //prepare data
+            $data_siswa = $this->siswa->getSiswa($id_siswa);
+            $data_kelas = $this->siswa->getKelasSiswa($id_siswa,$tahun_ajaran);
+            $data_mapel = $this->mata_pelajaran->getMapelByJurusan($data_kelas['jurusan'],$tahun_ajaran);
+
+            $string_tahun_ajaran = (string)$tahun_ajaran . ' / '. (string)($tahun_ajaran + 1);
+
+            if ($tes = 'uts')
+                $string_kartu = "Kartu Ujian Tengah Semester";
+            else if ($tes = 'uas')
+                $string_kartu = "Kartu Ujian Akhir Semester";
+
+            $objWorksheet->setCellValue('A1',$string_kartu);
+            $objWorksheet->setCellValue('C6',$data_siswa['nama_siswa']);
+            $objWorksheet->setCellValue('C7',$data_siswa['nis']." ");
+            $objWorksheet->setCellValue('C8',$data_kelas['nama_kelas']);
+
+            $baris = 11;
+            for ($i=0; $i < count($data_mapel); $i++) { 
+                $row = $data_mapel[$i];
+                $cur_baris = $baris + $i;
+                $merge = "B".$cur_baris.":C".$cur_baris;
+                $objWorksheet->setCellValueByColumnAndRow(0,$i+$baris,$i+1);
+                $objWorksheet->mergeCells($merge);
+                $objWorksheet->setCellValueByColumnAndRow(1,$i+$baris,$row['nama_mapel']);
+            }
+            $baris_akhir = $baris+$i;
+
+            for($x=$baris;$x<$baris_akhir;$x++){
+                for ($y=0; $y<=3 ; $y++) { 
+                    $cell = PHPExcel_Cell::stringFromColumnIndex($y) . $x;
+                    $objWorksheet->getStyle($cell)->applyFromArray($styleArray);
+                }
+            }
+
+            $objWriter = new PHPExcel_Writer_HTML($objPHPExcel);  
+            $output['data'] = $objWriter->generateHTMLHeader();
+            $output['data'] .= $objWriter->generateStyles();
+            $output['data'] .= $objWriter->generateSheetData();
+            $output['data'] .= $objWriter->generateHTMLFooter();
+
+
+            $this->showHeader();
+            $this->load->view('siswa/kartu_ujian',$output);
+            $this->load->view('footer_table');  
+        }
     }
 
     function showOutput($output = null, $data = null)
@@ -171,6 +276,7 @@ class Siswas extends CI_Controller {
 
     public function setAbsensi($semester)
     {
+        $berhasil = true;
         print_r($semester);
         print_r($_POST);
         $sakit = $this->input->post('sakit');
@@ -181,16 +287,40 @@ class Siswas extends CI_Controller {
 
         if ($sakit != null)
             foreach ($sakit as $row) {
-                $this->siswa->isiAbsensi($row,$tanggal,1,$semester,$tahun_ajaran);
+                $berhasil = $berhasil and $this->siswa->isiAbsensi($row,$tanggal,1,$semester,$tahun_ajaran);
             }
         if ($izin != null)
             foreach ($izin as $row) {
-                $this->siswa->isiAbsensi($row,$tanggal,2,$semester,$tahun_ajaran);
+                $berhasil = $berhasil and $this->siswa->isiAbsensi($row,$tanggal,2,$semester,$tahun_ajaran);
             }
         if ($alfa != null)
             foreach ($alfa as $row) {
-                $this->siswa->isiAbsensi($row,$tanggal,3,$semester,$tahun_ajaran);
+                $berhasil = $berhasil and $this->siswa->isiAbsensi($row,$tanggal,3,$semester,$tahun_ajaran);
             }
+
+        if ($berhasil){
+            echo "<script>alert('berhasil memasukkan data!')</script>";
+        } else {
+            echo "<script>alert('ada data yang gagal dimasukkan!')</script>";
+        }
+        redirect("siswas/absensiSiswa/$semester");
+    }
+
+    public function coba()
+    {
+        $query = $this->db->query("SELECT tabel_menu.*,tabel_menu_children.id as id_child,tabel_menu_children.title as title_child,tabel_menu_children.customSelect as customSelect_child FROM tabel_menu,tabel_menu_children WHERE tabel_menu.id=tabel_menu_children.idParent");
+        $hasil = $query->result_array();
+        $hasil2 = array();
+        foreach ($hasil as $row) {
+            $hasil2[$row['id']]['id'] = $row['id'];
+            $hasil2[$row['id']]['title'] = $row['title'];
+            $hasil2[$row['id']]['customSelect'] = $row['customSelect'];
+            $hasil2[$row['id']]['children'][] = array('id' => $row['id_child'],'title' => $row['title_child'],'customSelect' => $row['customSelect_child'] );
+            
+        }
+        print_r($hasil);
+        print_r($hasil2);
+        // print_r(json_encode($hasil2));
     }
 
     public function cariSiswa($tingkat)
@@ -201,7 +331,7 @@ class Siswas extends CI_Controller {
         for ($i=0; $i < sizeof($result); $i++) { 
             $result[$i]['text'] = $result[$i]['text'] .' - '.$result[$i]['nama_siswa'];
             $result[$i]['data_siswa'] = null;
-        }
+        } 
 
         // print_r($result);
         // die();
@@ -227,9 +357,8 @@ class Siswas extends CI_Controller {
         die();
     }
 
-    public function absensiSiswa($tingkat, $semester)
+    public function absensiSiswa($semester)
     {
-        $data['tingkat'] = $tingkat;
         $data['semester'] = $semester;
         $this->showHeader();
         $this->load->view('absensi/absensi',$data);

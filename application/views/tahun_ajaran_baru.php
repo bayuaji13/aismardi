@@ -6,7 +6,7 @@
 				<h4><i class="fa fa-angle-right"></i> PERHATIAN !! </h4>
 				<div class="panel-body">
 					<b>
-					Sebelum memulai tahun ajaran baru, PASTIKAN semua data sudah beres.<br/> Selanjutnya anda akan memilih siswa yang tinggal kelas / tidak lulus (Bila ada)
+					Sebelum memulai tahun ajaran baru, PASTIKAN semua data sudah beres.<br/> Selanjutnya anda akan memilih siswa yang tidak lulus (Bila ada)
 					<br/> Kelas HARUS diisi lagi tiap pergantian tahun ajaran
 					</b>
 					<br/>

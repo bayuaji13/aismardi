@@ -79,23 +79,22 @@
             <li class="sub-menu">
               <a class="active" href="javascript:;" >
                 <i class="fa fa-dashboard"></i>
-                <span>Laporan Akademik</span>
+                <span>Menu Akademik</span>
               </a>
               <ul class="sub">
-                <li><a  href="<?=base_url('monitor/overall10')?>">Monitor siswa</a></li>
-                <li><a href="<?=base_url('charts')?>">Diagram Nilai</a></li>
-                <li><a href="<?=base_url('nilai/manageNilai')?>">Data Nilai</a></li>
+                <li><a  href="<?=base_url('siswas/gantiTunggakan')?>">Atur Tunggakan</a></li>
+                <li><a href="<?=base_url('tahunajaran/setTanggal')?>">Atur Jadwal Download Kartu Ujian</a></li>
               </ul>
             </li>
 
             <li class="sub-menu">
               <a href="javascript:;" >
                 <i class="fa fa-dashboard"></i>
-                <span>Laporan Guru</span>
+                <span>Absensi Siswa</span>
               </a>
               <ul>
-                <li><a href="<?=base_url('pengampu/monitorPengampu/1')?>">Semester 1</a></li>
-                <li><a href="<?=base_url('pengampu/monitorPengampu/2')?>">Semester 2</a></li>
+                <li><a href="<?=base_url('siswas/absensiSiswa/1')?>">Semester 1</a></li>
+                <li><a href="<?=base_url('siswas/absensiSiswa/2')?>">Semester 2</a></li>
               </ul>
             </li>
 
@@ -108,10 +107,8 @@
               <ul class="sub">
                 <li><a  href="<?=base_url('mapels')?>">Daftar Mata Pelajaran</a></li>
                 <li><a  href="<?=base_url('gurus')?>">Daftar Guru</a></li>
-                <li><a  href="<?=base_url('pengampu')?>">Daftar Pengampu</a></li>
                 <li><a  href="<?=base_url('siswas')?>">Daftar siswa</a></li>
                 <li><a  href="<?=base_url('kelas')?>">Data Kelas</a></li>
-                <li><a  href="<?=base_url('jadwals')?>">Jadwal</a></li>
               </ul>
             </li>
             <li class="sub-menu">

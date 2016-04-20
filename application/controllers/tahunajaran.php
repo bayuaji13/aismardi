@@ -12,12 +12,12 @@ class TahunAjaran extends CI_Controller {
 
 	public function index()
 	{
-		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
-		$data = $this->nilai->getCompletion($tahun_ajaran);
-		$data['tahun_ajaran'] = $tahun_ajaran;
-		// print_r($data);
+		// $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+		// $data = $this->nilai->getCompletion($tahun_ajaran);
+		// $data['tahun_ajaran'] = $tahun_ajaran;
+		// // print_r($data);
 		$this->showHeader();
-		$this->load->view('idx_tahun_ajaran',$data);
+		$this->load->view('tahun_ajaran_baru');
 		$this->load->view('footer_general');
 	}
 
@@ -35,6 +35,20 @@ class TahunAjaran extends CI_Controller {
 		// die();
 		$result = json_encode($result);
 		print_r($result);
+	}
+
+	public function setTanggal()
+	{
+		$this->showHeader();
+		$this->load->view('tahun_ajaran/set_tanggal');
+		$this->load->view('footer_general');
+	}
+
+	public function prosesSetTanggal()
+	{
+		$data = $_POST;
+		unset($data['Submit']);
+		$this->tahun_ajaran->gantiTanggal($data);
 	}
 
 	public function setTinggalKelas()
@@ -56,16 +70,16 @@ class TahunAjaran extends CI_Controller {
 	{
 		if ($this->session->userdata('level') != 9)
 			redirect('users/login');
-		$this->tahun_ajaran->newTA(); //MUTED
-		$this->tinggalKelas();
+		// $this->tahun_ajaran->newTA(); //MUTED
+		$this->tidakLulus();
 	}
 
-	public function tinggalKelas()
+	public function tidakLulus()
 	{
 		if ($this->session->userdata('level') != 9)
 			redirect('users/login');
 		$this->showHeader('');
-		$this->load->view('tinggal_kelas');
+		$this->load->view('tahun_ajaran/tidak_lulus');
 		$this->load->view('footer_form');
 	}
 

@@ -109,7 +109,7 @@ class CI_Controller {
 				$this->load->view('header_guru');
 				break;
 			case '2':
-				$this->load->view('header_kepsek');
+				$this->load->view('header_bp');
 				break;
 			case '3':
 				$this->load->view('header_yayasan');

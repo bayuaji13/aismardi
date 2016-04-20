@@ -27,16 +27,21 @@
             redirect("users/login");
 	}
 
+	public function gantiTanggal($data)
+	{
+		$this->db->where('id_entry',1)->update('tabel_tanggal',$data);
+	}
+
 	function newTA(){
-		$data['tahun'] = (int)$this->getCurrentTA();
-		$data['tahun']++;
-		$tahun = $data['tahun'];
-		$data['ket_tahun'] = (string)$data['tahun'] . "/" . ((string)$data['tahun']+1);
+		$data['id_tahun_ajaran'] = (int)$this->getCurrentTA();
+		$data['id_tahun_ajaran']++;
+		$tahun = $data['id_tahun_ajaran'];
+		$data['tahun_ajaran'] = (string)$data['id_tahun_ajaran'] . "/" . ((string)$data['id_tahun_ajaran']+1);
 
 		$this->db->insert('tahun_ajaran',$data);
-		$query = $this->db->query("UPDATE data_siswa SET tingkat = tingkat + 1 WHERE $tahun - tahun_masuk < 4");
-		$sql = "UPDATE data_siswa SET status = '2' WHERE tingkat > 3";
-		$query = $this->db->query($sql);
+		// $query = $this->db->query("UPDATE data_siswa SET tingkat = tingkat + 1 WHERE $tahun - tahun_masuk < 4");
+		// $sql = "UPDATE data_siswa SET status = '2' WHERE tingkat > 3";
+		//$query = $this->db->query($sql);
 	}
 
 	function tinggalKelas($id){

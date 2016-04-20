@@ -16,7 +16,7 @@
 					<?=form_dropdown('sakit[]',[],'','id="tokenize1" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize1').tokenize({
-						    datas: "<?=base_url('siswas/cariSiswa/'.$tingkat.'')?>"
+						    datas: "<?=base_url('siswas/cariSiswaAll')?>"
 						});
 						</script>
 				</div>
@@ -30,7 +30,7 @@
 					<?=form_dropdown('izin[]',[],'','id="tokenize2" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize2').tokenize({
-						    datas: "<?=base_url('siswas/cariSiswa/'.$tingkat.'')?>"
+						    datas: "<?=base_url('siswas/cariSiswaAll')?>"
 						});
 						</script>
 				</div>
@@ -44,7 +44,7 @@
 					<?=form_dropdown('alfa[]',[],'','id="tokenize3" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize3').tokenize({
-						    datas: "<?=base_url('siswas/cariSiswa/'.$tingkat.'')?>"
+						    datas: "<?=base_url('siswas/cariSiswaAll')?>"
 						});
 						</script>
 				</div>

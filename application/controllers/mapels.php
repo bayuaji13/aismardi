@@ -9,6 +9,7 @@ class Mapels extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('grocery_CRUD');
         $this->load->model('mata_pelajaran');
+        $this->load->model('tahun_ajaran');
     }
 
     public function index(){
@@ -21,9 +22,11 @@ class Mapels extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('form');
 
-        $data['non_jurusan'] = $this->mata_pelajaran->getMapelByJurusan(1,2016);
-        $data['ipa'] = $this->mata_pelajaran->getMapelByJurusan(2,2016);
-        $data['ips'] = $this->mata_pelajaran->getMapelByJurusan(3,2016);
+        $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+
+        $data['non_jurusan'] = $this->mata_pelajaran->getMapelByJurusan(1,$tahun_ajaran);
+        $data['ipa'] = $this->mata_pelajaran->getMapelByJurusan(2,$tahun_ajaran);
+        $data['ips'] = $this->mata_pelajaran->getMapelByJurusan(3,$tahun_ajaran);
         $data['mapel'] = $this->mata_pelajaran->getAllMapel();
 
         // echo in_array($data['ips'][1],$data['mapel']);

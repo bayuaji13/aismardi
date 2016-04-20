@@ -220,67 +220,48 @@ class Nilai extends CI_Controller {
     public function manageNilai($tipe = null) {        
         $crud = new grocery_CRUD();
          
-        $crud->set_table('tabel_nilai')
+        $crud->set_table('tabel_nilai_rapor')
             ->set_subject('Nilai')
-            ->display_as('kd_pelajaran', 'Kode Pelajaran')
-            ->display_as('kd_siswa', 'NIS')
-            ->display_as('kd_kelas', 'Kelas')
-            ->set_relation('kd_pelajaran','mata_pelajaran','nama_pelajaran')
-            ->set_relation('kd_siswa','data_siswa','nis',array('status' => 1))
-            ->set_relation('kd_kelas','kelas','nama_kelas',array('tahun_ajaran' => $this->tahun_ajaran->getCurrentTA()))
-            ->field_type('nilai','hidden')
-            ->required_fields('kd_pelajaran','kd_siswa', 'tahun_ajaran','kd_kelas','semester')
+            ->display_as('id_mapel', 'Kode Pelajaran')
+            ->display_as('id_siswa', 'NIS')
+            ->set_relation('id_mapel','tabel_mapel','nama_mapel')
+            ->set_relation('id_siswa','tabel_siswa','nis',array('status' => 1))
+            ->set_relation('tahun_ajaran','tahun_ajaran','tahun_ajaran',array('id_tahun_ajaran' => $this->tahun_ajaran->getCurrentTA()))
+            ->unset_texteditor('ketercapaian_kompetensi')
+            ->field_type('semester','dropdown',array('1' => '1', '2' => '2'))
+            ->field_type('nilai_sikap','dropdown',array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E'))
+            ->field_type('keterangan','dropdown',array('T' => 'Tuntas', 'TT' => 'Tidak Tuntas'))
             ; 
         
 
-        if ($tipe != null){
-            switch ($tipe) {
-                case 'guru':
-                    # code...
-                    $where = "tabel_nilai.kd_pelajaran IN (SELECT pengampu.kd_pelajaran FROM pengampu WHERE kd_guru=" . $this->session->userdata('kd_transaksi') . ")";
-                    $crud->where($where);
-                    break;
-                case 'siswa':
-                    # code...
-                    // $where = "tabel_nilai.kd_pelajaran IN (SELECT pengampu.kd_pelajaran FROM pengampu WHERE kd_guru=" . $this->session->userdata('kd_transaksi') . ")";
-                    $crud->where('tabel_nilai.kd_siswa',$this->session->userdata('kd_transaksi'));
-                    break;                    
-                case 'wali':
-                    # code...
-                    $where = "tabel_nilai.kd_kelas IN (SELECT kelas.kd_kelas FROM kelas WHERE kd_guru=" . $this->session->userdata('kd_transaksi') . ")";
-                    $crud->where($where);
-                    break;                    
-                default:
-                    # code...
-                    break;
-            }
-        }
+        // if ($tipe != null){
+        //     switch ($tipe) {
+        //         case 'guru':
+        //             # code...
+        //             $where = "tabel_nilai.kd_pelajaran IN (SELECT pengampu.kd_pelajaran FROM pengampu WHERE kd_guru=" . $this->session->userdata('kd_transaksi') . ")";
+        //             $crud->where($where);
+        //             break;
+        //         case 'siswa':
+        //             # code...
+        //             // $where = "tabel_nilai.kd_pelajaran IN (SELECT pengampu.kd_pelajaran FROM pengampu WHERE kd_guru=" . $this->session->userdata('kd_transaksi') . ")";
+        //             $crud->where('tabel_nilai.kd_siswa',$this->session->userdata('kd_transaksi'));
+        //             break;                    
+        //         case 'wali':
+        //             # code...
+        //             $where = "tabel_nilai.kd_kelas IN (SELECT kelas.kd_kelas FROM kelas WHERE kd_guru=" . $this->session->userdata('kd_transaksi') . ")";
+        //             $crud->where($where);
+        //             break;                    
+        //         default:
+        //             # code...
+        //             break;
+        //     }
+        // }
 
         if ($this->session->userdata('level') != 9){
             $crud->unset_edit()
             ->unset_delete()
             ->unset_add();
         }
-
-        if ($this->session->userdata('filter_mapel')){
-            $crud->where('tabel_nilai.kd_pelajaran',$this->session->userdata('filter_mapel'));
-        }            
-        if ($this->session->userdata('filter_kelas')){
-            $crud->where('tabel_nilai.kd_kelas',$this->session->userdata('filter_kelas'));
-        } 
-
-        if ($this->session->userdata('filter_ta')){
-            $crud->where('tabel_nilai.tahun_ajaran',$this->session->userdata('filter_ta'));
-        }
-        else if (!$this->session->userdata('filter_ta')){
-            $crud->where('tabel_nilai.tahun_ajaran',$this->tahun_ajaran->getCurrentTA());
-        }
-
-        if ($this->session->userdata('filter_lulus')){
-            $crud->set_model('nilai_model');
-        } 
-                  
-        $this->session->set_userdata('uri_filter_nilai',$this->uri->uri_string());
 
         $output = $crud->render();
         $output->output ='<h3><i class="fa fa-angle-right"></i>Data Nilai</h3> <br/>' . $output->output;

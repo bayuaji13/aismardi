@@ -14,7 +14,7 @@
 			echo '<a  href="'.base_url('users/siftToWali').'"><button type="button" class="btn btn-primary">Masuk Sebagai Wali</button></a>';
 		}
 		if ($isGuruBP){
-			echo '<button type="button" class="btn btn-primary">Masuk Sebagai Guru BP</button>';
+			echo '<a  href="'.base_url('users/siftToGuruBP').'"><button type="button" class="btn btn-primary">Masuk Sebagai Wali</button></a>';
 		}
 		echo '		</div>
 				</div>
