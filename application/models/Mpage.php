@@ -10,4 +10,9 @@ class Mpage extends CI_Model {
 		$query = $this->db->get_where('tabel_laman', array('pageName' => $pageName));
 		return $query->row_array();
 	}
+	
+	public function getPages() {
+		$query = $this->db->get('tabel_laman');
+		return $query->result_array();
+	}
 }

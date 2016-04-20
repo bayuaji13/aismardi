@@ -36,7 +36,7 @@
 
     public function get_10_mapel($tipe,$tingkat,$kd_mapel)
     {
-        $data = [];
+        $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         if ($tipe == 'top'){
             $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata 
@@ -58,7 +58,7 @@
 
     public function get_10_mapel_santri($tipe,$tingkat,$kd_mapel)
     {
-        $data = [];
+        $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         if ($tipe == 'top'){
             $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata 
@@ -81,7 +81,7 @@
 
     public function get_10_tingkat($tipe,$tingkat)
     {
-        $data = [];
+        $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         if ($tipe == 'top'){
             $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata DESC LIMIT 0,10");    
@@ -97,7 +97,7 @@
     public function get_10_tingkat_santri($tipe,$tingkat)
     {
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
-        $data = [];
+        $data = array();
         if ($tipe == 'top'){
             $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa AND data_siswa.tipe = '2'  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata DESC LIMIT 0,10");    
         } elseif ($tipe == 'least') {
@@ -111,7 +111,7 @@
 
     public function get_lower($semester,$tingkat)
     {
-        $data = [];
+        $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         $query = $this->db->query("SELECT * FROM 
                                             (SELECT data_siswa.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, COUNT(tabel_nilai.nilai) as jumlah 
@@ -134,7 +134,7 @@
 
     public function get_lower_santri($semester,$tingkat)
     {
-        $data = [];
+        $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         $query = $this->db->query("SELECT * FROM 
                                             (SELECT data_siswa.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, COUNT(tabel_nilai.nilai) as jumlah 

@@ -7,7 +7,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Sistem Informasi Akademik MTs Taqwal Ilah</title>
+    <title>Sistem Informasi Akademik SMA Mardisiswa</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?=base_url('assets/css/bootstrap.css')?>" rel="stylesheet">
@@ -101,7 +101,6 @@
                           <li><a  href="<?=base_url('siswas/kehadiranSiswa/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/1')?>">Kehadiran</a></li>
                       </ul>
                   </li>
-                  <li cl
                   <li class="sub-menu">
                       <a class="active" href="javascript:;" >
                           <i class="fa fa-book"></i>

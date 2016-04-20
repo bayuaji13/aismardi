@@ -39,7 +39,7 @@
                 <div class="info col-md-8 col-sm-8">
                     <br />
                     <div class="contact pull-right">
-                        <p class="phone"><i class="fa fa-phone"></i>Contact 0800 123 4567</p> 
+                        <p class="phone"><i class="fa fa-phone"></i>Kontak (024)7471629</p> 
                         <p class="email"><i class="fa fa-envelope"></i><a href="#">info@smamardisiswa.sch.id</a></p>
                     </div><!--//contact-->
                 </div><!--//info-->
