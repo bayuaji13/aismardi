@@ -448,4 +448,19 @@ class Konten extends CI_Controller {
 		
 		return '<script>alert("coba");</script><input type="text" maxlength="128" name="linkUrl" placeholder="http://">';
 	}
+	
+	public function manageMenu(){
+		$this->load->model('mpage');
+		$data['pages'] = $this->mpage->getPages();
+		$this->load->view('header_menu');
+		$this->load->view('menu/menumanager', $data);
+		$this->load->view('footer_menu');
+	}
+	
+	public function coba(){
+		$this->load->model('mmenu');
+		$result = $this->mmenu->getMenu();
+		
+		echo (json_encode($result));
+	}
 }

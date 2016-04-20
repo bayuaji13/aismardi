@@ -101,7 +101,6 @@
                           <li><a  href="<?=base_url('siswas/kehadiranSiswa/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/1')?>">Kehadiran</a></li>
                       </ul>
                   </li>
-                  <li cl
                   <li class="sub-menu">
                       <a class="active" href="javascript:;" >
                           <i class="fa fa-book"></i>

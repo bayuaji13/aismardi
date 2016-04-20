@@ -9,6 +9,9 @@
 
   <title>Sistem Informasi Akademik SMA Mardisiswa</title>
 
+  <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/jquery.domenu-0.95.77.css')?>"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/github.min.css"/>
   <!-- Bootstrap core CSS -->
   <link href="<?=base_url('assets/css/bootstrap.css')?>" rel="stylesheet">
   <!--external css-->
@@ -21,7 +24,7 @@
   <link href="<?=base_url('assets/css/style.css')?>" rel="stylesheet">
   <link href="<?=base_url('assets/css/style-responsive.css')?>" rel="stylesheet">
 
-
+  <script src="<?=base_url('assets/js/jquery.js')?>"></script>  
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
