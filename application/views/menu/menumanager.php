@@ -46,11 +46,18 @@
 					                 data-placeholder="Any nice idea for the title?"
 					                 data-default-value="doMenu List Item. {?numeric.increment}">
 					          <select name="custom-select">
-					            <option>Pilih Laman</option>
-					            <optgroup label="Pages">
+					            <option>Pilih..</option>
+					            <optgroup label="Laman">
 					            <?php 
 					            foreach ($pages as $page){
-					            	echo "<option value='".$page['pageId']."'>".$page['pageTitle']."</option>";
+					            	echo "<option value='laman_".$page['pageId']."'>".$page['pageTitle']."</option>";
+					            }
+					            ?>
+					            </optgroup>
+					            <optgroup label="Tautan">
+					            <?php 
+					            foreach ($tautan as $row){
+					            	echo "<option value='tautan_".$row['linkId']."'>".$row['linkName']."</option>";
 					            }
 					            ?>
 					            </optgroup>

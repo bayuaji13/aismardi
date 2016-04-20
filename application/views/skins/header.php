@@ -34,7 +34,7 @@
             
             <div class="header-main container">
                 <h1 class="logo col-md-4 col-sm-4">
-                    <a href="<?php echo base_url();?>">Logo</a>
+                    <a href="<?php echo base_url();?>"><img width = '70px'src="<?php echo base_url('assets/img/logo.png')?>" alt='SMA Mardisiswa'> SMA Mardisiswa</a>
                 </h1><!--//logo-->           
                 <div class="info col-md-8 col-sm-8">
                     <br />

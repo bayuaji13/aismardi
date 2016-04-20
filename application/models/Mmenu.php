@@ -38,11 +38,13 @@ class Mmenu extends CI_Model {
 		$parent = array();
 		$children = array();
 		foreach ($data as $row){
-			if(!is_numeric($row['customSelect']))
+			if($row['customSelect'] == "Pilih..")
 				$row['customSelect'] = null;
 			array_push($parent, array('id' => $row['id'], 'title' => $row['title'], 'customSelect' => $row['customSelect']));
 			if(isset($row['children'])){
 				foreach ($row['children'] as $child){
+					if($child['customSelect'] == "Pilih..")
+						$child['customSelect'] = null;
 					array_push($children, array('id' => $child['id'], 'title' => $child['title'], 'customSelect' => $child['customSelect'], 'idParent' => $row['id']));
 				}	
 			}

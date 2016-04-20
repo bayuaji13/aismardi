@@ -446,12 +446,14 @@ class Konten extends CI_Controller {
 	
 	public function _callback_url($value = '', $primary_key = null) {
 		
-		return '<script>alert("coba");</script><input type="text" maxlength="128" name="linkUrl" placeholder="http://">';
+		return '<input type="text" maxlength="128" name="linkUrl" placeholder="http://">';
 	}
 	
 	public function manageMenu(){
 		$this->load->model('mpage');
+		$this->load->model('mtautan');
 		$data['pages'] = $this->mpage->getPages();
+		$data['tautan'] = $this->mtautan->getTautan();
 		$this->load->view('header_menu');
 		$this->load->view('menu/menumanager', $data);
 		$this->load->view('footer_menu');
