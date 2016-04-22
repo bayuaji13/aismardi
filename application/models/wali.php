@@ -12,12 +12,12 @@
 									(SELECT kelas.kd_kelas FROM kelas WHERE kd_guru='$kd_guru') AND kelas_siswa.tahun_ajaran = $ta)");
 	}
 
-	public function getKelasPerwalian($kd_guru,$tahun_ajaran)
+	public function getKelasPerwalian($id_guru,$tahun_ajaran)
 	{
-		$query = $this->db->query("SELECT kd_kelas FROM kelas WHERE kd_guru='$kd_guru' AND tahun_ajaran='$tahun_ajaran'");
+		$query = $this->db->query("SELECT id_kelas FROM tabel_kelas WHERE id_guru='$id_guru' AND tahun_ajaran='$tahun_ajaran'");
 		if ($query->num_rows() > 0) {
 		    $hasil =  $query->first_row();
-		    return $hasil->kd_kelas;
+		    return $hasil->id_kelas;
 		}
 
 	}

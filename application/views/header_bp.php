@@ -65,17 +65,13 @@
             <p class="centered"><a href=""><img src="<?=base_url('assets/img/ui-sam.jpg')?>" class="img-circle" width="60"></a></p>
             <h5 class="centered">Guru BP</h5>
             
-            <li class="sub-menu">
-              <a href="">
-                <i class="fa fa-home"></i>
-                <span>Beranda</span>
-              </a>
-              <ul class="sub">
-                <li><a  href="<?=base_url('IsiBeranda/showProfil')?>">Profil</a></li>
-                <li><a  href="<?=base_url('IsiBeranda/showTentang')?>">Tentang</a></li>
-                <li><a  href="<?=base_url('IsiBeranda/showBantuan')?>">Bantuan</a></li>
-              </ul>
-            </li>
+                  <li class="sub-menu">
+                      <a  href="<?=base_url('users/home')?>">
+                          <i class="fa fa-home"></i>
+                          <span>Beranda</span>
+                      </a>
+                  </li>
+                  
             <li class="sub-menu">
               <a class="active" href="javascript:;" >
                 <i class="fa fa-dashboard"></i>
@@ -92,7 +88,7 @@
                 <i class="fa fa-dashboard"></i>
                 <span>Absensi Siswa</span>
               </a>
-              <ul>
+              <ul class="sub">
                 <li><a href="<?=base_url('siswas/absensiSiswa/1')?>">Semester 1</a></li>
                 <li><a href="<?=base_url('siswas/absensiSiswa/2')?>">Semester 2</a></li>
               </ul>

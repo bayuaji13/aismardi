@@ -11,6 +11,25 @@ class Walis extends CI_Controller {
         $this->load->library('grocery_CRUD');
     }
 
+    public function raporWali($semester)
+    {
+        $id_guru = $this->session->userdata('id_transaksi');
+        $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+        $id_kelas = $this->wali->getKelasPerwalian($id_guru,$tahun_ajaran);
+        $data_kelas = $this->kelas->getInfoKelas($id_kelas);
+        $isi_kelas = $this->kelas->getIsiKelas($id_kelas);
+        $i = 0;
+        foreach ($isi_kelas as $row) {
+            $data[$i]['teks'] = $row['nis']." - ".$row['nama'];
+            $data[$i]['link'] = "nilai/generateExcel/".$row['id_siswa']."/".$tahun_ajaran."/".$semester;
+            $i++;
+        }
+        $form['data'] = $data;
+        $this->showHeader();
+        $this->load->view('wali/lihat_rapor',$form);
+        $this->load->view('footer_general');
+    }
+
     public function isiNilaiKI1SiswaAmpu($kd_kelas,$tahun_ajaran,$semester)
     {
     	

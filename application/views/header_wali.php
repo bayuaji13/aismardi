@@ -66,15 +66,10 @@
                   <h5 class="centered"><?php echo $this->session->userdata['nama_akun'];?></h5>
                     
                   <li class="sub-menu">
-                      <a  href="">
+                      <a  href="<?=base_url('users/home')?>">
                           <i class="fa fa-home"></i>
                           <span>Beranda</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="<?=base_url('IsiBeranda/showProfil')?>">Profil</a></li>
-                          <li><a  href="<?=base_url('IsiBeranda/showTentang')?>">Tentang</a></li>
-                          <li><a  href="<?=base_url('IsiBeranda/showBantuan')?>">Bantuan</a></li>
-                      </ul>
                   </li>
 
                   <li class="sub-menu">
@@ -98,7 +93,8 @@
                           <li><a  href="<?=base_url('siswas/managesiswa/wali')?>">Data siswa Kelas</a></li>
                              <!-- <li><a  href="<?=base_url('nilai/manageNilai/wali')?>">Data Nilai siswa Kelas</a></li>  -->
                              <!-- <li><a  href="<?=base_url('batchinput/do_upload/nilai')?>">Input Nilai Siswa</a></li>  -->
-                             <li><a  href="<?=base_url('batchoutput/rapor_wali')?>">Rapor Siswa</a></li> 
+                             <li><a  href="<?=base_url('walis/raporWali/1')?>">Rapor Siswa - Semester 1</a></li> 
+                             <li><a  href="<?=base_url('walis/raporWali/2')?>">Rapor Siswa - Semester 2</a></li> 
                       </ul>
                   </li>
 

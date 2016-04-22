@@ -487,11 +487,11 @@ class BatchInput extends CI_Controller {
 			for ($j=0; $j < $highestColumnIndex; $j++) { 
 				$data[$index][$field[$j]]= $objWorksheet->getCellByColumnAndRow($j, $i)->getValue();
 			}
-			if (!$this->siswa->cekSiswa($data[$index]['nis']) AND $tingkat_atas){
-					$this->session->set_flashdata('notice','Siswa '.$data[$index]['nis'].' - '.$data[$index]['nama'].' tidak ada dalam daftar');
-					$alert = "fail";
-					redirect('batchinput/do_upload/data/'.$alert);
-			}
+			// if (!$this->siswa->cekSiswa($data[$index]['nis']) AND $tingkat_atas){
+			// 		$this->session->set_flashdata('notice','Siswa '.$data[$index]['nis'].' - '.$data[$index]['nama'].' tidak ada dalam daftar');
+			// 		$alert = "fail";
+			// 		redirect('batchinput/do_upload/data/'.$alert);
+			// }
 			if (!$this->siswa->cekSiswaDiKelas($data[$index]['nis'])){
 					$this->session->set_flashdata('notice','Siswa '.$data[$index]['nis'].' - '.$data[$index]['nama'].' sudah terdaftar di kelas lain');
 					$alert = "fail";

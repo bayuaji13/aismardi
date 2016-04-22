@@ -49,6 +49,7 @@ class TahunAjaran extends CI_Controller {
 		$data = $_POST;
 		unset($data['Submit']);
 		$this->tahun_ajaran->gantiTanggal($data);
+		redirect('tahunajaran/setTanggal');
 	}
 
 	public function setTinggalKelas()

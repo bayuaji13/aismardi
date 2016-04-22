@@ -56,12 +56,12 @@
 
     public function setPassword($user,$pass)
     {
-    	return $this->db->query("UPDATE users SET pass='$pass' WHERE user='$user'");
+    	return $this->db->query("UPDATE tabel_users SET pass='$pass' WHERE user='$user'");
     }
     
     public function getPassword($user)
     {
-    	$mysql = $this->db->query("SELECT pass FROM users WHERE user='$user'");
+    	$mysql = $this->db->query("SELECT pass FROM tabel_users WHERE user='$user'");
     	return $mysql->first_row()->pass;
     }
 

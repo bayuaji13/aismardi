@@ -66,15 +66,10 @@
                   <h5 class="centered"><?php echo $this->session->userdata['nama_akun'];?></h5>
                     
                   <li class="sub-menu">
-                      <a  href="">
+                      <a  href="<?=base_url('users/home')?>">
                           <i class="fa fa-home"></i>
                           <span>Beranda</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="<?=base_url('IsiBeranda/showProfil')?>">Profil</a></li>
-                          <li><a  href="<?=base_url('IsiBeranda/showTentang')?>">Tentang</a></li>
-                          <li><a  href="<?=base_url('IsiBeranda/showBantuan')?>">Bantuan</a></li>
-                      </ul>
                   </li>
 
                   <li class="sub-menu">
@@ -87,21 +82,10 @@
                           <li><a  href="<?=base_url('gurus')?>">Daftar Guru</a></li>
                           <li><a  href="<?=base_url('siswas')?>">Daftar siswa</a></li>
                           <li><a  href="<?=base_url('kelas')?>">Daftar Kelas</a></li>
-                          <li><a  href="<?=base_url('jadwals')?>">Jadwal</a></li>
                       </ul>
                   </li>
 
-                  <li class="sub-menu">
-                      <a class="active" href="javascript:;" >
-                          <i class="fa fa-book"></i>
-                          <span>Menu Guru</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="<?=base_url('gurus/manageGuru/read').'/'.$this->session->userdata('kd_transaksi')?>">Data Pribadi</a></li>
-                          <li><a  href="<?=base_url('jadwals/manageJadwal/guru')?>">Jadwal Mengajar</a></li>
-                             <!-- <li><a  href="<?=base_url('nilai/manageNilai/guru')?>">Nilai Siswa</a></li>  -->
-                      </ul>
-                  </li>
+
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-book"></i>

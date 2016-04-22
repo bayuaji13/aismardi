@@ -92,6 +92,8 @@ class Users extends CI_Controller {
                 		'uploadURL' => base_url("assets/uploads/images")
                 );
                 $this->session->set_userdata('KCFINDER',$data);
+                $this->session->set_userdata('id_account',$username);
+
                 $this->session->set_userdata('level',$user['level']);
                 $this->session->set_userdata('id_transaksi',$user['id_transaksi']);
                 $this->session->set_userdata('nama_akun',$this->nama_akun($user['id_transaksi']));
@@ -132,14 +134,14 @@ class Users extends CI_Controller {
     }
 
     public function nama_akun(){
-    	$kode = $this->session->userdata('kd_transaksi');
+    	$kode = $this->session->userdata('id_transaksi');
     	if ($this->session->userdata['level'] == 5)	{
     		$query = $this->db->query("SELECT nama FROM tabel_siswa WHERE id_siswa = '$kode' ");
     		$result = $query->first_row();
     	    return $result->nama;
     	    
     	}
-    	else if ($this->session->userdata['level'] == 4 or $this->session->userdata['level'] == 1){
+    	else if ($this->session->userdata['level'] == 4 or $this->session->userdata['level'] == 1 or $this->session->userdata['level'] == 2 ){
     		$query = $this->db->query("SELECT nama FROM tabel_guru WHERE id_guru = '$kode' ");
     		$result = $query->first_row();
     	    return $result->nama;
@@ -162,7 +164,7 @@ class Users extends CI_Controller {
 		->set_rules('password_conf','Konfirmasi Password','required|min_length[1]|max_length[40]')
 		;
 
-		$id= $this->session->userdata('id_account');
+		// $id= $this->session->userdata('id_account');
 
 
 		if ($this->form_validation->run() == FALSE) {

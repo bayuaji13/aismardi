@@ -20,17 +20,17 @@
 									<td>Sakit</td>
 									<td>&nbsp;</td>
 									<td><?=$sakit?></td>
-								<tr>
+								</tr>
 								<tr>
 									<td>Izin</td>
 									<td>&nbsp;</td>
 									<td><?=$izin?></td>
-								<tr>
+								</tr>
 								<tr>
 									<td>Tanpa Keterangan</td>
 									<td>&nbsp;</td>
 									<td><?=$alfa?></td>
-								<tr>
+								</tr>
 							</tbody>
 						</table>
 					</div>
