@@ -127,6 +127,12 @@
 	              <span>Galeri</span>
 	            </a>
 	          </li>
+	          <li>
+	            <a href="<?=base_url('konten/manageMenu')?>">
+	              <i class="fa fa-list-alt"></i>
+	              <span>Menu</span>
+	            </a>
+	          </li>
 	          <li class="sub-menu">
 	            <a href="">
 	              <i class="fa fa-picture-o"></i>

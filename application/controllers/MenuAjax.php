@@ -1,10 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class MenuAjax extends CI_Controller {
+class Menuajax extends CI_Controller {
 	function __construct(){
 		parent::__construct();
-		$this->load->database();
-		$this->load->helper('url');
-		$this->load->helper('date');		
+		$this->load->database();	
 	}
 	
 	public function getMenuAjax(){

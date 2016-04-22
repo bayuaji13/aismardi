@@ -6,6 +6,7 @@
     <title>SMA Mardisiswa - <?php echo $pageTitle;?></title>
     <!-- Meta -->
     <meta charset="utf-8">
+    <meta name="google-site-verification" content="juTQMuK7-HRD0NG4pRSR-paEv1tFWRT-ONzCaONLcrM" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
