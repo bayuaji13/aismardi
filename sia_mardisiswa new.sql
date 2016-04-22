@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2016 at 07:00 PM
+-- Generation Time: Apr 22, 2016 at 02:01 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -582,14 +582,14 @@ CREATE TABLE IF NOT EXISTS `tabel_menu` (
 --
 
 INSERT INTO `tabel_menu` (`id`, `title`, `customSelect`) VALUES
-('1', 'Beranda', NULL),
-('11', 'Profil', 'laman_1'),
+('1', 'Beranda', 'home'),
+('11', 'Profil', NULL),
 ('1111111', 'Akademik', NULL),
-('1111111111', 'Berita', NULL),
+('1111111111', 'Berita', 'http://localhost/aismardi/berita'),
 ('11111111111', 'Fasilitas', NULL),
-('111111111111111', 'Galeri', 'tautan_0'),
+('111111111111111', 'Galeri', 'http://localhost/aismardi/galeri'),
 ('1111111111111111', 'Penerimaan Siswa Baru', NULL),
-('11111111111111111', 'Event', NULL);
+('11111111111111111', 'Event', 'http://localhost/aismardi/event');
 
 -- --------------------------------------------------------
 
@@ -820,13 +820,6 @@ CREATE TABLE IF NOT EXISTS `tabel_tautan` (
   `linkName` varchar(32) NOT NULL,
   `linkUrl` varchar(128) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tabel_tautan`
---
-
-INSERT INTO `tabel_tautan` (`linkId`, `linkName`, `linkUrl`) VALUES
-(1, 'Galeri', 'http://smamardisiswa.sch.id/galeri');
 
 -- --------------------------------------------------------
 

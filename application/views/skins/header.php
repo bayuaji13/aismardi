@@ -60,20 +60,22 @@
                 <div class="navbar-collapse collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
                     <?php 
-                    	foreach ($menu as $row){
-                    		// Jika punya anak
-                    		if (isset($row['children'])){
-                    			echo "<li id='".$row['title']."' class='nav-item dropdown'>";
-                    			echo "<a class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown' data-delay='0' data-close-others='false' href='".$row['customSelect']."'>".$row['title']."<i class='fa fa-angle-down'></i></a>";
-                    			echo '<ul class="dropdown-menu">';
-                    			foreach ($row['children'] as $children){
-                    				echo "<li><a href='".$children['customSelect']."'>".$children['title']."</a></li>"; 
-                    			}
-                    			echo '</ul>';
-                    		}else 
-                    			// Jika tidak punya anak
-                    			echo "<li id='".$row['title']."' class='nav-item'><a href='".$row['customSelect']."'>".$row['title']."</a></li>";
-                    		echo '</li>';
+                    	if (!empty($menu)){
+                    		foreach ($menu as $row){
+                    			// Jika punya anak
+                    			if (isset($row['children'])){
+                    				echo "<li id='".$row['title']."' class='nav-item dropdown'>";
+                    				echo "<a class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown' data-delay='0' data-close-others='false' href='".$row['customSelect']."'>".$row['title']."<i class='fa fa-angle-down'></i></a>";
+                    				echo '<ul class="dropdown-menu">';
+                    				foreach ($row['children'] as $children){
+                    					echo "<li><a href='".$children['customSelect']."'>".$children['title']."</a></li>";
+                    				}
+                    				echo '</ul>';
+                    			}else
+                    				// Jika tidak punya anak
+                    				echo "<li id='".$row['title']."' class='nav-item'><a href='".$row['customSelect']."'>".$row['title']."</a></li>";
+                    			echo '</li>';
+                    		}
                     	}
                     ?>
                     </ul><!--//nav-->
