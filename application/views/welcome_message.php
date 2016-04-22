@@ -11,10 +11,10 @@
 			<div class="content-panel"> 
 				<div class="panel-body">';
 		if ($isWali){
-			echo '<a  href="'.base_url('users/siftToWali').'"><button type="button" class="btn btn-primary">Masuk Sebagai Wali</button></a>';
+			echo '<a  href="'.base_url('users/siftToWali').'"><button type="button" class="btn btn-primary">Masuk Sebagai Wali</button></a>&nbsp;&nbsp;';
 		}
 		if ($isGuruBP){
-			echo '<a  href="'.base_url('users/siftToGuruBP').'"><button type="button" class="btn btn-primary">Masuk Sebagai Wali</button></a>';
+			echo '<a  href="'.base_url('users/siftToGuruBP').'"><button type="button" class="btn btn-primary">Masuk Sebagai Guru BP</button></a>';
 		}
 		echo '		</div>
 				</div>

@@ -86,7 +86,6 @@
                           <li><a  href="<?=base_url('gurus')?>">Daftar Guru</a></li>
                           <li><a  href="<?=base_url('siswas')?>">Daftar siswa</a></li>
                           <li><a  href="<?=base_url('kelas')?>">Daftar Kelas</a></li>
-                          <li><a  href="<?=base_url('jadwals')?>">Jadwal</a></li>
                       </ul>
                   </li>
 
@@ -96,16 +95,14 @@
                           <span>Menu Wali</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="<?=base_url('gurus/manageGuru/read').'/'.$this->session->userdata('kd_transaksi')?>">Data Pribadi</a></li>
                           <li><a  href="<?=base_url('siswas/managesiswa/wali')?>">Data siswa Kelas</a></li>
-                             <li><a  href="<?=base_url('pengampu/managePengampu/wali')?>">Data Guru Pengampu Kelas</a></li> 
                              <!-- <li><a  href="<?=base_url('nilai/manageNilai/wali')?>">Data Nilai siswa Kelas</a></li>  -->
                              <!-- <li><a  href="<?=base_url('batchinput/do_upload/nilai')?>">Input Nilai Siswa</a></li>  -->
                              <li><a  href="<?=base_url('batchoutput/rapor_wali')?>">Rapor Siswa</a></li> 
                       </ul>
                   </li>
 
-                  <li class="sub-menu">
+<!--                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-book"></i>
                           <span>Isi Nilai Pengembangan</span>
@@ -120,7 +117,7 @@
                              <li><a  href="<?=base_url($link.'1')?>">Semester 1</a></li> 
                              <li><a  href="<?=base_url($link.'2')?>">Semester 2</a></li> 
                       </ul>
-                  </li>
+                  </li> -->
 
                   <li class="sub-menu">
                     <a href="<?=base_url('users/ubahPassword')?>" >

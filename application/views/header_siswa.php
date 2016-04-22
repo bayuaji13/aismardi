@@ -98,7 +98,8 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="<?=base_url('siswas/managesiswa/read').'/'.$this->session->userdata('kd_transaksi')?>">Data Pribadi</a></li>
-                          <li><a  href="<?=base_url('siswas/kehadiranSiswa/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/1')?>">Kehadiran</a></li>
+                          <li><a  href="<?=base_url('siswas/kehadiranSiswa/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/1')?>">Kehadiran Semester 1</a></li>
+                          <li><a  href="<?=base_url('siswas/kehadiranSiswa/'.$this->session->userdata('id_transaksi').'/'.$this->tahun_ajaran->getCurrentTA().'/1')?>">Kehadiran Semester 2</a></li>
                       </ul>
                   </li>
                   <li class="sub-menu">

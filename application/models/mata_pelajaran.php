@@ -80,4 +80,11 @@
 		return $hasil;
 	}
 
+	public function getNamaMapel($id_mapel)
+	{	
+		$query = $this->db->query("SELECT nama_mapel FROM tabel_mapel WHERE id_mapel='$id_mapel'");
+		$hasil = $query->first_row('array');
+		return $hasil['nama_mapel'];
+	}
+
 }
