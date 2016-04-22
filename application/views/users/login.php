@@ -7,7 +7,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Login !</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?=base_url('assets/css/bootstrap.css')?>" rel="stylesheet">
@@ -57,6 +57,7 @@
 		                </span>
 		            </label>
 		            <button class="btn btn-theme btn-block" href="<?=base_url();?>users/login" type="submit"><i class="fa fa-lock"></i> Masuk</button>
+
 		            <!-- <input class="btn btn-theme btn-block" href="<?=base_url();?>users/login" type="submit" value="Submit"> -->
 		            
 		            <hr>

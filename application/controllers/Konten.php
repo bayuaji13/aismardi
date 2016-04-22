@@ -222,7 +222,7 @@ class Konten extends CI_Controller {
 		$post_array['pageTitle'] = strip_tags($post_array['pageTitle']);
 		$post_array['pageName'] = str_replace(" ", "-", $this->alphanumericAndSpace(strtolower($post_array['pageTitle'])));
 		$post_array['pageModified'] = date("Y-m-d H:i:s");
-		$post_array['pageUrl'] = base_url("laman/".$post_array['pageName']);
+		$post_array['pageUrl'] = base_url("page/".$post_array['pageName']);
 	
 		return $post_array;
 	}
@@ -233,7 +233,7 @@ class Konten extends CI_Controller {
 		$post_array['pageName'] = str_replace(" ", "-", $this->alphanumericAndSpace(strtolower($post_array['pageTitle'])));
 		$post_array['pageDate'] = date("Y-m-d H:i:s");
 		$post_array['pageModified'] = date("Y-m-d H:i:s");
-		$post_array['pageUrl'] = base_url("laman/".$post_array['pageName']);
+		$post_array['pageUrl'] = base_url("page/".$post_array['pageName']);
 	
 		return $post_array;
 	}
