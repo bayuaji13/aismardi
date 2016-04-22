@@ -59,35 +59,23 @@
                 </div><!--//navbar-header-->            
                 <div class="navbar-collapse collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active nav-item"><a href="<?php echo base_url();?>">Beranda</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Profil <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo base_url('page/sejarah');?>">Sejarah</a></li>
-                                <li><a href="<?php echo base_url('page/visi-misi');?>">Visi-Misi</a></li>
-                                <li><a href="<?php echo base_url('page/pimpinan');?>">Pimpinan</a></li>  
-								<li><a href="<?php echo base_url('page/staff');?>">Staff</a></li>  
-                            </ul>
-                        </li>
-						<li class="nav-item dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Akademik <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo base_url('page/kurikulum');?>">Kurikulum</a></li>
-								<li><a href="<?php echo base_url('page/ekstra-kurikuler');?>">Ekstra Kurikuler</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a href="<?php echo base_url('berita');?>">Berita</a></li>
-						<li class="nav-item dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">Fasilitas <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo base_url('page/laboratorium');?>">Laboratorium</a></li>
-								<li><a href="<?php echo base_url('page/fasilitas-keagamaan');?>">Fasilitas Keagamaan</a></li>
-								<li><a href="<?php echo base_url('page/fasilitas-olahraga');?>">Fasilitas Olahraga</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a href="<?php echo base_url('event/');?>">Event</a></li>
-						<li class="nav-item"><a href="<?php echo base_url('page/penerimaan-siswa-baru');?>">Penerimaan Siswa Baru</a></li>
-						<li class="nav-item"><a href="<?php echo base_url('galeri/');?>">Galeri</a></li>
+                    <?php 
+                    	foreach ($menu as $row){
+                    		// Jika punya anak
+                    		if (isset($row['children'])){
+                    			echo "<li id='".$row['title']."' class='nav-item dropdown'>";
+                    			echo "<a class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown' data-delay='0' data-close-others='false' href='".$row['customSelect']."'>".$row['title']."<i class='fa fa-angle-down'></i></a>";
+                    			echo '<ul class="dropdown-menu">';
+                    			foreach ($row['children'] as $children){
+                    				echo "<li><a href='".$children['customSelect']."'>".$children['title']."</a></li>"; 
+                    			}
+                    			echo '</ul>';
+                    		}else 
+                    			// Jika tidak punya anak
+                    			echo "<li id='".$row['title']."' class='nav-item'><a href='".$row['customSelect']."'>".$row['title']."</a></li>";
+                    		echo '</li>';
+                    	}
+                    ?>
                     </ul><!--//nav-->
                 </div><!--//navabr-collapse-->
             </div><!--//container-->

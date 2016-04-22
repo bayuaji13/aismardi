@@ -47,6 +47,10 @@
 					                 data-default-value="doMenu List Item. {?numeric.increment}">
 					          <select name="custom-select">
 					            <option>Pilih..</option>
+					            <option value='home'>Beranda</option>
+					            <option value="<?php echo base_url('galeri/')?>">Galeri</option>
+					            <option value="<?php echo base_url('event/')?>">Event</option>
+					            <option value="<?php echo base_url('berita/')?>">Berita</option>
 					            <optgroup label="Laman">
 					            <?php 
 					            foreach ($pages as $page){

@@ -6,7 +6,10 @@ class Konten extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('date');
 		$this->load->library('grocery_CRUD');
-		
+		$level = $this->session->userdata('level');
+		if ($level != 9){
+			redirect('users/login');
+		}
 	}
 	
 	function showOutput($output = null)
@@ -206,7 +209,8 @@ class Konten extends CI_Controller {
 	
 	
 		$crud->callback_before_update(array($this,'pageBeforeUpdate'))
-		->callback_before_insert(array($this,'pageBeforeInsert'));
+		->callback_before_insert(array($this,'pageBeforeInsert'))
+		->callback_before_delete(array($this,'pageBeforeDelete'));
 	
 		$output = $crud->render();
 		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Berita </h3> <br/>' . $output->output;
@@ -232,6 +236,12 @@ class Konten extends CI_Controller {
 		$post_array['pageUrl'] = base_url("laman/".$post_array['pageName']);
 	
 		return $post_array;
+	}
+	
+	public function pageBeforeDelete($idLaman){
+		$this->load->model('mmenu');
+		$idLaman = 'laman_'.$idLaman;
+		return !$this->mmenu->cekSelect($idLaman);
 	}
 	
 	public function manageEvent(){
@@ -437,11 +447,18 @@ class Konten extends CI_Controller {
 			->unset_delete();
 		}
 		
-		$crud->callback_field('linkUrl',array($this,'_callback_url'));
+		$crud->callback_field('linkUrl',array($this,'_callback_url'))
+		->callback_before_delete(array($this,'tautanBeforeDelete'));
 	
 		$output = $crud->render();
 		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Tautan </h3> <br/>' . $output->output;
 		$this->showOutput($output);
+	}
+	
+	public function tautanBeforeDelete($idTautan){
+		$this->load->model('mmenu');
+		$idTautan = 'tautan_'.$idTautan;
+		return !$this->mmenu->cekSelect($idTautan);
 	}
 	
 	public function _callback_url($value = '', $primary_key = null) {
@@ -450,6 +467,10 @@ class Konten extends CI_Controller {
 	}
 	
 	public function manageMenu(){
+		$level = $this->session->userdata('level');
+		if ($level == null){
+			redirect('users/login');
+		}
 		$this->load->model('mpage');
 		$this->load->model('mtautan');
 		$data['pages'] = $this->mpage->getPages();
@@ -461,8 +482,8 @@ class Konten extends CI_Controller {
 	
 	public function coba(){
 		$this->load->model('mmenu');
-		$result = $this->mmenu->getMenu();
+		$result = $this->mmenu->getMenuView();
 		
-		echo (json_encode($result));
+		var_dump($result);
 	}
 }

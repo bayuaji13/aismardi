@@ -9,6 +9,9 @@ class Galeri extends CI_Controller {
 	
 	public function index(){
 		$this->load->model('mtautan');		
+		$this->load->model('mmenu');		
+		$data['menu'] = $this->mmenu->getMenuView();
+		$data['active'] = 'Galeri';
 		$data['daftarTautan'] = $this->mtautan->getTautan();
 		
 		$per_page = 6;

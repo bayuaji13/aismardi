@@ -10,6 +10,9 @@ class Berita extends CI_Controller {
 	public function index($kategori = "", $namaBerita = ""){
 		$this->load->model('mtautan');
 		$this->load->model('mevent');
+		$this->load->model('mmenu');
+		$data['menu'] = $this->mmenu->getMenuView();
+		$data['active'] = 'Berita';
 		$data['daftarTautan'] = $this->mtautan->getTautan();
 		$data['latestEvents'] = $this->mevent->getLatestEvents(3);
 		$per_page = 6;

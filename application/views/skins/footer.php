@@ -70,8 +70,17 @@
         </div><!--//config-wrapper-inner-->
     </div><!--//config-wrapper-->
  
-    <!-- Javascript -->          
+    <!-- Javascript -->     
     <script type="text/javascript" src="<?php echo base_url('assets/js/jquery-1.11.2.min.js');?>"></script>
+    <?php 
+    	if (isset($active)){
+    ?>     
+    <script> 
+    	$(document).ready(function() {
+			$("#<?php echo $active;?>").addClass( "active" );
+    	})
+    </script>
+    <?php }?>
     <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.min.js');?>"></script> 
     <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap-hover-dropdown.min.js');?>"></script> 
     <script type="text/javascript" src="<?php echo base_url('assets/js/back-to-top.js')?>"></script>

@@ -10,11 +10,18 @@ class Page extends CI_Controller {
 	public function index($pageName = ""){
 		$this->load->model('mtautan');
 		$this->load->model('mberita');
+		$this->load->model('mmenu');
+		$data['menu'] = $this->mmenu->getMenuView();
 		$data['daftarTautan'] = $this->mtautan->getTautan();
 		$data['latestNews'] = $this->mberita->getLatestBerita(4);
 		if ($pageName != ""){
 			$page = $this->mpage->getPage($pageName);
 			if (!empty($page)){
+				$this->load->model('mmenu');
+				if(!empty(($parent = $this->mmenu->getParentTitleByChildId('laman_'.$page['pageId']))))
+					$data['active'] = $parent['title'];
+				else 
+					$data['active'] = $page['pageTitle'];
 				$data['pageTitle'] = $page['pageTitle'];
 				$data['page'] = $page;
 				$tanggal = new DateTime($page['pageDate']);

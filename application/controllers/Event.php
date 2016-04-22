@@ -10,6 +10,9 @@ class Event extends CI_Controller {
 	public function index(){
 		$this->load->model('mtautan');
 		$this->load->model('mberita');
+		$this->load->model('mmenu');
+		$data['menu'] = $this->mmenu->getMenuView();
+		$data['active'] = 'Event';
 		$data['daftarTautan'] = $this->mtautan->getTautan();
 		$data['latestNews'] = $this->mberita->getLatestBerita(4);
 		$per_page = 6;

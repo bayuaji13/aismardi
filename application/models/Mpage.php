@@ -11,6 +11,11 @@ class Mpage extends CI_Model {
 		return $query->row_array();
 	}
 	
+	public function getPageById($pageId) {
+		$query = $this->db->get_where('tabel_laman', array('pageId' => $pageId));
+		return $query->row_array();
+	}
+	
 	public function getPages() {
 		$query = $this->db->get('tabel_laman');
 		return $query->result_array();
