@@ -113,9 +113,8 @@
 	
 	
 	<script src="<?=base_url('assets/js/jquery.domenu-0.95.77.js')?>"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
-	
+	<script src="<?=base_url('assets/js/select2.min.js')?>"></script>
+	<script src="<?=base_url('assets/js/highlight.min.js')?>"></script>
 	<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script> 
   </body>
 </html>

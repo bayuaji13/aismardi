@@ -165,7 +165,7 @@ class Konten extends CI_Controller {
 	}
 	
 	public function categoryBeforeDelete($idCategory){
-		if($idCategory == 0)
+		if($idCategory == 1)
 			return false;
 		else{
 			$this->load->model('mberita');
@@ -478,12 +478,5 @@ class Konten extends CI_Controller {
 		$this->load->view('header_menu');
 		$this->load->view('menu/menumanager', $data);
 		$this->load->view('footer_menu');
-	}
-	
-	public function coba(){
-		$this->load->model('mmenu');
-		$result = $this->mmenu->getMenuView();
-		
-		var_dump($result);
 	}
 }

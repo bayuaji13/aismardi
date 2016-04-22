@@ -33,7 +33,7 @@ class Mberita extends CI_Model {
 	
 	public function setCategoryToDefault($categoryId){
 		$data = array(
-				'categoryId' => 0
+				'categoryId' => 1
 		);
 		
 		$this->updateUrlBeritaToDefault($categoryId);
