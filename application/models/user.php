@@ -52,7 +52,7 @@
             } else {
                 return false;
             }
-        }
+    }
 
     public function setPassword($user,$pass)
     {

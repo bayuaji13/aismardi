@@ -25,7 +25,7 @@ class BatchInput extends CI_Controller {
 	{
 		
 		$config['upload_path'] = './assets/uploads/temporary_xls';
-		$config['allowed_types'] = 'xls';
+		$config['allowed_types'] = array('xls','xlsx');
 		$config['max_size']	= '20000';
 		// $config['max_width']  = '1024';
 		// $config['max_height']  = '768';
@@ -381,7 +381,7 @@ class BatchInput extends CI_Controller {
                         'pass' => sha1($nip),
                         'kd_transaksi' => $data['kd_guru']
                 );
-		$isiKelas['kd_siswa'] = $this->siswa->nis2kd_siswa($objWorksheet->getCellByColumnAndRow(1,8));
+		$isiKelas['kd_siswa'] = $this->siswa->nisn2kd_siswa($objWorksheet->getCellByColumnAndRow(1,8));
 
 		print_r($data);
 		echo "<br/>";
@@ -397,7 +397,7 @@ class BatchInput extends CI_Controller {
 		}
 
 		for ($row = 8; $row <= $highestRow; ++$row) {
-			$isiKelas['kd_siswa'] = $this->siswa->nis2kd_siswa($objWorksheet->getCellByColumnAndRow(1,$row));
+			$isiKelas['kd_siswa'] = $this->siswa->nisn2kd_siswa($objWorksheet->getCellByColumnAndRow(1,$row));
 			$this->kelas->process_isi_kelas($isiKelas);
 			print_r($isiKelas);
 			echo "<br/>";
@@ -422,8 +422,8 @@ class BatchInput extends CI_Controller {
 		$data['semester'] = $objWorksheet->getCellByColumnAndRow(4,2)->getValue();
 		$data['tahun_ajaran'] = $this->tahun_ajaran->getCurrentTA();
 		for ($row = 7; $row <= $highestRow; ++$row) {
-			$nis=$objWorksheet->getCellByColumnAndRow(1,$row)->getValue();
-			$query = $this->db->query("SELECT kd_siswa FROM data_siswa WHERE nis='$nis'");
+			$nisn=$objWorksheet->getCellByColumnAndRow(1,$row)->getValue();
+			$query = $this->db->query("SELECT kd_siswa FROM data_siswa WHERE nisn='$nisn'");
 			$result = $query->first_row();
 			$data['kd_siswa'] = $result->kd_siswa;
 			for ($column=3; $column < $highestColumnIndex; $column++) { 
@@ -441,6 +441,11 @@ class BatchInput extends CI_Controller {
 
 	
 	public function inputDatasiswa($file){
+		if ($this->session->userdata('level') != 9){
+            echo "<script>alert('akses ditolak')</script>";
+            // sleep(5);
+            redirect('users/login');
+        }
 		$laporan = null;
 		$this->load->model('siswa');
 		$this->load->model('user');
@@ -456,64 +461,91 @@ class BatchInput extends CI_Controller {
 		$highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
-		$nama_kelas = $objWorksheet->getCellByColumnAndRow(2,8)->getValue();
-		$tingkat = $objWorksheet->getCellByColumnAndRow(2,9)->getValue();
-		$nip = $objWorksheet->getCellByColumnAndRow(2,11)->getValue();
-		$penjurusan = $objWorksheet->getCellByColumnAndRow(2,12)->getValue();
+		$data_kelas1 = $this->siswa->getSiswaByTingkat(1);
+		$data_kelas2 = $this->siswa->getSiswaByTingkat(2);
+		$data_kelas3 = $this->siswa->getSiswaByTingkat(3);
+		$data_kelas123 = array_merge($data_kelas1,$data_kelas2,$data_kelas3);
+		
 
-		echo "nama kelas : ".$nama_kelas;
-		echo "<br/>tingkat : ".$tingkat;
-		echo "<br/>nip : ".$nip;
-		echo "<br/>penjurusan : ".$penjurusan;
+		$current_tingkat = null;
+		$current_kelas = null;
+		$index_kelas = -1;
+		for ($i=9; $i <= $highestRow; $i++) { 
+			$iter_kelas = $objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+			$iter_tingkat = $objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
 
-		if ($this->kelas->cekKelas($nama_kelas)){
-			$this->session->set_flashdata('notice','Nama kelas sudah terdaftar');
-			$alert = "fail";
-			redirect('batchinput/do_upload/data/'.$alert);
-		}
-		if (!$this->pengampu_m->cekGuru($nip)){
-			$this->session->set_flashdata('notice','NIP Guru tidak ada dalam daftar');
-			$alert = "fail";
-			redirect('batchinput/do_upload/data/'.$alert);
-		}
-
-		$index = 0;
-		$tingkat_atas = ($tingkat == 2 OR $tingkat == 3);
-
-		for ($i=0; $i < $highestColumnIndex; $i++) { 
-			$field[$i] = $objWorksheet->getCellByColumnAndRow($i, 15)->getValue();
-		}
-		for ($i=17; $i <= $highestRow; $i++) { 
-			for ($j=0; $j < $highestColumnIndex; $j++) { 
-				$data[$index][$field[$j]]= $objWorksheet->getCellByColumnAndRow($j, $i)->getValue();
+			if ($iter_tingkat != $current_tingkat){
+				$current_tingkat = $iter_tingkat;
 			}
-			// if (!$this->siswa->cekSiswa($data[$index]['nis']) AND $tingkat_atas){
-			// 		$this->session->set_flashdata('notice','Siswa '.$data[$index]['nis'].' - '.$data[$index]['nama'].' tidak ada dalam daftar');
-			// 		$alert = "fail";
-			// 		redirect('batchinput/do_upload/data/'.$alert);
-			// }
-			if (!$this->siswa->cekSiswaDiKelas($data[$index]['nis'])){
-					$this->session->set_flashdata('notice','Siswa '.$data[$index]['nis'].' - '.$data[$index]['nama'].' sudah terdaftar di kelas lain');
-					$alert = "fail";
-					redirect('batchinput/do_upload/data/'.$alert);
+
+			if ($iter_kelas != $current_kelas){
+				$index_kelas++;
+				$current_kelas = $iter_kelas;
+				$data[$index_kelas]['nama_kelas'] = $current_kelas;
+				$data[$index_kelas]['tingkat'] = $current_tingkat;
 			}
-			$index++;
-		}
+			$data_siswa['nama'] = $objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+			$data_siswa['nisn'] = $objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
+			$nisn['nisn'] = $data_siswa['nisn'];
+			$data_siswa['tempat_lahir'] = $objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
+			$data_siswa['tanggal_lahir'] = $objWorksheet->getCellByColumnAndRow(4,$i)->getValue();
 
-
-		if ($tingkat_atas){
-			$validasi_penjurusan = ($penjurusan = 'IPA' OR $penjurusan == 'IPS');
-			if (!$validasi_penjurusan){
-				$laporan = $data;
+			if (!in_array($nisn, $data_kelas123)){
+				$data_siswa['tahun_masuk'] = $this->tahun_ajaran->getCurrentTA();
+				$data_siswa['flag_baru'] = 1;
 			} else {
-				$this->entryKelasSiswa($nip,$nama_kelas,$tingkat,$data,$penjurusan);
+				$data_siswa['flag_baru'] = 0;
 			}
+			if ($current_tingkat == 1)
+				$data_siswa['jurusan'] = 1;
+			else
+				$data_siswa['jurusan'] = $this->konversiJurusan($objWorksheet->getCellByColumnAndRow(6,$i)->getValue());
 
-		} else {
-			$this->entryDataSiswa($data);
-			$this->entryKelasSiswa($nip,$nama_kelas,$tingkat,$data);
-		}		
+			$data_siswa['status'] = 1;
+			$data_siswa['flag_tunggakan'] = 0;
+			$data_siswa['tingkat'] = $current_tingkat;
+			$data[$index_kelas]['data_siswa'][] = $data_siswa;
+		}
 
+		for ($i=0; $i < count($data); $i++) { 
+			$isi_kelas = array();
+			for ($j=0; $j < count($data[$i]['data_siswa']); $j++) { 
+				if ($data[$i]['data_siswa'][$j]['flag_baru'] == 1){
+					unset($data[$i]['data_siswa'][$j]['flag_baru']);
+					$data[$i]['data_siswa'][$j]['id_siswa'] = $this->siswa->process_create_siswa($data[$i]['data_siswa'][$j]);
+					$laporan = $laporan and $data[$i]['data_siswa'][$j]['id_siswa'];
+					$user['user'] = $data[$i]['data_siswa'][$j]['nisn'];
+					$user['pass'] = sha1($this->konversiPasswordSiswa($data[$i]['data_siswa'][$j]['tanggal_lahir']));
+					$user['id_transaksi'] = $data[$i]['data_siswa'][$j]['id_siswa'];
+					$user['level'] = 5;
+					$this->user->process_create_user($user);
+					$isi_kelas[] = $data[$i]['data_siswa'][$j]['id_siswa'];
+				} else {
+					unset($data[$i]['data_siswa'][$j]['flag_baru']);
+					unset($data[$i]['data_siswa'][$j]['tahun_masuk']);
+					$data[$i]['data_siswa'][$j]['id_siswa'] = $this->siswa->nisn2id_siswa($data[$i]['data_siswa'][$j]['nisn']);
+					$this->siswa->process_update_siswa($data[$i]['data_siswa'][$j]['id_siswa'],$data[$i]['data_siswa'][$j]);
+					$isi_kelas[] = $data[$i]['data_siswa'][$j]['id_siswa'];
+				}
+				print_r($data[$i]['data_siswa'][$j]['tingkat']);
+			}
+			$kelas['nama_kelas'] = $data[$i]['nama_kelas'];
+			$kelas['tingkat'] = $data[$i]['tingkat'];
+			$kelas['jurusan'] = $data[$i]['data_siswa'][0]['jurusan'];
+			$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+			$kelas['tahun_ajaran'] = $tahun_ajaran;
+			$id_kelas = $this->kelas->process_create_kelas($kelas);
+			$laporan = $laporan and $id_kelas;
+			foreach ($isi_kelas as $siswa) {
+				$isi['tahun_ajaran'] = $tahun_ajaran;
+				$isi['id_kelas'] = $id_kelas;
+				$isi['id_siswa'] = $siswa;
+				$this->kelas->process_isi_kelas($isi);
+			}
+		}
+
+		// echo "<script>alert('data berhasil dimasukkan')</script>";
+		// redirect('siswas/manageSiswa');
 
 		if ($laporan == null){
 			$alert = "success";
@@ -531,6 +563,13 @@ class BatchInput extends CI_Controller {
 		
 	}
 
+	public function konversiPasswordSiswa($tanggal)
+	{
+		$strings = explode('-', $tanggal);
+		$hasil = $strings[2].$strings[1].$strings[0];
+		return $hasil;
+	}
+
 	public function entryDataSiswa($data)
 	{
 		$laporan = array();
@@ -545,7 +584,7 @@ class BatchInput extends CI_Controller {
 				if (!$user['id_transaksi'] = $this->siswa->process_create_siswa($row))
 					$laporan[] = $row;
 				else {
-					$user['user'] = $row['nis'];
+					$user['user'] = $row['nisn'];
 					$user['pass'] = sha1('123');
 					$user['level'] = 5;
 					$this->user->process_create_user($user);
@@ -577,10 +616,10 @@ class BatchInput extends CI_Controller {
 
 		foreach ($data as $row) {
 			$row['tahun_ajaran'] = $tahun_ajaran;
-			$row['id_siswa'] = $this->siswa->nis2id_siswa($row['nis']);
+			$row['id_siswa'] = $this->siswa->nisn2id_siswa($row['nisn']);
 			$row['id_kelas'] = $id_kelas;
 
-			unset($row['nis']);
+			unset($row['nisn']);
 			unset($row['nama']);
 
 			if ($row['tgl_kls'] == null){
@@ -615,7 +654,7 @@ class BatchInput extends CI_Controller {
 		// header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		// header('Cache-Control: max-age=0'); //no cache
 
-		$objWriter = new PHPExcel_Writer_excel5($objPHPExcel);  
+		$objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);  
 		$exportPlace = realpath(FCPATH).'/assets/downloadable/'.$filename;
 		$objWriter->save($exportPlace);
 

@@ -7,7 +7,7 @@
 				<thead>
 					<tr>
 						<th > No. </th>
-						<th > NIS</th>
+						<th > nisn</th>
 						<th > Nama siswa</th>
 						<th > Semester 1 </th>
 						<th > Semester 2 </th>
@@ -20,7 +20,7 @@
 						?>
 						<tr>
 							<td align="center"><?=$i?>.</td>
-							<td><?=$row['nis']?></td>
+							<td><?=$row['nisn']?></td>
 							<td><?=$row['nama_siswa']?></td>
 							<td><a href="<?=base_url('batchoutput/exporterRapor2013/'.$row['kd_siswa'].'/1')?>">Semester 1 </a></td>
 							<td><a href="<?=base_url('batchoutput/exporterRapor2013/'.$row['kd_siswa'].'/2')?>">Semester 2 </a></td>

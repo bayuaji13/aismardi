@@ -20,7 +20,7 @@ class Walis extends CI_Controller {
         $isi_kelas = $this->kelas->getIsiKelas($id_kelas);
         $i = 0;
         foreach ($isi_kelas as $row) {
-            $data[$i]['teks'] = $row['nis']." - ".$row['nama'];
+            $data[$i]['teks'] = $row['nisn']." - ".$row['nama'];
             $data[$i]['link'] = "nilai/generateExcel/".$row['id_siswa']."/".$tahun_ajaran."/".$semester;
             $i++;
         }
@@ -47,7 +47,7 @@ class Walis extends CI_Controller {
             $inner_data = $this->siswa->getSiswa($row['kd_siswa']);
             $hasil = $inner_data->first_row('array');
             $hasil[$i]['kd_siswa'] = $row['kd_siswa'];
-            $teks = $hasil['nama_siswa'] . " - " .$hasil['nis'];
+            $teks = $hasil['nama_siswa'] . " - " .$hasil['nisn'];
             $this->form_validation->set_rules("nilai[$i]",$teks,'min_length[1]|max_length[5]');
             $i++;
             
@@ -71,7 +71,7 @@ class Walis extends CI_Controller {
                                                 );
                 $inner_data = $this->siswa->getSiswa($row['kd_siswa']);
                 $hasil = $inner_data->first_row('array');
-                $teks = $hasil['nama_siswa'] . " - " .$hasil['nis'];
+                $teks = $hasil['nama_siswa'] . " - " .$hasil['nisn'];
                 $form['data']['label'][$i] = $teks;
                 $i++;
             }
@@ -128,7 +128,7 @@ class Walis extends CI_Controller {
     	foreach ($isi as $siswa) {
     		$form['id_siswa'][] = $siswa['id_siswa'];
     		$form['kegiatan'][$siswa['id_siswa']] = $this->nilai_m->cekNilaiKegiatan($siswa['id_siswa'],$tahun_ajaran,$semester);
-    		$form['organisasi'][$siswa['id_siswa']] = $this->nilai_m->cekNilaiOrganisasi($siswa['id_siswa'],$tahun_ajaran,$semester);
+    		$form['organisnasi'][$siswa['id_siswa']] = $this->nilai_m->cekNilaiOrganisnasi($siswa['id_siswa'],$tahun_ajaran,$semester);
 
     		$form['nama_siswa'][] = $siswa['nama'];
     	}
@@ -160,12 +160,12 @@ class Walis extends CI_Controller {
         $id_siswa = $this->input->post('id_siswa');
         $nama_kegiatan = $this->input->post('nama_kegiatan');
         $nama_kegiatan_lama = $this->input->post('nama_kegiatan_lama');
-        $nama_organisasi_lama = $this->input->post('nama_organisasi_lama');
-        $nama_organisasi = $this->input->post('nama_organisasi');
+        $nama_organisnasi_lama = $this->input->post('nama_organisnasi_lama');
+        $nama_organisnasi = $this->input->post('nama_organisnasi');
         $nilai_kegiatan = $this->input->post('nilai_kegiatan');
-        $nilai_organisasi = $this->input->post('nilai_organisasi');
+        $nilai_organisnasi = $this->input->post('nilai_organisnasi');
         $ket_kegiatan = $this->input->post('ket_kegiatan');
-        $ket_organisasi = $this->input->post('ket_organisasi');
+        $ket_organisnasi = $this->input->post('ket_organisnasi');
 
         for ($i=0; $i < count($id_siswa); $i++) { 
             $dataKegiatan['id_siswa'] = $id_siswa[$i];
@@ -176,13 +176,13 @@ class Walis extends CI_Controller {
             $dataKegiatan['nilai_kegiatan'] = $nilai_kegiatan[$i];
             $dataKegiatan['ket_kegiatan'] = $ket_kegiatan[$i];
 
-            $dataOrganisasi['id_siswa'] = $id_siswa[$i];
-            $dataOrganisasi['tahun_ajaran'] = $tahun_ajaran;
-            $dataOrganisasi['semester'] = $semester;
-            $dataOrganisasi['nama_organisasi'] = $nama_organisasi[$i];
-            $dataOrganisasi['nama_organisasi_lama'] = $nama_organisasi_lama[$i];
-            $dataOrganisasi['nilai_organisasi'] = $nilai_organisasi[$i];
-            $dataOrganisasi['ket_organisasi'] = $ket_organisasi[$i];
+            $dataOrganisnasi['id_siswa'] = $id_siswa[$i];
+            $dataOrganisnasi['tahun_ajaran'] = $tahun_ajaran;
+            $dataOrganisnasi['semester'] = $semester;
+            $dataOrganisnasi['nama_organisnasi'] = $nama_organisnasi[$i];
+            $dataOrganisnasi['nama_organisnasi_lama'] = $nama_organisnasi_lama[$i];
+            $dataOrganisnasi['nilai_organisnasi'] = $nilai_organisnasi[$i];
+            $dataOrganisnasi['ket_organisnasi'] = $ket_organisnasi[$i];
 
             // $dataKegiatan[$i]['id_siswa'] = $id_siswa[$i];
             // $dataKegiatan[$i]['tahun_ajaran'] = $tahun_ajaran;
@@ -192,19 +192,19 @@ class Walis extends CI_Controller {
             // $dataKegiatan[$i]['nilai_kegiatan'] = $nilai_kegiatan[$i];
             // $dataKegiatan[$i]['ket_kegiatan'] = $ket_kegiatan[$i];
 
-            // $dataOrganisasi[$i]['id_siswa'] = $id_siswa[$i];
-            // $dataOrganisasi[$i]['tahun_ajaran'] = $tahun_ajaran;
-            // $dataOrganisasi[$i]['semester'] = $semester;
-            // $dataOrganisasi[$i]['nama_organisasi'] = $nama_organisasi[$i];
-            // $dataOrganisasi[$i]['nama_organisasi_lama'] = $nama_organisasi_lama[$i];
-            // $dataOrganisasi[$i]['nilai_organisasi'] = $nilai_organisasi[$i];
-            // $dataOrganisasi[$i]['ket_organisasi'] = $ket_organisasi[$i];
+            // $dataOrganisnasi[$i]['id_siswa'] = $id_siswa[$i];
+            // $dataOrganisnasi[$i]['tahun_ajaran'] = $tahun_ajaran;
+            // $dataOrganisnasi[$i]['semester'] = $semester;
+            // $dataOrganisnasi[$i]['nama_organisnasi'] = $nama_organisnasi[$i];
+            // $dataOrganisnasi[$i]['nama_organisnasi_lama'] = $nama_organisnasi_lama[$i];
+            // $dataOrganisnasi[$i]['nilai_organisnasi'] = $nilai_organisnasi[$i];
+            // $dataOrganisnasi[$i]['ket_organisnasi'] = $ket_organisnasi[$i];
 
-            $this->nilai_m->isiNilaiPengembangan($dataKegiatan,$dataOrganisasi);
+            $this->nilai_m->isiNilaiPengembangan($dataKegiatan,$dataOrganisnasi);
             die();
         }
         print_r($dataKegiatan);
-        print_r($dataOrganisasi);
+        print_r($dataOrganisnasi);
         die();
 
 
@@ -229,7 +229,7 @@ class Walis extends CI_Controller {
     	$izin = $this->input->post('izin');
     	$alfa = $this->input->post('alfa');
     	$antar_mapel = $this->input->post('antar_mapel');
-    	$jenis = $this->input->post('nama_kegiatan');
+    	$jenisn = $this->input->post('nama_kegiatan');
         $keterangan = $this->input->post('ket_kegiatan');
     	
     	// print_r($antar_mapel);
@@ -243,8 +243,8 @@ class Walis extends CI_Controller {
 
     		//isi nilai pengembangan
     		$in_iter = 0;
-    		foreach ($jenis[$iter] as $kegiatan) {
-    			$this->nilai_m->isiNilaiKegiatan($kd_siswa[$iter],$tahun_ajaran,$semester,$jenis[$iter][$in_iter],$keterangan[$iter][$in_iter]);
+    		foreach ($jenisn[$iter] as $kegiatan) {
+    			$this->nilai_m->isiNilaiKegiatan($kd_siswa[$iter],$tahun_ajaran,$semester,$jenisn[$iter][$in_iter],$keterangan[$iter][$in_iter]);
     			$in_iter++;
     		}
     		$iter++;

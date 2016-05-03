@@ -15,6 +15,41 @@ class Nilai_m extends CI_Model
         return $berhasil;
     }
 
+    public function isiNilaiSKHUSiswa($data)
+    {
+        $berhasil = true;
+        foreach ($data as $row) {
+            if ($existed = $this->cekNilaiSKHU($row)){ //kalo udah ada diupdate
+                $this->db->where($existed);
+                $berhasil = $berhasil AND $this->db->update('tabel_nilai_un',$row);
+            } else {
+                $berhasil = $berhasil AND $this->db->insert('tabel_nilai_un',$row);
+            }
+        }
+        return $berhasil;
+    }
+
+    public function getNilaiUN($id_siswa)
+    {
+        $this->db->where('id_siswa',$id_siswa);
+        $query = $this->db->get('tabel_nilai_un');
+        return $query->result_array();
+    }
+
+    public function cekNilaiSKHU($data)
+    {
+        $check['id_siswa'] = $data['id_siswa'];
+        $check['id_mapel'] = $data['id_mapel'];
+        $check['tahun_ajaran'] = $data['tahun_ajaran'];
+
+        $this->db->where($check);
+        $query = $this->db->get('tabel_nilai_un');
+        if ($query->num_rows() == 1)
+            return $check;
+        else
+            return FALSE;
+    }
+
     public function cekNilai($data)
     {
         $check['id_siswa'] = $data['id_siswa'];
@@ -48,28 +83,28 @@ class Nilai_m extends CI_Model
 
     }
 
-    public function isiNilaiPengembangan($nilai_ekskul,$nilai_organisasi)
+    public function isiNilaiPengembangan($nilai_ekskul,$nilai_organisnasi)
     {
         $row_ekskul = array_filter($nilai_ekskul);
-        $row_organisasi = array_filter($nilai_organisasi);
+        $row_organisnasi = array_filter($nilai_organisnasi);
         
 
         $row_ekskul['nama_kegiatan'] = $row_ekskul['nama_kegiatan_lama'];
-        $row_organisasi['nama_organisasi'] = $row_organisasi['nama_organisasi_lama'];
+        $row_organisnasi['nama_organisnasi'] = $row_organisnasi['nama_organisnasi_lama'];
 
         unset($row_ekskul['nama_kegiatan_lama']);
-        unset($row_organisasi['nama_organisasi_lama']);
+        unset($row_organisnasi['nama_organisnasi_lama']);
 
         unset($row_ekskul['ket_kegiatan']);
         unset($row_ekskul['nilai_kegiatan']);
 
-        unset($row_organisasi['ket_organisasi']);
-        unset($row_organisasi['nilai_organisasi']);
+        unset($row_organisnasi['ket_organisnasi']);
+        unset($row_organisnasi['nilai_organisnasi']);
 
         
 
         print_r($row_ekskul);
-        print_r($row_organisasi);
+        print_r($row_organisnasi);
         die();
 
     }
@@ -83,12 +118,12 @@ class Nilai_m extends CI_Model
         return $query->result_array();
     }
 
-    public function cekNilaiOrganisasi($id_siswa,$tahun_ajaran,$semester)
+    public function cekNilaiOrganisnasi($id_siswa,$tahun_ajaran,$semester)
     {
         $this->db->where('id_siswa',$id_siswa);
         $this->db->where('tahun_ajaran',$tahun_ajaran);
         $this->db->where('semester',$semester);
-        $query = $this->db->get('tabel_nilai_organisasi');
+        $query = $this->db->get('tabel_nilai_organisnasi');
         return $query->result_array();
     }
 
@@ -115,9 +150,9 @@ class Nilai_m extends CI_Model
             return FALSE;
     }
 
-    public function CekNilaiKegiatanOLD($kd_siswa,$tahun_ajaran,$semester,$jenis){
+    public function CekNilaiKegiatanOLD($kd_siswa,$tahun_ajaran,$semester,$jenisn){
         $query = $this->db->query("SELECT * FROM tabel_pengembangan_diri_siswa WHERE kd_siswa='$kd_siswa' AND semester='$semester'
-                                    AND tahun_ajaran='$tahun_ajaran'AND jenis = '$jenis'
+                                    AND tahun_ajaran='$tahun_ajaran'AND jenisn = '$jenisn'
                                 ");
         if ($query->num_rows() == 1)
             return TRUE;
@@ -197,7 +232,7 @@ class Nilai_m extends CI_Model
 
     public function cekNilaiFieldKegiatanOLD($kd_siswa,$tahun_ajaran,$semester)
     {
-        $query = $this->db->query("SELECT jenis,keterangan FROM tabel_pengembangan_diri_siswa
+        $query = $this->db->query("SELECT jenisn,keterangan FROM tabel_pengembangan_diri_siswa
                                     WHERE kd_siswa='$kd_siswa' 
                                     AND semester='$semester'
                                     AND tahun_ajaran='$tahun_ajaran'
@@ -218,14 +253,14 @@ class Nilai_m extends CI_Model
         return $isi;
     }
 
-    public function isiNilaiKegiatan($kd_siswa,$tahun_ajaran,$semester,$jenis,$keterangan)
+    public function isiNilaiKegiatan($kd_siswa,$tahun_ajaran,$semester,$jenisn,$keterangan)
     {
-        if ($jenis == null and $keterangan == null)
+        if ($jenisn == null and $keterangan == null)
             return true;
-        if (!$this->CekNilaiKegiatan($kd_siswa,$tahun_ajaran,$semester,$jenis))
-            $query = "INSERT INTO tabel_pengembangan_diri_siswa (`kd_siswa`,`tahun_ajaran`,`semester`,`jenis`,`keterangan`) VALUES ('$kd_siswa','$tahun_ajaran','$semester','$jenis','$keterangan')";
+        if (!$this->CekNilaiKegiatan($kd_siswa,$tahun_ajaran,$semester,$jenisn))
+            $query = "INSERT INTO tabel_pengembangan_diri_siswa (`kd_siswa`,`tahun_ajaran`,`semester`,`jenisn`,`keterangan`) VALUES ('$kd_siswa','$tahun_ajaran','$semester','$jenisn','$keterangan')";
         else
-            $query = "UPDATE `tabel_pengembangan_diri_siswa` SET `keterangan` = '$keterangan' WHERE `tabel_pengembangan_diri_siswa`.`kd_siswa` = '$kd_siswa' AND `tabel_pengembangan_diri_siswa`.`jenis` = '$jenis' AND `tabel_pengembangan_diri_siswa`.`tahun_ajaran` = '$tahun_ajaran' AND `tabel_pengembangan_diri_siswa`.`semester` = '$semester'";
+            $query = "UPDATE `tabel_pengembangan_diri_siswa` SET `keterangan` = '$keterangan' WHERE `tabel_pengembangan_diri_siswa`.`kd_siswa` = '$kd_siswa' AND `tabel_pengembangan_diri_siswa`.`jenisn` = '$jenisn' AND `tabel_pengembangan_diri_siswa`.`tahun_ajaran` = '$tahun_ajaran' AND `tabel_pengembangan_diri_siswa`.`semester` = '$semester'";
         // die($query);
         if ($this->db->query($query)){
             return true;

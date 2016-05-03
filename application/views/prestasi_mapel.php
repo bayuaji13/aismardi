@@ -19,7 +19,7 @@ for ($i=0; $i < count($data['nama_mapel']); $i++) {
 					<thead>
 						<tr>
 							<th>No.</th>
-							<th>NIS</th>
+							<th>nisn</th>
 							<th>Nama</th>
 							<th>Nilai Mapel</th>
 						</tr>
@@ -33,7 +33,7 @@ for ($i=0; $i < count($data['nama_mapel']); $i++) {
 								$i_idx++;
 								echo '<tr>';
 								echo '<td>'.$i_idx.'</td>';
-								echo '<td>'.$siswa['nis'].'</td>';
+								echo '<td>'.$siswa['nisn'].'</td>';
 								echo "<td><a href=".base_url('siswas/managesiswa/read/'.$siswa['kd_siswa']).">".$siswa['nama_siswa']."</a></td>";
 								echo '<td>'.$siswa['rerata'].'</td>';
 								echo '</tr>';

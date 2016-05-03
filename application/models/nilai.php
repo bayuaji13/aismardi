@@ -39,7 +39,7 @@
         $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         if ($tipe == 'top'){
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata 
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata 
                                         FROM tabel_nilai,data_siswa 
                                         WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' 
                                         AND tabel_nilai.kd_siswa = data_siswa.kd_siswa 
@@ -48,10 +48,10 @@
                                         GROUP BY data_siswa.kd_siswa 
                                         ORDER BY rerata DESC LIMIT 0,10");    
         } elseif ($tipe == 'least') {
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.kd_siswa = data_siswa.kd_siswa AND tabel_nilai.kd_pelajaran='$kd_mapel' AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.kd_siswa = data_siswa.kd_siswa AND tabel_nilai.kd_pelajaran='$kd_mapel' AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
         }
         foreach ($query->result() as $row) {
-            $data[] = array('kd_siswa' => $row->kd_siswa,'nis' => $row->nis ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
+            $data[] = array('kd_siswa' => $row->kd_siswa,'nisn' => $row->nisn ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
         }
         return $data;
     }
@@ -61,7 +61,7 @@
         $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         if ($tipe == 'top'){
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata 
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata 
                                         FROM tabel_nilai,data_siswa 
                                         WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' 
                                         AND tabel_nilai.kd_siswa = data_siswa.kd_siswa 
@@ -71,10 +71,10 @@
                                         GROUP BY data_siswa.kd_siswa 
                                         ORDER BY rerata DESC LIMIT 0,10");    
         } elseif ($tipe == 'least') {
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.kd_siswa = data_siswa.kd_siswa AND tabel_nilai.kd_pelajaran='$kd_mapel' AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.kd_siswa = data_siswa.kd_siswa AND tabel_nilai.kd_pelajaran='$kd_mapel' AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
         }
         foreach ($query->result() as $row) {
-            $data[] = array('kd_siswa' => $row->kd_siswa,'nis' => $row->nis ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
+            $data[] = array('kd_siswa' => $row->kd_siswa,'nisn' => $row->nisn ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
         }
         return $data;
     }
@@ -84,12 +84,12 @@
         $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         if ($tipe == 'top'){
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata DESC LIMIT 0,10");    
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata DESC LIMIT 0,10");    
         } elseif ($tipe == 'least') {
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
         }
         foreach ($query->result() as $row) {
-            $data[] = array('kd_siswa' => $row->kd_siswa,'nis' => $row->nis ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
+            $data[] = array('kd_siswa' => $row->kd_siswa,'nisn' => $row->nisn ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
         }
         return $data;
     }
@@ -99,12 +99,12 @@
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         $data = array();
         if ($tipe == 'top'){
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa AND data_siswa.tipe = '2'  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata DESC LIMIT 0,10");    
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa AND data_siswa.tipe = '2'  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata DESC LIMIT 0,10");    
         } elseif ($tipe == 'least') {
-            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa AND data_siswa.tipe = '2'  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
+            $query = $this->db->query("SELECT tabel_nilai.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, AVG(tabel_nilai.nilai) as rerata FROM tabel_nilai,data_siswa WHERE tabel_nilai.tahun_ajaran = '$tahun_ajaran' AND tabel_nilai.kd_siswa = data_siswa.kd_siswa AND data_siswa.tipe = '2'  AND data_siswa.tingkat='$tingkat' AND data_siswa.status='1' GROUP BY data_siswa.kd_siswa ORDER BY rerata LIMIT 0,10");    
         }
         foreach ($query->result() as $row) {
-            $data[] = array('kd_siswa' => $row->kd_siswa,'nis' => $row->nis ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
+            $data[] = array('kd_siswa' => $row->kd_siswa,'nisn' => $row->nisn ,'nama_siswa' => $row->nama_siswa,'rerata' => round($row->rerata,2));
         }
         return $data;
     }
@@ -114,7 +114,7 @@
         $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         $query = $this->db->query("SELECT * FROM 
-                                            (SELECT data_siswa.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, COUNT(tabel_nilai.nilai) as jumlah 
+                                            (SELECT data_siswa.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, COUNT(tabel_nilai.nilai) as jumlah 
                                                 FROM data_siswa,tabel_nilai,mata_pelajaran 
                                                 WHERE data_siswa.kd_siswa = tabel_nilai.kd_siswa 
                                                 AND data_siswa.status = '1'
@@ -127,7 +127,7 @@
                                             ) hasil WHERE jumlah > 3
                                     ");
         foreach ($query->result() as $row) {
-            $data[] = array('kd_siswa' => $row->kd_siswa,'nis' => $row->nis,'nama_siswa' => $row->nama_siswa,'jumlah' => $row->jumlah);
+            $data[] = array('kd_siswa' => $row->kd_siswa,'nisn' => $row->nisn,'nama_siswa' => $row->nama_siswa,'jumlah' => $row->jumlah);
         }
         return $data;
     }
@@ -137,7 +137,7 @@
         $data = array();
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         $query = $this->db->query("SELECT * FROM 
-                                            (SELECT data_siswa.kd_siswa, data_siswa.nis, data_siswa.nama_siswa, COUNT(tabel_nilai.nilai) as jumlah 
+                                            (SELECT data_siswa.kd_siswa, data_siswa.nisn, data_siswa.nama_siswa, COUNT(tabel_nilai.nilai) as jumlah 
                                                 FROM data_siswa,tabel_nilai,mata_pelajaran 
                                                 WHERE data_siswa.kd_siswa = tabel_nilai.kd_siswa 
                                                 AND data_siswa.status = '1'
@@ -151,7 +151,7 @@
                                             ) hasil WHERE jumlah > 3
                                     ");
         foreach ($query->result() as $row) {
-            $data[] = array('kd_siswa' => $row->kd_siswa,'nis' => $row->nis,'nama_siswa' => $row->nama_siswa,'jumlah' => $row->jumlah);
+            $data[] = array('kd_siswa' => $row->kd_siswa,'nisn' => $row->nisn,'nama_siswa' => $row->nama_siswa,'jumlah' => $row->jumlah);
         }
         return $data;
     }
@@ -283,7 +283,7 @@
         return $data;
     }
 	public function get_nilai_bytipe($tipe){
-        $query = $this->db->query("SELECT tabel_nilai.nilai, data_siswa.kd_siswa, data_siswa.nama_siswa, data_siswa.tingkat, mata_pelajaran.nama_pelajaran, data_siswa.nis
+        $query = $this->db->query("SELECT tabel_nilai.nilai, data_siswa.kd_siswa, data_siswa.nama_siswa, data_siswa.tingkat, mata_pelajaran.nama_pelajaran, data_siswa.nisn
                                     FROM tabel_nilai, data_siswa, mata_pelajaran
                                     WHERE data_siswa.kd_siswa = tabel_nilai.kd_siswa 
                                     AND tabel_nilai.kd_pelajaran = mata_pelajaran.kd_pelajaran

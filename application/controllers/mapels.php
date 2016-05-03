@@ -36,21 +36,63 @@ class Mapels extends CI_Controller {
         $this->load->view('footer_general');
     }
 
+    public function seleksiMapelUN()
+    {
+        $this->load->database();
+        $this->load->helper('url');
+        $this->load->helper('form');
+
+        $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+
+        $data['ipa'] = $this->mata_pelajaran->getMapelUNByJurusan(2,$tahun_ajaran);
+        $data['ips'] = $this->mata_pelajaran->getMapelUNByJurusan(3,$tahun_ajaran);
+        $data['mapel'] = $this->mata_pelajaran->getAllMapel();
+
+        // echo in_array($data['ips'][1],$data['mapel']);
+
+        $this->showHeader();
+        $this->load->view('seleksi_mapel_un',$data);
+        $this->load->view('footer_general');
+    }
+
     public function setSeleksiMapel()
     {
-        foreach ($_POST['non_jurusan'] as $row) {
-            $this->mata_pelajaran->setMapelTahunan(1,$row);
-        }
+        $ta = $this->tahun_ajaran->getCurrentTA();
+        $query = $this->db->query("DELETE FROM tabel_mapel_jurusan WHERE tahun_ajaran='$ta'");
+        if (isset($_POST['non_jurusan']))
+            foreach ($_POST['non_jurusan'] as $row) {
+                $this->mata_pelajaran->setMapelTahunan(1,$row);
+            }
 
-        foreach ($_POST['ipa'] as $row) {
-            $this->mata_pelajaran->setMapelTahunan(2,$row);
-        }
+        if (isset($_POST['ipa']))
+            foreach ($_POST['ipa'] as $row) {
+                $this->mata_pelajaran->setMapelTahunan(2,$row);
+            }
 
-        foreach ($_POST['ips'] as $row) {
-            $this->mata_pelajaran->setMapelTahunan(3,$row);
-        }
+        if (isset($_POST['ips']))
+            foreach ($_POST['ips'] as $row) {
+                $this->mata_pelajaran->setMapelTahunan(3,$row);
+            }
         echo "<script>alert('Data berhasil dimasukkan')</script>";
         redirect('mapels/seleksiMapel');
+    }
+    
+    public function setSeleksiMapelUN()
+    {
+        $ta = $this->tahun_ajaran->getCurrentTA();
+        $query = $this->db->query("DELETE FROM tabel_mapel_un WHERE tahun_ajaran='$ta' AND (id_jurusan='2' OR id_jurusan='3')");
+
+        if (isset($_POST['ipa']))
+            foreach ($_POST['ipa'] as $row) {
+                $this->mata_pelajaran->setMapelUN(2,$row);
+            }
+
+        if (isset($_POST['ips']))
+            foreach ($_POST['ips'] as $row) {
+                $this->mata_pelajaran->setMapelUN(3,$row);
+            }
+        echo "<script>alert('Data berhasil dimasukkan')</script>";
+        redirect('mapels/seleksiMapelUN');
     }
 
     public function manageMapel() {

@@ -2,7 +2,7 @@
 <script type="text/javascript" src="<?=base_url('assets/js/jquery.tokenize.js')?>"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/jquery.tokenize.css')?>"/>
 
-<h3><i class="fa fa-angle-right"></i> Ketikkan NIS siswa yang tidak lulus</h3>
+<h3><i class="fa fa-angle-right"></i> Ketikkan nisn siswa yang tidak lulus</h3>
 <div class="tab-pane" id="chartjs">
 	<div class="row mt">
 		<?php 
@@ -10,10 +10,10 @@
 			echo form_open('siswas/setTidakLulus'); ?>
 		<div class="col-lg-6">
 			<div class="content-panel"> 
-				<h4><i class="fa fa-angle-right"></i>Ketikkan NIS siswa yang tidak lulus</h4>
+				<h4><i class="fa fa-angle-right"></i>Ketikkan nisn siswa yang tidak lulus</h4>
 				<div class="panel-body">
 					<p></p>
-					<?=form_dropdown('tidak_lulus[]',[],'','id="tokenize1" multiple="false" class="tokenize-sample"')?>
+					<?=form_dropdown('tidak_lulus[]',array(),'','id="tokenize1" multiple="false" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize1').tokenize({
 						    datas: "<?=base_url('siswas/cariSiswa/3')?>"

@@ -72,6 +72,7 @@
                       </a>
                   </li>
 
+
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-th"></i>
@@ -83,6 +84,23 @@
                           
                       </ul>
                   </li>
+                  <?php
+                  if (!isset(($this->session->userdata('tingkat')){
+                    $query = $this->siswa->getDetailSiswa($this->session->userdata('id_transaksi'));
+                    $this->session->set_userdata('tingkat',$query['tingkat']);
+                  }
+
+                  if ($this->session->userdata('tingkat') == 3 or $this->session->userdata('tingkat') == 4 ){
+                    ?>
+                    <li class="sub-menu">
+                    <a href="<?=base_url('nilai/getSKHU/').$this->session->userdata('id_transaksi')?>">
+                      <i class="fa fa-desktop"></i>
+                      <span>Menu SKHU</span>
+                    </a>
+                  </li>
+                    <?php
+                  }
+                  ?>
 
                   <li class="sub-menu">
                       <a href="javascript:;" >

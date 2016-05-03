@@ -83,7 +83,7 @@
           <li class="sub-menu">
             <a class="active" href="javascript:;" >
               <i class="fa fa-book"></i>
-              <span>Administrasi Akademik</span>
+              <span>Adminisntrasi Akademik</span>
             </a>
             <ul class="sub">
               <li><a  href="<?=base_url('siswas')?>">Data siswa</a></li>
@@ -99,7 +99,7 @@
           <li class="sub-menu">
             <a href="javascript:;" >
               <i class="fa fa-desktop"></i>
-              <span>Administrasi Sistem</span>
+              <span>Adminisntrasi Sistem</span>
             </a>
             <ul class="sub">
               <li>

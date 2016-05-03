@@ -10,6 +10,36 @@ class TahunAjaran extends CI_Controller {
 		$this->load->model('nilai');
 	}
 
+	public function dataTambahan()
+	{
+		$this->showHeader();
+		$this->load->view('tahun_ajaran/data_tambahan');
+		$this->load->view('footer_general');
+	}
+
+
+	public function bukaSKHU()
+	{
+		$this->showHeader();
+		$this->load->view('tahun_ajaran/set_buka_skhu');
+		$this->load->view('footer_time');
+	}
+
+
+
+	public function prosesSetData()
+	{
+		$data['tahun_ajaran'] = $this->tahun_ajaran->getCurrentTA();
+		$data['kepala_sekolah'] = $this->input->post('nama_kepsek');
+		$data['nomor_peraturan'] = $this->input->post('nomor_peraturan');
+		$data['tahun_peraturan'] = $this->input->post('tahun_peraturan');
+
+		$this->db->where('id_tahun_ajaran',$data['tahun_ajaran']);
+		$this->db->update('tahun_ajaran',$data);
+		echo "<script>alert('data berhasil dimasukkan')</script>";
+		redirect('tahunajaran/dataTambahan');
+	}
+
 	public function index()
 	{
 		// $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
@@ -23,8 +53,8 @@ class TahunAjaran extends CI_Controller {
 
 	public function getTinggalKelas($tingkat)
 	{
-		$nis = '%'.$this->input->get('search').'%';
-		$query = $this->db->query("SELECT kd_siswa as value,nis as text,nama_siswa FROM data_siswa WHERE status = '1' AND tingkat='$tingkat' AND nis LIKE '$nis'");
+		$nisn = '%'.$this->input->get('search').'%';
+		$query = $this->db->query("SELECT kd_siswa as value,nisn as text,nama_siswa FROM data_siswa WHERE status = '1' AND tingkat='$tingkat' AND nisn LIKE '$nisn'");
 		$result = $query->result_array();
 		for ($i=0; $i < sizeof($result); $i++) { 
 			$result[$i]['text'] = $result[$i]['text'] .' - '.$result[$i]['nama_siswa'];
@@ -92,5 +122,14 @@ class TahunAjaran extends CI_Controller {
 		$this->load->view('tahun_ajaran_baru');
 		$this->load->view('footer_general');
 	}
+
+	public function prosesSetTanggalSKHU()
+	 {
+	 	$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
+	 	$this->db->where('id_tahun_ajaran',$tahun_ajaran);
+	 	$data['buka_skhu'] = $this->input->post('waktu_skhu');
+	 	$this->db->update('tahun_ajaran',$data);
+	 	redirect('users/home');
+	 } 
 
 }

@@ -14,6 +14,30 @@
 		return $hasil;
 	}
 
+	public function getMapelUNByJurusan($id_jurusan,$tahun_ajaran)
+	{
+		$query =  $this->db->query("SELECT tabel_mapel.id_mapel, tabel_mapel.nama_mapel FROM tabel_mapel,tabel_mapel_un 
+								WHERE tabel_mapel.id_mapel = tabel_mapel_un.id_mapel 
+								AND tabel_mapel_un.id_jurusan = $id_jurusan 
+								AND tabel_mapel_un.tahun_ajaran = $tahun_ajaran");
+		$hasil = $query->result_array();
+		return $hasil;
+	}
+
+
+	public function setMapelUN($id_jurusan,$id_mapel)
+	{
+		$ta = $this->tahun_ajaran->getCurrentTA();
+		$data['id_jurusan'] = $id_jurusan;
+		$data['id_mapel'] = $id_mapel;
+		$data['tahun_ajaran'] = $ta;
+		$query = $this->db->query("SELECT * FROM tabel_mapel_un WHERE tahun_ajaran='$ta' AND id_mapel='$id_mapel' AND id_jurusan='$id_jurusan'");
+		$hasil = $query->result();
+		if ($hasil != null){
+			$query = $this->db->query("DELETE FROM tabel_mapel_un WHERE tahun_ajaran='$ta' AND id_mapel='$id_mapel' AND id_jurusan='$id_jurusan'");
+		}
+		$this->db->insert('tabel_mapel_un',$data);
+	}
 
 	public function setMapelTahunan($id_jurusan,$id_mapel)
 	{

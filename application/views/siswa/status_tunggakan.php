@@ -12,8 +12,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>Ganti Ke Tidak Menunggak</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa yang akan diganti ke tidak menunggak</p>
-					<?=form_dropdown('tidak_menunggak[]',[],'','id="tokenize1" multiple="false" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa yang akan diganti ke tidak menunggak</p>
+					<?=form_dropdown('tidak_menunggak[]',array(),'','id="tokenize1" multiple="false" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize1').tokenize({
 						    datas: "<?=base_url('siswas/cariSiswaAll')?>"
@@ -26,8 +26,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>Ganti Ke Menunggak</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa akan diganti ke menunggak</p>
-					<?=form_dropdown('menunggak[]',[],'','id="tokenize2" multiple="multiple" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa akan diganti ke menunggak</p>
+					<?=form_dropdown('menunggak[]',array(),'','id="tokenize2" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize2').tokenize({
 						    datas: "<?=base_url('siswas/cariSiswaAll/')?>"

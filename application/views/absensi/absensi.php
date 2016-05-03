@@ -12,8 +12,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>Sakit</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa yang sakit</p>
-					<?=form_dropdown('sakit[]',[],'','id="tokenize1" multiple="multiple" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa yang sakit</p>
+					<?=form_dropdown('sakit[]',array(),'','id="tokenize1" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize1').tokenize({
 						    datas: "<?=base_url('siswas/cariSiswaAll')?>"
@@ -26,8 +26,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>IZIN</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa  yang izin</p>
-					<?=form_dropdown('izin[]',[],'','id="tokenize2" multiple="multiple" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa  yang izin</p>
+					<?=form_dropdown('izin[]',array(),'','id="tokenize2" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize2').tokenize({
 						    datas: "<?=base_url('siswas/cariSiswaAll')?>"
@@ -40,8 +40,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>ALFA</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa yang alfa</p>
-					<?=form_dropdown('alfa[]',[],'','id="tokenize3" multiple="multiple" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa yang alfa</p>
+					<?=form_dropdown('alfa[]',array(),'','id="tokenize3" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize3').tokenize({
 						    datas: "<?=base_url('siswas/cariSiswaAll')?>"

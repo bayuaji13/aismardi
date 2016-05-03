@@ -29,7 +29,7 @@ class Users extends CI_Controller {
 		->display_as('pass','Password')
 		->required_fields('user','pass')
 		->unique_fields('user')
-		->set_relation('level','tabel_level','jenis_user')
+		->set_relation('level','tabel_level','jenisn_user')
 		->columns('user','pass')
 		->unset_add_fields('kd_transaksi')
 		->unset_edit_fields('kd_transaksi','level')

@@ -177,7 +177,7 @@ class Rest extends REST_Controller {
         $query = $this->siswa->getSiswa($kd_siswa);
         $result = $query->first_row();
         $objWorksheet->setCellValue('C8',$result->nama_siswa);
-        $objWorksheet->setCellValue('C9',$result->nis);
+        $objWorksheet->setCellValue('C9',$result->nisn);
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         $kd_guru = -1;
         $query = $this->kelas->getKelasBySiswaByTahunAjaranByGuru($kd_siswa,$tahun_ajaran,$kd_guru);
@@ -281,7 +281,7 @@ class Rest extends REST_Controller {
         $ltf2 = $ltf + 2;
         $objWorksheet->setCellValueByColumnAndRow(0,$ltf+1," ");
         $objWorksheet->setCellValueByColumnAndRow(0,$ltf2,"No");
-        $objWorksheet->setCellValueByColumnAndRow(1,$ltf2,"Jenis Pengembangan Diri");
+        $objWorksheet->setCellValueByColumnAndRow(1,$ltf2,"Jenisn Pengembangan Diri");
         $objWorksheet->setCellValueByColumnAndRow(2,$ltf2,"Keterangan");
 
         $kegiatan = $this->nilai_m->cekNilaiFieldKegiatan($kd_siswa,$tahun_ajaran,$semester);
@@ -293,7 +293,7 @@ class Rest extends REST_Controller {
             $placer = $i+1;
             $objWorksheet->setCellValueByColumnAndRow(0,$ltf2+$placer,$placer);             
             if (isset($kegiatan[$i])){
-                $objWorksheet->setCellValueByColumnAndRow(1,$ltf2+$placer,$kegiatan[$i]['jenis']);
+                $objWorksheet->setCellValueByColumnAndRow(1,$ltf2+$placer,$kegiatan[$i]['jenisn']);
                 $objWorksheet->setCellValueByColumnAndRow(2,$ltf2+$placer,$kegiatan[$i]['keterangan']);
             } else {
                 $objWorksheet->setCellValueByColumnAndRow(1,$ltf2+$placer,"");
@@ -620,12 +620,12 @@ class Rest extends REST_Controller {
         $crud = new grocery_CRUD();
 
         $crud->set_table('data_siswa')
-        ->set_relation('jns_kelamin','tabel_jenkel','jenis_kelamin')
+        ->set_relation('jns_kelamin','tabel_jenkel','jenisn_kelamin')
         ->set_relation('tahun_masuk','tahun_ajaran','tahun',null,'tahun DESC LIMIT 3')
         ->unset_fields('kd_siswa')
         ->field_type('tahun_lulus','integer')
-        ->required_fields('nis','nama_siswa','status', 'tipe','tahun_masuk')
-        ->unique_fields('nis')
+        ->required_fields('nisn','nama_siswa','status', 'tipe','tahun_masuk')
+        ->unique_fields('nisn')
         ->unset_texteditor('alamat','alamat_ortu','alamat_sekolah')
         ->callback_after_insert(array($this,'createUsersiswa'))
         ->callback_before_delete(array($this,'deleteUsersiswa'))
