@@ -20,7 +20,7 @@ class Mberita extends CI_Model {
 			$data = array();
 			
 			foreach($news as $row){
-				$newUrl = base_url("news/uncategorized/".$row['newsName']);
+				$newUrl = base_url("berita/uncategorized/".$row['newsName']);
 				array_push($data, array(
 						'categoryId' => $categoryId,
 						'newsUrl' => $newUrl
@@ -49,7 +49,7 @@ class Mberita extends CI_Model {
 			$data = array();
 			
 			foreach($news as $row){
-				$newUrl = base_url("news/".$namaKategori."/".$row['newsName']);
+				$newUrl = base_url("berita/".$namaKategori."/".$row['newsName']);
 				array_push($data, array(
 						'categoryId' => $categoryId,
 						'newsUrl' => $newUrl

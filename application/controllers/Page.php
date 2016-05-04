@@ -18,7 +18,8 @@ class Page extends CI_Controller {
 			$page = $this->mpage->getPage($pageName);
 			if (!empty($page)){
 				$this->load->model('mmenu');
-				if(!empty(($parent = $this->mmenu->getParentTitleByChildId('laman_'.$page['pageId']))))
+				$parent = $this->mmenu->getParentTitleByChildId('laman_'.$page['pageId']);
+				if(!empty($parent))
 					$data['active'] = $parent['title'];
 				else 
 					$data['active'] = $page['pageTitle'];

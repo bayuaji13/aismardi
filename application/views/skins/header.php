@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">    
-    <link rel="shortcut icon" href="favicon.ico">  
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url('assets/img/favicon-32x32.png')?>">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>   
     <!-- Global CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css');?>">   
@@ -40,7 +40,7 @@
                 <div class="info col-md-8 col-sm-8">
                     <br />
                     <div class="contact pull-right">
-                        <p class="phone"><i class="fa fa-phone"></i>Kontak (024)7471629</p> 
+                        <p class="phone"><i class="fa fa-phone"></i>(024)7471629</p> 
                         <p class="email"><i class="fa fa-envelope"></i><a href="#">info@smamardisiswa.sch.id</a></p>
                     </div><!--//contact-->
                 </div><!--//info-->
