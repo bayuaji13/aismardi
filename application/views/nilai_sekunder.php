@@ -44,10 +44,10 @@ foreach ($kd_siswa as $siswa) { $i++
 					<tbody>
 						<?php
 							for ($j=0; $j < 3; $j++) { 
-								if (isset($kegiatan[$kd_siswa[$i]][$j]['jenis'])){
-									$val[$j]['jenis'] = $kegiatan[$kd_siswa[$i]][$j]['jenis'];
+								if (isset($kegiatan[$kd_siswa[$i]][$j]['jenisn'])){
+									$val[$j]['jenisn'] = $kegiatan[$kd_siswa[$i]][$j]['jenisn'];
 								} else {
-									$val[$j]['jenis'] = "";
+									$val[$j]['jenisn'] = "";
 								}
 
 								if (isset($kegiatan[$kd_siswa[$i]][$j]['keterangan'])){
@@ -58,7 +58,7 @@ foreach ($kd_siswa as $siswa) { $i++
 								?>
 								<tr>
 									<td>
-										<input type="text" class="form-control" name="nama_kegiatan[<?=$i?>][]" value="<?=$val[$j]['jenis']?>">
+										<input type="text" class="form-control" name="nama_kegiatan[<?=$i?>][]" value="<?=$val[$j]['jenisn']?>">
 									</td>
 									<td>
 										<input type="text" class="form-control" name="ket_kegiatan[<?=$i?>][]" value="<?=$val[$j]['keterangan']?>">

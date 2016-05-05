@@ -6,8 +6,8 @@
 	public function get_all_siswa() {
 		return $this->db->get('data_siswa');
 	}
-	public function delete_user($nis) {
-		$this->db->where('nis', $nis);
+	public function delete_user($nisn) {
+		$this->db->where('nisn', $nisn);
 		if ($this->db->delete('data_siswa')) {
 			return true;
 		} else {
@@ -28,8 +28,8 @@
                     return FALSE;
             }
 	}
-	public function process_update_siswa($nis, $data) {
-            $this->db->where('nis', $nis);
+	public function process_update_siswa($nisn, $data) {
+            $this->db->where('nisn', $nisn);
             if ($this->db->update('data_siswa', $data)) {
                 return true;
             } else {
@@ -38,7 +38,7 @@
         }
 	
 	 public function get_siswa_bytipe($tipe){
-		$query = $this->db->query("SELECT *, tabel_jenkel.jenis_kelamin
+		$query = $this->db->query("SELECT *, tabel_jenkel.jenisn_kelamin
 							FROM data_siswa, kelas_siswa, kelas, tabel_jenkel
 							WHERE data_siswa.kd_siswa = kelas_siswa.kd_siswa
 							AND data_siswa.jns_kelamin = tabel_jenkel.id_jekel

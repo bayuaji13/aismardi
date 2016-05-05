@@ -7,7 +7,7 @@
 	public function getSiswaPerwalian($kd_guru)
 	{
 		$ta = $this->tahun_ajaran->getCurrentTA();
-		return $this->db->query("SELECT data_siswa.kd_siswa as kd_siswa, data_siswa.nis AS nis, data_siswa.nama_siswa AS nama FROM data_siswa WHERE 
+		return $this->db->query("SELECT data_siswa.kd_siswa as kd_siswa, data_siswa.nisn AS nisn, data_siswa.nama_siswa AS nama FROM data_siswa WHERE 
 								data_siswa.kd_siswa IN (SELECT kelas_siswa.kd_siswa FROM kelas_siswa WHERE kelas_siswa.kd_kelas IN 
 									(SELECT kelas.kd_kelas FROM kelas WHERE kd_guru='$kd_guru') AND kelas_siswa.tahun_ajaran = $ta)");
 	}

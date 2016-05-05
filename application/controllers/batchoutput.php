@@ -86,7 +86,7 @@ class BatchOutput extends CI_Controller {
 		$query = $this->wali->getSiswaPerwalian($this->session->userdata('kd_transaksi'));
 		
 		$i = 6;
-		$this->excel->getActiveSheet()->setCellValue('A6','No')->setCellValue('B6','NIS')->setCellValue('C6','Nama Siswa')
+		$this->excel->getActiveSheet()->setCellValue('A6','No')->setCellValue('B6','nisn')->setCellValue('C6','Nama Siswa')
 					->setCellValue('B3',$kd_kelas)->setCellValue('B2',$nama_kelas)->setCellValue('E2',$value)
 					->setCellValue('A3','Kode Kelas :')->setCellValue('A2','Nama Kelas')
 					->setCellValue('D2','Semester');
@@ -97,11 +97,11 @@ class BatchOutput extends CI_Controller {
 			// echo $numb;
 			// die();
 			$this->excel->getActiveSheet()->setCellValue('A'.$i,$numb.' ');
-			$this->excel->getActiveSheet()->setCellValue('B'.$i,$row->nis);
+			$this->excel->getActiveSheet()->setCellValue('B'.$i,$row->nisn);
 			// $this->excel->getActiveSheet()->setCellValue('A'.$i,'');
 			$this->excel->getActiveSheet()->setCellValue('C'.$i,$row->nama);
 			for ($j=0;$j<$n;$j++){
-				$kd_siswa = $this->siswa->nis2kd_siswa($row->nis);
+				$kd_siswa = $this->siswa->nisn2kd_siswa($row->nisn);
 				$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
 				$kd_pelajaran = $this->excel->getActiveSheet()->getCellByColumnAndRow($j+3 , 5)->getValue();
 				$query = $this->nilai->getNilaiBySiswaBySemesterByTahunAjaranByMapel($kd_siswa,$value,$tahun_ajaran,$kd_pelajaran);
@@ -160,7 +160,7 @@ class BatchOutput extends CI_Controller {
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0'); //no cache
 
-		$objWriter = new PHPExcel_Writer_excel5($this->excel);  
+		$objWriter = new PHPExcel_Writer_Excel5($this->excel);  
 		$objWriter->save('php://output');
 		# code...
 	}
@@ -202,7 +202,7 @@ class BatchOutput extends CI_Controller {
 		$query = $this->siswa->getSiswa($kd_siswa);
 		$result = $query->first_row();
 		$objWorksheet->setCellValue('C6',$result->nama_siswa);
-		$objWorksheet->setCellValue('C7',$result->nis);
+		$objWorksheet->setCellValue('C7',$result->nisn);
 		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
 		$kd_guru = -1;
 		if ($this->session->userdata('level') == 4){
@@ -308,7 +308,7 @@ class BatchOutput extends CI_Controller {
 		$query = $this->siswa->getSiswa($kd_siswa);
 		$result = $query->first_row();
 		$objWorksheet->setCellValue('C6',$result->nama_siswa);
-		$objWorksheet->setCellValue('C7',$result->nis);
+		$objWorksheet->setCellValue('C7',$result->nisn);
 		$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
 		$kd_guru = -1;
 		if ($this->session->userdata('level') == 4){
@@ -557,7 +557,7 @@ class BatchOutput extends CI_Controller {
 		
 		$query = $this->wali->getSiswaPerwalian($kd_guru);
 		foreach ($query->result() as $row) {
-			$data['siswa'][]  = array('kd_siswa' => $row->kd_siswa, 'nis' => $row->nis , 'nama_siswa' => $row->nama);
+			$data['siswa'][]  = array('kd_siswa' => $row->kd_siswa, 'nisn' => $row->nisn , 'nama_siswa' => $row->nama);
 		}
 		if (!isset($data)){
 			$data['last_url'] = base_url().'users/home';
@@ -660,7 +660,7 @@ class BatchOutput extends CI_Controller {
 		$query = $this->siswa->getSiswa($kd_siswa);
 		$result = $query->first_row();
 		$objWorksheet->setCellValue('C8',$result->nama_siswa);
-		$objWorksheet->setCellValue('C9',$result->nis);
+		$objWorksheet->setCellValue('C9',$result->nisn);
 		if ($tahun_ajaran == null)
 			$tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
 		$kd_guru = -1;
@@ -774,7 +774,7 @@ class BatchOutput extends CI_Controller {
 		$ltf2 = $ltf + 2;
 		$objWorksheet->setCellValueByColumnAndRow(0,$ltf+1," ");
 		$objWorksheet->setCellValueByColumnAndRow(0,$ltf2,"No");
-		$objWorksheet->setCellValueByColumnAndRow(1,$ltf2,"Jenis Pengembangan Diri");
+		$objWorksheet->setCellValueByColumnAndRow(1,$ltf2,"Jenisn Pengembangan Diri");
 		$objWorksheet->setCellValueByColumnAndRow(2,$ltf2,"Keterangan");
 
 		$kegiatan = $this->nilai_m->cekNilaiFieldKegiatan($kd_siswa,$tahun_ajaran,$semester);
@@ -786,7 +786,7 @@ class BatchOutput extends CI_Controller {
 			$placer = $i+1;
 			$objWorksheet->setCellValueByColumnAndRow(0,$ltf2+$placer,$placer);				
 			if (isset($kegiatan[$i])){
-				$objWorksheet->setCellValueByColumnAndRow(1,$ltf2+$placer,$kegiatan[$i]['jenis']);
+				$objWorksheet->setCellValueByColumnAndRow(1,$ltf2+$placer,$kegiatan[$i]['jenisn']);
 				$objWorksheet->setCellValueByColumnAndRow(2,$ltf2+$placer,$kegiatan[$i]['keterangan']);
 			} else {
 				$objWorksheet->setCellValueByColumnAndRow(1,$ltf2+$placer,"");

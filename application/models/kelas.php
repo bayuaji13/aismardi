@@ -4,8 +4,8 @@
 		parent::__construct();
 	}
 
-	// public function delete_user($nis) {
-	// 	$this->db->where('nis', $nis);
+	// public function delete_user($nisn) {
+	// 	$this->db->where('nisn', $nisn);
 	// 	if ($this->db->delete('data_siswa')) {
 	// 		return true;
 	// 	} else {
@@ -121,8 +121,10 @@
 	public function getNamaKelas($id_kelas)
 	{
 		$query = $this->db->query("SELECT nama_kelas FROM tabel_kelas WHERE id_kelas='$id_kelas'");
-		$hasil = $query->first_row();
-		return $hasil->nama_kelas;
+		if ($hasil = $query->first_row())
+			return $hasil->nama_kelas;
+		else
+			return null;
 	}
 
 	public function getIsiKelas($id_kelas)
@@ -131,10 +133,10 @@
 		$hasil = $query->result_array();
 		$i = 0;
 		foreach ($hasil as $row) {
-			$query = $this->db->select('nis,nama')->where('id_siswa',$row['id_siswa'])->get('tabel_siswa');
+			$query = $this->db->select('nisn,nama')->where('id_siswa',$row['id_siswa'])->get('tabel_siswa');
 			$hasil2 = $query->first_row('array');
 			$returned[$i]['id_siswa'] = $row['id_siswa'];
-			$returned[$i]['nis'] = $hasil2['nis'];
+			$returned[$i]['nisn'] = $hasil2['nisn'];
 			$returned[$i]['nama'] = $hasil2['nama'];
 			$i++;
 		}
@@ -148,8 +150,8 @@
 		$hasil = $query->first_row();
 		return $hasil->jumlah;
 	}
-	// public function process_update_siswa($nis, $data) {
- //            $this->db->where('nis', $nis);
+	// public function process_update_siswa($nisn, $data) {
+ //            $this->db->where('nisn', $nisn);
  //            if ($this->db->update('data_siswa', $data)) {
  //                return true;
  //            } else {

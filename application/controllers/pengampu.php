@@ -18,6 +18,11 @@ class Pengampu extends CI_Controller {
 
     public function pilihKelas()
     {
+        if ($this->session->userdata('level') == 5){
+            echo "<script>alert('akses ditolak')</script>";
+            // sleep(5);
+            redirect('users/login');
+        }
         $data['kelas'] = $this->kelas->getAllKelas();
         $this->showHeader();
         $this->load->view('pengampu/pilih_kelas',$data);
@@ -26,6 +31,11 @@ class Pengampu extends CI_Controller {
 
     public function pilihPengampu($id_kelas)
     {
+        if ($this->session->userdata('level') == 5){
+            echo "<script>alert('akses ditolak')</script>";
+            // sleep(5);
+            redirect('users/login');
+        }
         $tahun_ajaran = $this->tahun_ajaran->getCurrentTA();
         $jurusan = $this->kelas->getJurusanByKelas($id_kelas);
         if ($jurusan == null)
@@ -40,6 +50,11 @@ class Pengampu extends CI_Controller {
 
     public function setPengampu()
     {
+        if ($this->session->userdata('level') == 5){
+            echo "<script>alert('akses ditolak')</script>";
+            // sleep(5);
+            redirect('users/login');
+        }
         print_r($_POST);
         $mapel = $_POST['mapel'];
         $pengampu = $_POST['pengampu'];
@@ -192,6 +207,11 @@ class Pengampu extends CI_Controller {
 
     public function PenilaianPerSemester()
     {
+        if ($this->session->userdata('level') == 5){
+            echo "<script>alert('akses ditolak')</script>";
+            // sleep(5);
+            redirect('users/login');
+        }
         $this->showHeader();
         $this->load->view('menu_nilai');
         $this->load->view('footer_general');
@@ -240,6 +260,11 @@ class Pengampu extends CI_Controller {
     public function templateExporter($id_kelas,$id_mapel,$semester)
     {
 
+        if ($this->session->userdata('level') == 5){
+            echo "<script>alert('akses ditolak')</script>";
+            // sleep(5);
+            redirect('users/login');
+        }
         $path_template = realpath(FCPATH).'/assets/template_excel/TemplateUploadNilaiSiswa.xls';
         $excel = new PHPExcel_Reader_Excel5();
         $objPHPExcel = $excel->load($path_template);
@@ -273,7 +298,7 @@ class Pengampu extends CI_Controller {
         $i = 1;
         foreach ($isi_kelas as $siswa) {
             $objWorksheet->setCellValueByColumnAndRow(0,$row,$i);
-            $objWorksheet->setCellValueByColumnAndRow(1,$row,$siswa['nis']);
+            $objWorksheet->setCellValueByColumnAndRow(1,$row,$siswa['nisn']);
             $objWorksheet->setCellValueByColumnAndRow(2,$row,$siswa['nama']);
             $i++;
             $row++;
@@ -319,7 +344,7 @@ class Pengampu extends CI_Controller {
         // header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
         // header('Cache-Control: max-age=0'); //no cache
 
-        // $objWriter = new PHPExcel_Writer_excel5($objPHPExcel);  
+        // $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);  
         // $objWriter->save('php://output');
 
 

@@ -12,8 +12,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>Tingkat 1</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa tingkat 1 yang tinggal kelas</p>
-					<?=form_dropdown('daftar[]',[],'','id="tokenize1" multiple="multiple" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa tingkat 1 yang tinggal kelas</p>
+					<?=form_dropdown('daftar[]',array(),'','id="tokenize1" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize1').tokenize({
 						    datas: "getTinggalKelas/2"
@@ -26,8 +26,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>Tingkat 2</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa tingkat 2 yang tinggal kelas</p>
-					<?=form_dropdown('daftar[]',[],'','id="tokenize2" multiple="multiple" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa tingkat 2 yang tinggal kelas</p>
+					<?=form_dropdown('daftar[]',array(),'','id="tokenize2" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize2').tokenize({
 						    datas: "getTinggalKelas/3"
@@ -40,8 +40,8 @@
 			<div class="content-panel"> 
 				<h4><i class="fa fa-angle-right"></i>Tingkat 3</h4>
 				<div class="panel-body">
-					<p>Ketikkan NIS siswa tingkat 3 yang tidak lulus</p>
-					<?=form_dropdown('daftar[]',[],'','id="tokenize3" multiple="multiple" class="tokenize-sample"')?>
+					<p>Ketikkan nisn siswa tingkat 3 yang tidak lulus</p>
+					<?=form_dropdown('daftar[]',array(),'','id="tokenize3" multiple="multiple" class="tokenize-sample"')?>
 					<script type="text/javascript">
 						$('#tokenize3').tokenize({
 						    datas: "getTinggalKelas/4"
