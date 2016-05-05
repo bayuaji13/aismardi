@@ -96,7 +96,9 @@ class Mevent extends CI_Model {
 	}
 	
 	public function countAllEvent(){
+		$now = new DateTime();
+		$now = $now->format('Y-m-d H:i:s');
 		$this->db->or_where(array('startDate >=' => $now, 'endDate >=' => $now));
-		return $this->db->count_all('tabel_event');
+		return $this->db->count_all_results('tabel_event');
 	}
 }
