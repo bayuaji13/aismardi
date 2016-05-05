@@ -68,38 +68,58 @@
            <p class="centered"><a href=""><img src="<?=base_url('assets/img/ui-sam.jpg')?>" class="img-circle" width="60"></a></p>
            <h5 class="centered">Admin</h5>
 
-           <li class="sub-menu">
+           <li class="sub">
             <a  href="">
-              <i class="fa fa-home"></i>
+              <i class="fa fa-home" href="<?=base_url('users/home')?>"></i>
               <span>Beranda</span>
             </a>
-            <ul class="sub">
-              <li><a  href="<?=base_url('IsiBeranda/showProfil')?>">Profil</a></li>
-              <li><a  href="<?=base_url('IsiBeranda/showTentang')?>">Tentang</a></li>
-              <li><a  href="<?=base_url('IsiBeranda/showBantuan')?>">Bantuan</a></li>
-            </ul>
-          </li>
 
           <li class="sub-menu">
             <a class="active" href="javascript:;" >
               <i class="fa fa-book"></i>
-              <span>Administrasi Akademik</span>
+              <span>Adminisntrasi Akademik</span>
             </a>
             <ul class="sub">
               <li><a  href="<?=base_url('siswas')?>">Data siswa</a></li>
               <li><a  href="<?=base_url('batchinput/do_upload/data')?>">Input Data siswa</a></li>
               <li><a  href="<?=base_url('gurus')?>">Data Guru</a></li>
               <li><a  href="<?=base_url('mapels')?>">Data Mata Pelajaran</a></li>
+              <li><a  href="<?=base_url('mapels/seleksiMapel')?>">Seleksi Mata Pelajaran</a></li>
+              <li><a  href="<?=base_url('mapels/seleksiMapelUN')?>">Seleksi Mapel UN</a></li>
               <li><a  href="<?=base_url('kelas')?>">Data Kelas siswa</a></li>
-              <li><a  href="<?=base_url('pengampu/pilihkelas')?>">Data Guru Pengampu</a></li>
+              <li><a  href="<?=base_url('pengampu/pilihKelas')?>">Data Pengampu</a></li>
+              <li><a  href="<?=base_url('nilai')?>">Data Nilai siswa </a></li>
               <li><a  href="<?=base_url('tahunajaran')?>">Tahun Ajaran</a></li>
             </ul>
           </li>
 
           <li class="sub-menu">
             <a href="javascript:;" >
+              <i class="fa fa-book"></i>
+              <span>Adminisntrasi Kelulusan</span>
+            </a>
+            <ul class="sub">
+              <li><a  href="<?=base_url('siswas/menuKelulusan/')?>">Menu kelulusan</a></li>
+              <li><a  href="<?=base_url('tahunajaran/bukaSKHU')?>">Set Tanggal SKHU</a></li>
+              <li><a  href="<?=base_url('siswas/menuBatalKelulusan')?>">Pembatalan Kelulusan</a></li>
+            </ul>
+          </li>
+
+          <li class="sub-menu">
+            <a href="javascript:;" >
+              <i class="fa fa-book"></i>
+              <span>Adminisntrasi Ujian</span>
+            </a>
+            <ul class="sub">
+              <li><a  href="<?=base_url('nilai/isiKartu')?>">Upload Data Kartu</a></li>
+              <li><a  href="<?=base_url('tahunajaran/setTanggal')?>">Set Tanggal Download Kartu</a></li>
+            </ul>
+          </li>
+
+          <li class="sub-menu">
+            <a href="javascript:;" >
               <i class="fa fa-desktop"></i>
-              <span>Administrasi Sistem</span>
+              <span>Adminisntrasi Sistem</span>
             </a>
             <ul class="sub">
               <li>
@@ -121,7 +141,7 @@
 	              <span>Event</span>
 	            </a>
 	          </li>
-	          <li>
+	           <li>
 	            <a href="<?=base_url('konten/manageGallery')?>">
 	              <i class="fa fa-picture-o"></i>
 	              <span>Galeri</span>

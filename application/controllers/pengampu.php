@@ -308,7 +308,7 @@ class Pengampu extends CI_Controller {
         // header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
         // header('Cache-Control: max-age=0'); //no cache
 
-        $objWriter = new PHPExcel_Writer_excel5($objPHPExcel);  
+        $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);  
         $exportPlace = realpath(FCPATH).'/assets/downloadable/'.$filename;
         $objWriter->save($exportPlace);
         return $filename;

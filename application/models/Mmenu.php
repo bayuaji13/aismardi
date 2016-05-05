@@ -9,7 +9,7 @@ class Mmenu extends CI_Model {
 	public function getMenu(){
 		$query = $this->db->query("SELECT tabel_menu.*,tabel_menu_children.id as id_child,tabel_menu_children.title as title_child,tabel_menu_children.customSelect as customSelect_child
 				FROM tabel_menu LEFT JOIN tabel_menu_children 
-				ON tabel_menu.id=tabel_menu_children.idParent ORDER BY tabel_menu.id ASC, id_child ASC");
+				ON tabel_menu.id=tabel_menu_children.idParent ORDER BY tabel_menu.order, tabel_menu_children.order ASC");
 		$result = array();
         foreach ($query->result_array() as $row){
         	$result[$row['id']]['id'] = $row['id'];
@@ -38,7 +38,7 @@ class Mmenu extends CI_Model {
 		$this->load->model('mtautan');
 		$query = $this->db->query("SELECT tabel_menu.*,tabel_menu_children.id as id_child,tabel_menu_children.title as title_child,tabel_menu_children.customSelect as customSelect_child, tabel_menu_children.idParent as parent
 				FROM tabel_menu LEFT JOIN tabel_menu_children
-				ON tabel_menu.id=tabel_menu_children.idParent ORDER BY tabel_menu.id ASC, id_child ASC");
+				ON tabel_menu.id=tabel_menu_children.idParent ORDER BY tabel_menu.order, tabel_menu_children.order ASC");
 		$result = array();
 		foreach ($query->result_array() as $row){
 			$result[$row['id']]['id'] = $row['id'];
@@ -93,15 +93,17 @@ class Mmenu extends CI_Model {
 		$data = $this->input->post('data');
 		$parent = array();
 		$children = array();
+		$orderParent = 1;
+		$orderChild = 1;
 		foreach ($data as $row){
 			if($row['customSelect'] == "Pilih..")
 				$row['customSelect'] = null;
-			array_push($parent, array('id' => $row['id'], 'title' => $row['title'], 'customSelect' => $row['customSelect']));
+			array_push($parent, array('id' => $row['id'], 'title' => $row['title'], 'customSelect' => $row['customSelect'], 'order' => $orderParent++));
 			if(isset($row['children'])){
 				foreach ($row['children'] as $child){
 					if($child['customSelect'] == "Pilih..")
 						$child['customSelect'] = null;
-					array_push($children, array('id' => $child['id'], 'title' => $child['title'], 'customSelect' => $child['customSelect'], 'idParent' => $row['id']));
+					array_push($children, array('id' => $child['id'], 'title' => $child['title'], 'customSelect' => $child['customSelect'], 'idParent' => $row['id'], 'order' => $orderChild++));
 				}	
 			}
 		}

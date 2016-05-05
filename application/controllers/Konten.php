@@ -213,7 +213,7 @@ class Konten extends CI_Controller {
 		->callback_before_delete(array($this,'pageBeforeDelete'));
 	
 		$output = $crud->render();
-		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Berita </h3> <br/>' . $output->output;
+		$output->output ='<h3><i class="fa fa-angle-right"></i>Daftar Laman </h3> <br/>' . $output->output;
 		$this->showOutput($output);
 	}
 	
@@ -398,8 +398,8 @@ class Konten extends CI_Controller {
 		->required_fields('testiImage', 'testiName', 'testiAngkatan', 'testiContent')
 		->columns('testiImage', 'testiName', 'testiAngkatan', 'testiContent')
 		->fields('testiImage', 'testiName', 'testiAngkatan', 'testiContent')
-		->set_rules('testiContent', 'Angkatan Pemberi Testimoni', 'max_length[255]')
-		->set_rules('testiName', 'Angkatan Pemberi Testimoni', 'max_length[64]')
+		->set_rules('testiContent', 'Konten Testimoni', 'max_length[255]')
+		->set_rules('testiName', 'Nama Pemberi Testimoni', 'max_length[64]')
 		->set_rules('testiAngkatan', 'Angkatan Pemberi Testimoni', 'max_length[8]')
 		->order_by('testiId','asc')
 		->set_field_upload('testiImage', 'assets/uploads/images/sambutan')

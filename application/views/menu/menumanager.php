@@ -51,6 +51,7 @@
 					            <option value="<?php echo base_url('galeri/')?>">Galeri</option>
 					            <option value="<?php echo base_url('event/')?>">Event</option>
 					            <option value="<?php echo base_url('berita/')?>">Berita</option>
+					            <option value="<?php echo base_url('users/')?>">Log In</option>
 					            <optgroup label="Laman">
 					            <?php 
 					            foreach ($pages as $page){

@@ -30,7 +30,7 @@
                             <p class="adr clearfix col-md-12 col-sm-4">
                                 <i class="fa fa-map-marker pull-left"></i>        
                                 <span class="adr-group pull-left">       
-                                    <span class="street-address">Jl. Sukun Raya 43, Srondol Wetan</span><br>
+                                    <span class="street-address">Jl. Sukun Raya 45, Srondol Wetan</span><br>
                                     <span class="region">Semarang, Jawa Tengah</span><br>
                                     <span class="postal-code">50264</span><br>
                                     <span class="country-name">Indonesia</span>
